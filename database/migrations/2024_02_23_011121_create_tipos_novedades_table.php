@@ -11,13 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('perfiles', function (Blueprint $table) {
-            $table->smallInteger('id_perfil')->autoIncrement();
-            $table->string('perfil', '50');
-            $table->timestamp('creado_en');
-            $table->timestamp('actualizado_en')->nullable();
-
-            $table->index('id_perfil');
+        Schema::create('tipos_novedades', function (Blueprint $table) {
+            $table->tinyIncrements('idTipos_novedades');
+            $table->string('nombre_tipo_novedad', '60');
+            $table->longText('descripcion_tipo_novedad')->nullable();
+            $table->timestamps();
         });
     }
 
@@ -26,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('perfiles');
+        Schema::dropIfExists('tipos_novedades');
     }
 };
