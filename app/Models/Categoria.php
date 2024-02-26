@@ -14,7 +14,8 @@ class Categoria extends Model
     /**
     * Get the comments for the blog post.
     */
-    public function subcategoria(): HasMany{
+    public function subCategoria(): HasMany
+    {
         return $this->hasMany(SubCategoria::class);
     }
 

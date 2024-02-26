@@ -18,14 +18,16 @@ class Elemento extends Model
     /**
     * Get the post that owns the comment.
     */
-    public function proyecto(): BelongsTo{
+    public function proyecto(): BelongsTo
+    {
         return $this->belongsTo(Proyecto::class);
     }
 
     /**
     * Get the post that owns the comment.
     */
-    public function stand(): BelongsTo{
+    public function stand(): BelongsTo
+    {
         return $this->belongsTo(Stand::class);
     }
 

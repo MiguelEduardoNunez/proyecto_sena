@@ -15,14 +15,16 @@ class Proyecto extends Model
     /**
     * Get the comments for the blog post.
     */
-    public function elemento(): HasMany{
+    public function elemento(): HasMany
+    {
         return $this->hasMany(Elemento::class);
     }
 
     /**
     * Get the comments for the blog post.
     */
-    public function entregaElemento(): HasMany{
+    public function entregaElemento(): HasMany
+    {
         return $this->hasMany(EntregaElemento::class);
     }   
 

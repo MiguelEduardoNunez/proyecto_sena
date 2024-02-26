@@ -5,9 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
-use Termwind\Components\Element;
 
 class Item extends Model
 {
@@ -17,9 +15,9 @@ class Item extends Model
     /**
     * Get the post that owns the comment.
     */
-    public function subcategoria(): BelongsTo
+    public function subCategoria(): BelongsTo
     {
-        return $this->belongsTo(subcategoria::class);
+        return $this->belongsTo(SubCategoria::class);
     }
 
     /**
@@ -30,6 +28,4 @@ class Item extends Model
         return $this->hasOne(Elemento::class);
     }
 
-
- 
 }

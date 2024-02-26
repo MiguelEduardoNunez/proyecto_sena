@@ -5,7 +5,6 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class EntregaElemento extends Model
@@ -24,9 +23,9 @@ class EntregaElemento extends Model
     /**
      * Get the post that owns the comment.
      */
-    public function elemento(): BelongsToMany
+    public function elemento(): BelongsTo
     {
-        return $this->belongsToMany(Elemento::class);
+        return $this->belongsTo(Elemento::class);
     }
 
     /**

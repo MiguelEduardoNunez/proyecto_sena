@@ -14,7 +14,8 @@ class Stand extends Model
     /**
     * Get the comments for the blog post.
     */
-    public function elemento(): HasMany{
+    public function elemento(): HasMany
+    {
         return $this->hasMany(Elemento::class);
     }
 

@@ -14,7 +14,8 @@ class TipoNovedad extends Model
     /**
     * Get the comments for the blog post.
     */
-    public function novedad(): HasMany{
+    public function novedad(): HasMany
+    {
         return $this->hasMany(Novedad::class);
     }
 
