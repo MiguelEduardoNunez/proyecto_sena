@@ -16,7 +16,7 @@ return new class extends Migration
             $table->collation = 'utf8_spanish_ci';
 
             $table->integer('id_item')->autoIncrement();
-            $table->integer('sub_categoria_id');
+            $table->integer('subcategoria_id');
             $table->string('item', '100');
             $table->text('descripcion');
             $table->timestamp('creado_en');

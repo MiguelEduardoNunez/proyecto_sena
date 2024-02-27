@@ -15,9 +15,9 @@ class Item extends Model
     /**
     * Get the post that owns the comment.
     */
-    public function subCategoria(): BelongsTo
+    public function subcategoria(): BelongsTo
     {
-        return $this->belongsTo(SubCategoria::class);
+        return $this->belongsTo(Subcategoria::class);
     }
 
     /**

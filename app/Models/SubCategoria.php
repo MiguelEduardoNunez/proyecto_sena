@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class SubCategoria extends Model
+class Subcategoria extends Model
 {
     protected $table = 'subcategorias';
     protected $primaryKey = 'id_subcategoria';
