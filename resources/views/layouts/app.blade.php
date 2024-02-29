@@ -149,13 +149,12 @@
         <!-- Sidebar -->
         <div class="sidebar">
             <nav class="mt-2">
-                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
-                    data-accordion="false">
-                    <li class="nav-item menu-open">
+                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                    <li class="nav-item">
                         <a class="nav-link active" href="#">
                             <i class="nav-icon fas fa-tachometer-alt"></i>
                             <p>
-                                Usuarios
+                                Dashboard
                                 <i class="right fas fa-angle-left"></i>
                             </p>
                         </a>
@@ -163,7 +162,7 @@
                             <li class="nav-item">
                                 <a class="nav-link active" href="#">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>Registrar Usuario</p>
+                                    <p>Dashboard v2</p>
                                 </a>
                             </li>
                             <li class="nav-item">
@@ -179,21 +178,21 @@
                         <a class="nav-link" href="#">
                             <i class="nav-icon fas fa-chart-pie"></i>
                             <p>
-                                Charts
+                                Perfiles
                                 <i class="right fas fa-angle-left"></i>
                             </p>
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a class="nav-link" href="#">
+                                <a class="nav-link" href="{{ route('perfiles.create') }}">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>ChartJS</p>
+                                    <p>Registrar Perfil</p>
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="#">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>Flot</p>
+                                    <p>Gestionar Perfil</p>
                                 </a>
                             </li>
                         </ul>

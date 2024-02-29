@@ -18,7 +18,7 @@ return new class extends Migration
             $table->integer('id_item')->autoIncrement();
             $table->integer('subcategoria_id');
             $table->string('item', '100');
-            $table->text('descripcion');
+            $table->text('descripcion')->nullable();
             $table->timestamp('creado_en');
             $table->timestamp('actualizado_en')->nullable();
         });

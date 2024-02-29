@@ -17,7 +17,7 @@ return new class extends Migration
 
             $table->integer('id_proyecto')->autoIncrement();
             $table->string('proyecto', '200');  
-            $table->text('descripcion');
+            $table->text('descripcion')->nullable();
             $table->date('fecha_inicio'); 
             $table->date('fecha_fin'); 
             $table->string('responsable_proyecto', '100');  

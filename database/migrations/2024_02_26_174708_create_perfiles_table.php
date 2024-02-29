@@ -17,6 +17,7 @@ return new class extends Migration
 
             $table->smallInteger('id_perfil')->autoIncrement();
             $table->string('perfil', '50');
+            $table->text('descripcion')->nullable();
             $table->timestamp('creado_en');
             $table->timestamp('actualizado_en')->nullable();
         });

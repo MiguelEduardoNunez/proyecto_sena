@@ -17,7 +17,7 @@ return new class extends Migration
 
             $table->smallInteger('id_tipo_novedad')->autoIncrement();
             $table->string('tipo_novedad', '100');
-            $table->text('descripcion');
+            $table->text('descripcion')->nullable();
             $table->timestamp('creado_en');
             $table->timestamp('actualizado_en')->nullable();
         });

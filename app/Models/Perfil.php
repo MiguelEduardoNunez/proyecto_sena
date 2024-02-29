@@ -31,8 +31,8 @@ class Perfil extends Model
     /**
     * Get the post that owns the comment.
     */
-    public function user(): HasMany
+    public function usuario(): HasMany
     {
-        return $this->hasMany(User::class);
+        return $this->hasMany(Usuario::class);
     }
 }
