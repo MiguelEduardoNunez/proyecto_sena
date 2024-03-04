@@ -33,6 +33,6 @@ class Perfil extends Model
     */
     public function usuario(): HasMany
     {
-        return $this->hasMany(Usuario::class);
+        return $this->hasMany(Usuario::class, 'perfil_id', 'id_perfil');
     }
 }

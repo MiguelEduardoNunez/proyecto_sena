@@ -31,6 +31,9 @@ class Usuario extends Authenticatable
     protected $primaryKey = 'id_usuario';
 
 
+    const CREATED_AT = 'creado_en';
+    const UPDATED_AT = 'actualizado_en';
+
     /**
      * The attributes that are mass assignable.
      *
@@ -67,6 +70,6 @@ class Usuario extends Authenticatable
     */
     public function perfil(): BelongsTo
     {
-        return $this->belongsTo(Perfil::class);
+        return $this->belongsTo(Perfil::class, 'perfil_id', 'id_perfil');
     }
 }

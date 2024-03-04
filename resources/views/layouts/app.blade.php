@@ -17,9 +17,6 @@
     <!-- iCheck -->
     <link rel="stylesheet" href="{{ asset('adminlte/plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}">
 
-    <!-- Tempusdominus Bootstrap 4 -->
-    <link rel="stylesheet" href="{{ asset('adminlte/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css') }}">
-
     <!-- AdminLTE App -->
     <link rel="stylesheet" href="{{ asset('adminlte/css/adminlte.css') }}">
 
@@ -31,15 +28,6 @@
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
-    {{-- <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
-            @include('layouts.navigation')
-
-            <!-- Page Content -->
-            <main>
-                {{ $slot }}
-            </main>
-        </div> --}}
-
     <!-- Navbar -->
     <nav class="main-header navbar navbar-expand navbar-white navbar-light">
         <!-- Left navbar links -->
@@ -47,17 +35,11 @@
             <li class="nav-item">
                 <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
             </li>
-            <li class="nav-item d-none d-sm-inline-block">
-                <a class="nav-link" href="#">Inicio</a>
-            </li>
-            <li class="nav-item d-none d-sm-inline-block">
-                <a class="nav-link" href="#">Contacto</a>
-            </li>
         </ul>
 
         <!-- Right navbar links -->
         <ul class="navbar-nav ml-auto">
-            <!-- Navbar Search -->
+            {{-- <!-- Navbar Search -->
             <li class="nav-item">
                 <a class="nav-link" data-widget="navbar-search" href="#" role="button">
                     <i class="fas fa-search fa-lg"></i>
@@ -65,8 +47,7 @@
                 <div class="navbar-search-block">
                     <form class="form-inline">
                         <div class="input-group input-group-sm">
-                            <input class="form-control form-control-navbar" type="search" placeholder="Search"
-                                aria-label="Search">
+                            <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
                             <div class="input-group-append">
                                 <button class="btn btn-navbar" type="submit">
                                     <i class="fas fa-search"></i>
@@ -78,7 +59,7 @@
                         </div>
                     </form>
                 </div>
-            </li>
+            </li> --}}
 
             <!-- Notifications Dropdown Menu -->
             <li class="nav-item dropdown">
@@ -190,9 +171,33 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">
+                                <a class="nav-link" href="{{ route('perfiles.index') }}">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>Gestionar Perfil</p>
+                                    <p>Gestionar Perfiles</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <i class="nav-icon fas fa-chart-pie"></i>
+                            <p>
+                                Usuarios
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('usuarios.create') }}">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Registrar Usuario</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('usuarios.index') }}">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Gestionar Usuarios</p>
                                 </a>
                             </li>
                         </ul>
@@ -208,13 +213,10 @@
         <div class="content-header">
             <div class="container-fluid">
                 <div class="row mb-2">
-                    <div class="col-sm-6">
-                        <h1 class="m-0">{{ $header ?? 'Dash' }}</h1>
-                    </div>
-                    <div class="col-sm-6">
+                    <div class="col-12">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="#">Home</a></li>
-                            <li class="breadcrumb-item active">Dashboard v1</li>
+                            <li class="breadcrumb-item"><a href="{{route('dashboard')}}">Inicio</a></li>
+                            <li class="breadcrumb-item active">{{ $page ?? 'Null' }}</li>
                         </ol>
                     </div>
                 </div>
@@ -231,7 +233,7 @@
 
     <!-- Page Foot -->
     <footer class="main-footer">
-        <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong>
+        <strong>Copyright &copy; 2014-2021 <a href="#">AdminLTE.io</a>.</strong>
         All rights reserved.
         <div class="float-right d-none d-sm-inline-block">
             <b>Version</b> 3.1.0
@@ -252,8 +254,17 @@
     <!-- Bootstrap 4 -->
     <script src="{{ asset('adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 
+    <!-- Daterange picker -->
+    <script src="{{asset('adminlte/plugins/daterangepicker/daterangepicker.js')}}"></script>
+
     <!-- AdminLTE App -->
     <script src="{{ asset('adminlte/js/adminlte.js') }}"></script>
+
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+    </script>
 </body>
 
 </html>
