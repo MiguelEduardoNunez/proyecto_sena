@@ -132,24 +132,96 @@
             <nav class="mt-2">
                 <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                     <li class="nav-item">
-                        <a class="nav-link active" href="#">
+                        <a class="nav-link" href="#">
                             <i class="nav-icon fas fa-tachometer-alt"></i>
                             <p>
-                                Dashboard
+                                Elementos
                                 <i class="right fas fa-angle-left"></i>
                             </p>
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a class="nav-link active" href="#">
+                                <a class="nav-link active" href="{{ route('elementos.create') }}">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>Dashboard v2</p>
+                                    <p>Registrar Elemento</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">
+                                <a class="nav-link" href="{{ route('elementos.index') }}">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>Dashboard v2</p>
+                                    <p>Gestionar Elementos</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <i class="nav-icon fas fa-chart-pie"></i>
+                            <p>
+                                Proyectos
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('proyectos.create') }}">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Registrar Proyecto</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('proyectos.index') }}">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Gestionar Proyectos</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <i class="nav-icon fas fa-chart-pie"></i>
+                            <p>
+                                Stands
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('stands.create') }}">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Registrar Stand</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('stands.index') }}">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Gestionar Stands</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <i class="nav-icon fas fa-chart-pie"></i>
+                            <p>
+                                Novedades
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('novedades.create') }}">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Registrar Novedad</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('novedades.index') }}">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Gestionar Novedades</p>
                                 </a>
                             </li>
                         </ul>
@@ -226,6 +298,7 @@
         <!-- Main Content -->
         <section class="content">
             <div class="container-fluid">
+                @include('sweetalert::alert')
                 {{ $slot }}
             </div>
         </section>

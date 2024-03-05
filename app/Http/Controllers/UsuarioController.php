@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Perfil;
 use App\Models\Usuario;
 use Illuminate\Http\Request;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class UsuarioController extends Controller
 {
@@ -51,6 +52,8 @@ class UsuarioController extends Controller
         $usuario->password = $request->password;
         $usuario->save();
 
+        Alert::success('Registrado', 'Usuario con éxito');
+
         return redirect(route('usuarios.index'));
     }
 
@@ -87,7 +90,7 @@ class UsuarioController extends Controller
             'nombres' => ['required', 'string', 'max:100'],
             'telefono' => ['nullable', 'max:10'],
             'email' => ['required', 'email', 'max:50'],
-            'password' => ['required', 'string', 'max:255'],
+            // 'password' => ['required', 'string', 'max:255'],
         ]);
 
         $usuario = Usuario::find($id);
@@ -97,6 +100,8 @@ class UsuarioController extends Controller
         $usuario->telefono = $request->telefono;
         $usuario->email = $request->email;
         $usuario->save();
+
+        Alert::success('Actualizado', 'Usuario con éxito');
 
         return redirect(route('usuarios.index'));
     }
