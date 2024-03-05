@@ -35,9 +35,11 @@ class UsuarioController extends Controller
     {
         $validaciones = $request->validate([
             'perfil_id' => ['required', 'numeric'],
-            'identificacion' => ['required', 'max:15'],
+            'identificacion' => ['required', 'max:10'],
             'nombres' => ['required', 'string', 'max:100'],
-            'email' => ['required', 'email', 'max:50']
+            'telefono' => ['nullable', 'max:10'],
+            'email' => ['required', 'email', 'max:50'],
+            'password' => ['required', 'string', 'max:255'],
         ]);
 
         $usuario = new Usuario();
@@ -49,7 +51,7 @@ class UsuarioController extends Controller
         $usuario->password = $request->password;
         $usuario->save();
 
-        return redirect(route('usuarios.create'));
+        return redirect(route('usuarios.index'));
     }
 
     /**
@@ -81,8 +83,11 @@ class UsuarioController extends Controller
     {
         $validaciones = $request->validate([
             'perfil_id' => ['required', 'numeric'],
-            'identificacion' => ['required', 'max:15'],
-            'nombres' => ['required', 'string', 'max:100']
+            'identificacion' => ['required', 'max:10'],
+            'nombres' => ['required', 'string', 'max:100'],
+            'telefono' => ['nullable', 'max:10'],
+            'email' => ['required', 'email', 'max:50'],
+            'password' => ['required', 'string', 'max:255'],
         ]);
 
         $usuario = Usuario::find($id);
