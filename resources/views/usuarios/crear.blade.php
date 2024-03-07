@@ -15,8 +15,8 @@
                             <label>Perfil</label>
                             <select class="form-control @error('identificacion') is-invalid @enderror" id="perfil_id" name="perfil_id">
                                 <option selected disabled></option>
-                                @foreach ($perfiles as $perfil)
-                                    <option value="{{$perfil->id_perfil}}">{{$perfil->perfil}}</option>
+                                @foreach($perfiles as $perfil)
+                                    <option value="{{ $perfil->id_perfil }}">{{ $perfil->perfil }}</option>
                                 @endforeach
                             </select>
                             @error('perfil_id')

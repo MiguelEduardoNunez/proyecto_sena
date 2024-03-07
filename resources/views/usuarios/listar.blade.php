@@ -37,7 +37,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($usuarios as $usuario)
+                            @foreach($usuarios as $usuario)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $usuario->identificacion }}</td>

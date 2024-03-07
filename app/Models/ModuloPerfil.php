@@ -4,9 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Perfil extends Model
+class ModuloPerfil extends Model
 {
     use HasFactory;
 
@@ -16,7 +16,7 @@ class Perfil extends Model
      * @var string
      */
 
-    protected $table = 'perfiles';
+    protected $table = 'modulos_perfiles';
 
 
     /**
@@ -25,20 +25,20 @@ class Perfil extends Model
      * @var string
      */
 
-    protected $primaryKey = 'id_perfil';
+    protected $primaryKey = 'modulo_id';
 
 
     const CREATED_AT = 'creado_en';
     const UPDATED_AT = 'actualizado_en';
 
 
-    public function usuario(): HasMany
+    public function modulo(): BelongsTo
     {
-        return $this->hasMany(Usuario::class, 'perfil_id', 'id_perfil');
+        return $this->belongsTo(Modulo::class, 'modulo_id', 'id_modulo');
     }
 
-    public function moduloPerfil(): HasMany
+    public function perfil(): BelongsTo
     {
-        return $this->hasMany(ModuloPerfil::class, 'perfil_id', 'id_perfil');
+        return $this->belongsTo(Perfil::class, 'perfil_id', 'id_perfil');
     }
 }

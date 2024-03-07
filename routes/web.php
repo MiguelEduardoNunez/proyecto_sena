@@ -34,5 +34,6 @@ Route::resource('/usuarios', UsuarioController::class);
 
 Route::resource('/perfiles', PerfilController::class);
 
+Route::resource('/elementos', PerfilController::class);
 
 require __DIR__.'/auth.php';

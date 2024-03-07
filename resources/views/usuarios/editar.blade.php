@@ -18,7 +18,7 @@
                             <label>Perfil</label>
                             <select class="form-control" name="perfil_id">
                                 <option value="{{ $usuario->perfil->id_perfil }}" selected>{{ $usuario->perfil->perfil }}</option>
-                                @foreach ($perfiles as $perfil)
+                                @foreach($perfiles as $perfil)
                                     @if ($perfil->id_perfil != $usuario->perfil_id)
                                         <option value="{{ $perfil->id_perfil }}">{{ $perfil->perfil }}</option>
                                     @endif
