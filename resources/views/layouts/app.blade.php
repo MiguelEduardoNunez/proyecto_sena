@@ -141,13 +141,13 @@
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a class="nav-link active" href="{{ route('elementos.create') }}">
+                                <a class="nav-link active" href="">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Registrar Elemento</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('elementos.index') }}">
+                                <a class="nav-link" href="">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Gestionar Elementos</p>
                                 </a>
@@ -165,13 +165,13 @@
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('proyectos.create') }}">
+                                <a class="nav-link" href={{ route('proyectos.create') }}>
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Registrar Proyecto</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('proyectos.index') }}">
+                                <a class="nav-link" href={{ route('proyectos.index') }}>
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Gestionar Proyectos</p>
                                 </a>
@@ -189,13 +189,13 @@
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('stands.create') }}">
+                                <a class="nav-link" href="">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Registrar Stand</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('stands.index') }}">
+                                <a class="nav-link" href="">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Gestionar Stands</p>
                                 </a>
@@ -213,13 +213,13 @@
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('novedades.create') }}">
+                                <a class="nav-link" href="">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Registrar Novedad</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('novedades.index') }}">
+                                <a class="nav-link" href="">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Gestionar Novedades</p>
                                 </a>

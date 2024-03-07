@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
@@ -10,6 +9,8 @@ class Proyecto extends Model
 {
     protected $table = 'proyectos';
     protected $primaryKey = 'id_proyecto';
+    const CREATED_AT = 'creado_en';
+    const UPDATED_AT = 'actualizado_en';
 
 
     /**
