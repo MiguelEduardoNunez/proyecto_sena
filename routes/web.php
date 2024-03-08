@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\EmpleadoController;
 use App\Http\Controllers\PerfilController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProyectoController;
@@ -36,5 +37,7 @@ Route::resource('/usuarios', UsuarioController::class);
 Route::resource('/perfiles', PerfilController::class);
 
 Route::resource('/elementos', PerfilController::class);
+
+Route::resource('/empleados',EmpleadoController::class);
 
 require __DIR__.'/auth.php';
