@@ -10,6 +10,8 @@ class Stand extends Model
 {
     protected $table = 'stands';
     protected $primaryKey = 'id_stand';
+    const CREATED_AT='creado_en';
+    const UPDATED_AT='actualizado_en';
 
     /**
     * Get the comments for the blog post.

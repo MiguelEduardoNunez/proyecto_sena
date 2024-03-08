@@ -3,7 +3,9 @@
 use App\Http\Controllers\ElementoController;
 use App\Http\Controllers\NovedadController;
 use App\Http\Controllers\PerfilController;
+use App\Http\Controllers\EmpleadoController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\StandController;
 use App\Http\Controllers\UsuarioController;
 
 use Illuminate\Support\Facades\Route;
@@ -35,6 +37,8 @@ Route::middleware('auth')->group(function () {
 
 Route::resource('/usuarios', UsuarioController::class);
 
+Route::resource('/stand',StandController::class);
+
 Route::resource('/perfiles', PerfilController::class);
 
 Route::resource('/novedades', NovedadController::class);
@@ -42,5 +46,7 @@ Route::resource('/novedades', NovedadController::class);
 Route::resource('/elementos', ElementoController::class);
 
 
+
+Route::resource('/empleados',EmpleadoController::class);
 
 require __DIR__.'/auth.php';

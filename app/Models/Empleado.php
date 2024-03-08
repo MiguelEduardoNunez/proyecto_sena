@@ -9,7 +9,11 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Empleado extends Model
 {
     protected $table = 'empleados';
+
     protected $primaryKey = 'id_empleado';
+        
+    const CREATED_AT = 'creado_en';
+    const UPDATED_AT = 'actualizado_en';
 
     /**
     * Get the comments for the blog post.
