@@ -1,9 +1,11 @@
 <?php
 
+use App\Http\Controllers\ElementoController;
+use App\Http\Controllers\NovedadController;
 use App\Http\Controllers\PerfilController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\ProyectoController;
 use App\Http\Controllers\UsuarioController;
+
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -35,6 +37,10 @@ Route::resource('/usuarios', UsuarioController::class);
 
 Route::resource('/perfiles', PerfilController::class);
 
-Route::resource('/elementos', PerfilController::class);
+Route::resource('/novedades', NovedadController::class);
+
+Route::resource('/elementos', ElementoController::class);
+
+
 
 require __DIR__.'/auth.php';

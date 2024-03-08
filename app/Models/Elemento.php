@@ -8,19 +8,26 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
 
 class Elemento extends Model
 {
+
+
+
     protected $table = 'elementos';
     protected $primaryKey = 'id_elemento';
 
+    const CREATED_AT = 'creado_en';
+    const UPDATED_AT = 'actualizado_en';
 
     /**
     * Get the post that owns the comment.
     */
     public function proyecto(): BelongsTo
     {
-        return $this->belongsTo(Proyecto::class);
+        return $this->belongsTo(Proyecto::class, 'proyecto_id', 'id_proyecto');
     }
 
     /**
@@ -28,7 +35,7 @@ class Elemento extends Model
     */
     public function stand(): BelongsTo
     {
-        return $this->belongsTo(Stand::class);
+        return $this->belongsTo(Stand::class, 'stand_id', 'id_stand');
     }
 
     /**
@@ -36,7 +43,7 @@ class Elemento extends Model
      */
     public function item(): BelongsTo
     {
-        return $this->belongsTo(Item::class);
+        return $this->belongsTo(Item::class, 'item_id', 'id_item');
     }
 
     /**
@@ -44,7 +51,7 @@ class Elemento extends Model
      */
     public function novedad(): HasMany
     {
-        return $this->hasMany(Novedad::class);
+        return $this->hasMany(Novedad::class, 'elemento_id', 'id_elemento');
     }
 
     /**

@@ -25,7 +25,7 @@ class Item extends Model
     */
     public function elemento(): HasOne
     {
-        return $this->hasOne(Elemento::class);
+        return $this->hasOne(Elemento::class, 'item_id', 'id_item');
     }
 
 }

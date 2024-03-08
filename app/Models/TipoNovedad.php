@@ -16,7 +16,7 @@ class TipoNovedad extends Model
     */
     public function novedad(): HasMany
     {
-        return $this->hasMany(Novedad::class);
+        return $this->hasMany(Novedad::class, 'tipo_novedad_id', 'id_tipo_novedad');
     }
 
 }
