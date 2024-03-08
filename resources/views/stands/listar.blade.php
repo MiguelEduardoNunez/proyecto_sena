@@ -32,6 +32,7 @@
                                 <th>#</th>
                                 <th>Nombre</th>
                                 <th>Ubicacion</th>
+                                <th class="text-center">Acciones</th>
                             </tr>
                         </thead>
                         <tbody>

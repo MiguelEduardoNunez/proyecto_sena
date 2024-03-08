@@ -4,8 +4,12 @@
     
     <div class="card card-outline card-primary shadow">
         <div class="card-header text-center">
-            <h2 class="text-primary font-weight-bold" data-toggle="tooltip" title="Sistema de Información para la Gestion y Control de Materiales de Formación">
+            {{-- <h2 class="text-primary font-weight-bold" data-toggle="tooltip" title="Sistema de Información para la Gestion y Control de Materiales de Formación">
                 SIGMAF
+            </h2> --}}
+
+            <h2 class="text-primary font-weight-bold" data-toggle="tooltip" title="Sistema de Información y Gestión para la Operación en Telecomunicaciones">
+                SIGPOT
             </h2>
         </div>
         <form method="POST" action="{{ route('login') }}">

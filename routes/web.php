@@ -6,6 +6,7 @@ use App\Http\Controllers\PerfilController;
 use App\Http\Controllers\EmpleadoController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ProyectoController;
 use App\Http\Controllers\StandController;
 use App\Http\Controllers\UsuarioController;
 use App\Models\Item;
@@ -36,19 +37,22 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::resource('/usuarios', UsuarioController::class);
-
-Route::resource('/stand',StandController::class);
 
 Route::resource('/perfiles', PerfilController::class);
 
-Route::resource('/novedades', NovedadController::class);
+Route::resource('/usuarios', UsuarioController::class);
+
+Route::resource('proyectos', ProyectoController::class);
+
+Route::resource('/stand', StandController::class);
+
+Route::resource('/empleados', EmpleadoController::class);
 
 Route::resource('/elementos', ElementoController::class);
 
+Route::resource('/novedades', NovedadController::class);
+
 Route::resource('/items', ItemController::class);
 
-
-Route::resource('/empleados',EmpleadoController::class);
 
 require __DIR__.'/auth.php';

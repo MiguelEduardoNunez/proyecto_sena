@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Categoria;
 use App\Models\Item;
 use App\Models\Subcategoria;
 use Illuminate\Http\Request;
@@ -24,8 +25,10 @@ class ItemController extends Controller
      */
     public function create()
     {
+        $categorias = Categoria::all();
         $subcategorias = Subcategoria::all();
-        return view('items.crear', ['subcategorias'=>$subcategorias]);
+
+        return view('items.crear', ['categorias' => $categorias, 'subcategorias' => $subcategorias]);
     }
 
     /**

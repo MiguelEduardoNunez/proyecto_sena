@@ -25,7 +25,7 @@
 
                         <div class="form-group">
                             <label for="ubicacion"><span class="text-danger" data-toggle="tooltip"
-                                title="Campo Obligatorio">*</span>Ubicacion</label>
+                                title="Campo Obligatorio">*</span> Ubicación</label>
                             <input type="text" class="form-control @error('ubicacion') is-invalid @enderror" id="ubicacion" name="ubicacion" value="{{ old('ubicacion') }}">
                             @error('ubicacion')
                                 <div class="invalid-feedback">

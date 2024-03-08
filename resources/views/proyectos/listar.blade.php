@@ -48,30 +48,46 @@
                                      <td>{{ $proyecto->fecha_fin }}</td>
                                      <td class="text-center">
                                          <div class="row justify-content-center">
-                                             <div class="col-4">
+                                             <div class="col-3">
                                                  <a href={{ route('proyectos.show', $proyecto->id_proyecto) }}
                                                      type="button">
                                                      <i class="far fa-eye" data-toggle="tooltip"
-                                                         title="Detalles proyecto"></i>
+                                                         title="Detalles Proyecto"></i>
                                                  </a>
                                              </div>
-                                             <div class="col-4">
+                                             <div class="col-3">
                                                  <a href={{ route('proyectos.edit', $proyecto->id_proyecto) }}
                                                      type="button">
                                                      <i class="far fa-edit" data-toggle="tooltip"
-                                                         title="Actualizar proyecto"></i>
+                                                         title="Actualizar Proyecto"></i>
                                                  </a>
                                              </div>
-                                             <div class="col-4">
+
+                                             <div class="col-3">
+                                                <a href={{ route('proyectos.edit', $proyecto->id_proyecto) }}
+                                                    type="button">
+                                                    <i class="fas fa-tools" data-toggle="tooltip"
+                                                        title="Gestionar Elementos"></i>
+                                                </a>
+                                            </div>
+
+                                            <div class="col-3">
+                                                <a href={{ route('proyectos.edit', $proyecto->id_proyecto) }}
+                                                    type="button">
+                                                    <i class="fas fa-truck-loading" data-toggle="tooltip"
+                                                        title="Entregar Elementos"></i>
+                                                </a>
+                                            </div>
+                                             {{-- <div class="col-2">
                                                  <form method="POST" action="#">
                                                      @csrf
                                                      @method('DELETE')
                                                      <button type="submit" class="btn p-0">
                                                          <i class="far fa-trash-alt" data-toggle="tooltip"
-                                                             title="Eliminar Usuario"></i>
+                                                             title="Eliminar Proyecto"></i>
                                                      </button>
                                                  </form>
-                                             </div>
+                                             </div> --}}
                                          </div>
                                      </td>
                                  </tr>

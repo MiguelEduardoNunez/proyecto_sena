@@ -1,7 +1,8 @@
 <x-app-layout>
-
+    <x-slot:page>
+        {{ __('Registrar Elemento') }}
+    </x-slot>
     <div class="row justify-content-center">
-
         <div class="col-12 col-md-10 col-lg-6">
             <div class="card card-outline card-primary shadow">
                 <div class="card-header">
@@ -11,7 +12,6 @@
                 <form method="POST" action="{{ route('elementos.store') }}">
                     @csrf
                     <div class="card-body">
-
                         <div class="form-group">
                             <label><span class="text-danger" data-toggle="tooltip" title="Campo Obligatorio">*</span> Proyecto</label>
                             <select class="form-control @error('proyecto') is-invalid @enderror" id="proyecto_id" name="proyecto_id">
@@ -148,23 +148,12 @@
                         </div>
 
 
-
-                        <div class="card-footer bg-transparent mb-2">
-                            <button type="submit" class="btn btn-outline-primary btn-block font-weight-bold">Registrar</button>
-                        </div>
                     </div>
-
+                    <div class="card-footer bg-transparent mb-2">
+                        <button type="submit" class="btn btn-outline-primary btn-block font-weight-bold">Registrar</button>
+                    </div>
                 </form>
-
             </div>
         </div>
-
-
-
     </div>
-
-
-
-
-
 </x-app-layout>

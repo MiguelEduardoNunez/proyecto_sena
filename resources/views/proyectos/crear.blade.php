@@ -6,7 +6,7 @@
         <div class="col-12 col-md-10 col-lg-6">
             <div class="card card-outline card-primary shadow">
                 <div class="card-header">
-                    <h4 class="text-primary text-center font-weight-bold">Crear Proyecto</h4>
+                    <h4 class="text-primary text-center font-weight-bold">Registrar Proyecto</h4>
                 </div>
                 <form method="POST" action={{route('proyectos.store')}} >
                     @csrf
@@ -18,36 +18,36 @@
 
                         <div class="form-group">
                             <label for="descripcion">Descripcion</label>
-                            <textarea class="form-control" id="descripcion" name="descripcion"> {{old('descripcion')}}</textarea>
+                            <textarea class="form-control" id="descripcion" name="descripcion" rows="4">{{ old('descripcion') }}</textarea>
                         </div>
 
                         <div class="form-group">
-                            <label for="fecha_inicio"><span class="text-danger" data-toggle="tooltip" title="Campo Obligatorio">*</span>Fecha de Inicio</label>
+                            <label for="fecha_inicio"><span class="text-danger" data-toggle="tooltip" title="Campo Obligatorio">*</span> Fecha Inicio</label>
                             <input type="date" class="form-control" id="fecha_inicio" name="fecha_inicio" value={{old('fecha_inicio')}}>
                         </div>
 
                         <div class="form-group">
-                            <label for="fecha_fin"><span class="text-danger" data-toggle="tooltip" title="Campo Obligatorio">*</span>Fecha de Fin</label>
+                            <label for="fecha_fin"><span class="text-danger" data-toggle="tooltip" title="Campo Obligatorio">*</span> Fecha Fin</label>
                             <input type="date" class="form-control" id="fecha_fin" name="fecha_fin" value={{old('fecha_fin')}}>
                         </div>
 
                         <div class="form-group">
-                            <label for="responsable_proyecto"><span class="text-danger" data-toggle="tooltip" title="Campo Obligatorio">*</span>Responsable del proyecto</label>
+                            <label for="responsable_proyecto"><span class="text-danger" data-toggle="tooltip" title="Campo Obligatorio">*</span> Responsable del Proyecto</label>
                             <input type="text" class="form-control" id="responsable_proyecto" name="responsable_proyecto" value={{old('responsable_proyecto')}}>
                         </div>
 
                         <div class="form-group">
-                            <label for="correo_responsable"><span class="text-danger" data-toggle="tooltip" title="Campo Obligatorio">*</span>Correo del responsable</label>
+                            <label for="correo_responsable"><span class="text-danger" data-toggle="tooltip" title="Campo Obligatorio">*</span> Correo del Responsable</label>
                             <input type="email" class="form-control" id="correo_responsable" name="correo_responsable" value={{old('correo_responsable')}}>
                         </div>
 
                         <div class="form-group">
-                            <label for="telefono_responsable">Telefono del responsable</label>
+                            <label for="telefono_responsable">Telefono del Responsable</label>
                             <input type="text" class="form-control" id="telefono_responsable" name="telefono_responsable" value={{old('telefono_responsable')}}>
                         </div>
 
                         <div class="form-group">
-                            <label for="direccion_cliente">Direccion del cliente</label>
+                            <label for="direccion_cliente">Direccion del Cliente</label>
                             <input type="text" class="form-control" id="direccion_cliente" name="direccion_cliente" value={{old('direccion_cliente')}}>
                         </div>
 

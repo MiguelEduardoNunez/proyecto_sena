@@ -126,8 +126,12 @@
             <!-- Brand Logo -->
             <a class="brand-link elevation-2" href="#">
                 <img src="{{ asset('adminlte/img/logo.png') }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-                <span class="brand-text" data-toggle="tooltip" title="Sistema de Información para la Gestion y Control de Materiales de Formación">
+                {{-- <span class="brand-text" data-toggle="tooltip" title="Sistema de Información para la Gestion y Control de Materiales de Formación">
                     SIGMAF
+                </span> --}}
+
+                <span class="brand-text" data-toggle="tooltip" title="Sistema de Información y Gestión para la Operación en Telecomunicaciones">
+                    SIGPOT
                 </span>
             </a>
 

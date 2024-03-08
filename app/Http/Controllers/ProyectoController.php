@@ -36,8 +36,6 @@ class ProyectoController extends Controller
      */
     public function store(Request $request)
     {
-
-
         //
         $validated=$request->validate([
             'proyecto'=> 'required|string|max:200',

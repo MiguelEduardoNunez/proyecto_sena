@@ -7,9 +7,8 @@
         <div class="col-md-6">
             <div class="card card-outline card-primary shadow">
                 <div class="card-header">
-                    <h4 class="text-primary text-center font-weight-bold">Bienvenido !!</h4>
+                    <h4 class="text-primary text-center font-weight-bold">Bienvenid@ !!</h4>
                 </div>
-                
             </div>
         </div>
     </div>
