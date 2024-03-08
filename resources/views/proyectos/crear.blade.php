@@ -12,7 +12,7 @@
                     @csrf
                     <div class="card-body">
                         <div class="form-group">
-                            <label for="proyecto">Proyecto</label>
+                            <label for="proyecto"><span class="text-danger" data-toggle="tooltip" title="Campo Obligatorio">*</span> Proyecto</label>
                             <input type="text" class="form-control @error('proyecto') is-invalid @enderror" id="proyecto" name="proyecto" value={{old('proyecto')}}>
                         </div>
 
@@ -22,22 +22,22 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="fecha_inicio">Fecha de Inicio</label>
+                            <label for="fecha_inicio"><span class="text-danger" data-toggle="tooltip" title="Campo Obligatorio">*</span>Fecha de Inicio</label>
                             <input type="date" class="form-control" id="fecha_inicio" name="fecha_inicio" value={{old('fecha_inicio')}}>
                         </div>
 
                         <div class="form-group">
-                            <label for="fecha_fin">Fecha de Fin</label>
+                            <label for="fecha_fin"><span class="text-danger" data-toggle="tooltip" title="Campo Obligatorio">*</span>Fecha de Fin</label>
                             <input type="date" class="form-control" id="fecha_fin" name="fecha_fin" value={{old('fecha_fin')}}>
                         </div>
 
                         <div class="form-group">
-                            <label for="responsable_proyecto">Responsable del proyecto</label>
+                            <label for="responsable_proyecto"><span class="text-danger" data-toggle="tooltip" title="Campo Obligatorio">*</span>Responsable del proyecto</label>
                             <input type="text" class="form-control" id="responsable_proyecto" name="responsable_proyecto" value={{old('responsable_proyecto')}}>
                         </div>
 
                         <div class="form-group">
-                            <label for="correo_responsable">Correo del responsable</label>
+                            <label for="correo_responsable"><span class="text-danger" data-toggle="tooltip" title="Campo Obligatorio">*</span>Correo del responsable</label>
                             <input type="email" class="form-control" id="correo_responsable" name="correo_responsable" value={{old('correo_responsable')}}>
                         </div>
 
@@ -51,9 +51,9 @@
                             <input type="text" class="form-control" id="direccion_cliente" name="direccion_cliente" value={{old('direccion_cliente')}}>
                         </div>
 
-                        <div class="card-footer bg-transparent mb-2">
-                            <button type="submit" class="btn btn-outline-primary btn-block font-weight-bold">Registrar</button>
-                        </div>
+                    </div>
+                    <div class="card-footer bg-transparent mb-2">
+                        <button type="submit" class="btn btn-outline-primary btn-block font-weight-bold">Registrar</button>
                     </div>
                 </form>
             </div>

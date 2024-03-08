@@ -11,12 +11,15 @@ class Novedad extends Model
     protected $table = 'novedades';
     protected $primaryKey = 'id_novedad';
 
+    const CREATED_AT = 'creado_en';
+    const UPDATED_AT = 'actualizado_en';
+
     /**
     * Get the post that owns the comment.
     */
     public function tipoNovedad(): BelongsTo
     {
-        return $this->belongsTo(TipoNovedad::class);
+        return $this->belongsTo(TipoNovedad::class, 'tipo_novedad_id', 'id_tipo_novedad');
     }
 
     /**
@@ -24,7 +27,7 @@ class Novedad extends Model
     */
     public function elemento(): BelongsTo
     {
-        return $this->belongsTo(Elemento::class);
+        return $this->belongsTo(Elemento::class, 'elemento_id', 'id_elemento');
     }
 
         /**
@@ -32,6 +35,6 @@ class Novedad extends Model
      */
     public function empleado(): BelongsTo
     {
-        return $this->belongsTo(Empleado::class);
+        return $this->belongsTo(Empleado::class, 'empleado_id', 'id_empleado');
     }
 }

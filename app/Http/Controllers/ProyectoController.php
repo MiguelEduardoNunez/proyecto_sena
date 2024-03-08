@@ -41,13 +41,10 @@ class ProyectoController extends Controller
         //
         $validated=$request->validate([
             'proyecto'=> 'required|string|max:200',
-            'descripcion'=> 'string',
             'fecha_inicio'=> 'required|date',
             'fecha_fin'=> 'required|date',
             'responsable_proyecto'=> 'required|string|max:100',
-            'correo_responsable'=> 'required|string|max:50',
-            'telefono_responsable'=> 'string|max:20',
-            'direccion_cliente'=> 'string|max:100',
+            'correo_responsable'=> 'required|string|max:50'
         ]);
         
         $proyecto = new Proyecto();
@@ -64,7 +61,9 @@ class ProyectoController extends Controller
         Log::info('Proyecto creado: '.$proyecto->proyecto);
         $proyecto->save();
         Alert::success('Registrado', 'proyecto con éxito');
-        return view ('proyectos.crear',['proyectos'=>$proyecto]);
+
+        $proyectos = Proyecto::all();
+        return view ('proyectos.listar',['proyectos'=>$proyectos]);
 
     }
 
@@ -74,6 +73,8 @@ class ProyectoController extends Controller
     public function show(string $id)
     {
         //
+        $proyecto = Proyecto::find($id);
+        return view('proyectos.mostrar',['proyecto'=>$proyecto]);
         
     }
 
@@ -83,6 +84,8 @@ class ProyectoController extends Controller
     public function edit(string $id)
     {
         //
+        $proyecto = Proyecto::find($id);
+        return view('proyectos.editar',['proyecto'=>$proyecto]);
 
     }
 
@@ -92,6 +95,26 @@ class ProyectoController extends Controller
     public function update(Request $request, string $id)
     {
         //
+        $validated=$request->validate([
+            'proyecto'=> 'required|string|max:200',
+            'fecha_inicio'=> 'required|date',
+            'fecha_fin'=> 'required|date'
+        ]);
+
+        $proyecto = Proyecto::find($id);
+        $proyecto->proyecto = $request->proyecto;
+        $proyecto->descripcion = $request->descripcion;
+        $proyecto->fecha_inicio = $request->fecha_inicio;
+        $proyecto->fecha_fin = $request->fecha_fin;
+
+        $proyecto->save();
+
+        Alert::success('Actualizado', 'proyecto con éxito');
+
+        $proyectos = Proyecto::all();
+
+
+        return view('proyectos.listar',['proyectos'=>$proyectos]);
 
 
     }
