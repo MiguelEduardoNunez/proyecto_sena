@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\PerfilController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\ProyectoController;
 use App\Http\Controllers\UsuarioController;
 use Illuminate\Support\Facades\Route;
 
@@ -18,7 +17,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth.login');
 });
 
 Route::get('/dashboard', function () {
