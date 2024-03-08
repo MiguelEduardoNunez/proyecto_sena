@@ -12,6 +12,9 @@ class Item extends Model
     protected $table = 'items';
     protected $primaryKey = 'id_item';
 
+    const CREATED_AT = 'creado_en';
+    const UPDATED_AT = 'actualizado_en';
+
     /**
     * Get the post that owns the comment.
     */

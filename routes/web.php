@@ -4,10 +4,11 @@ use App\Http\Controllers\ElementoController;
 use App\Http\Controllers\NovedadController;
 use App\Http\Controllers\PerfilController;
 use App\Http\Controllers\EmpleadoController;
+use App\Http\Controllers\ItemController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StandController;
 use App\Http\Controllers\UsuarioController;
-
+use App\Models\Item;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -45,6 +46,7 @@ Route::resource('/novedades', NovedadController::class);
 
 Route::resource('/elementos', ElementoController::class);
 
+Route::resource('/items', ItemController::class);
 
 
 Route::resource('/empleados',EmpleadoController::class);
