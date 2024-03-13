@@ -1,7 +1,7 @@
 <x-app-layout>
     <div class="row">
         <div class="col-1 d-none d-lg-flex">
-            <a href="{{ route('stand.index') }}" type="button">
+            <a href="{{ route('stands.index') }}" type="button">
                 <i class="far fa-arrow-alt-circle-left fa-2x" data-toggle="tooltip" title="Regresar"></i>
             </a>
         </div>
@@ -10,7 +10,7 @@
                 <div class="card-header">
                     <h4 class="text-primary text-center font-weight-bold">Actualizar Stand</h4>
                 </div>
-                <form method="POST" action={{ route('stand.update', $stand->id_stand) }}>
+                <form method="POST" action={{ route('stands.update', $stand->id_stand) }}>
                     @csrf
                     @method('PUT')
                     <div class="card-body">

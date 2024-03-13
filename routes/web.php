@@ -37,6 +37,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+Route::get('/perfiles/permisos', [PerfilController::class, 'createPermiso'])->name('perfiles.permisos.create');
+Route::post('/perfiles/permisos', [PerfilController::class, 'storePermiso'])->name('perfiles.permisos.store');
 
 Route::resource('/perfiles', PerfilController::class);
 
@@ -44,7 +46,7 @@ Route::resource('/usuarios', UsuarioController::class);
 
 Route::resource('proyectos', ProyectoController::class);
 
-Route::resource('/stand', StandController::class);
+Route::resource('/stands', StandController::class);
 
 Route::resource('/empleados', EmpleadoController::class);
 

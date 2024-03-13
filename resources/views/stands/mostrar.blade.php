@@ -1,7 +1,7 @@
 <x-app-layout>
     <div class="row">
         <div class="col-1 d-none d-lg-flex">
-            <a href="{{ route('stand.index') }}" type="button">
+            <a href="{{ route('stands.index') }}" type="button">
                 <i class="far fa-arrow-alt-circle-left fa-2x" data-toggle="tooltip" title="Regresar"></i>
             </a>
         </div>

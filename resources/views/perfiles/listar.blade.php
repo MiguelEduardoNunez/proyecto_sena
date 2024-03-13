@@ -51,11 +51,17 @@
                                                 <i class="far fa-edit" data-toggle="tooltip" title="Actualizar Perfil"></i>
                                             </a>
                                         </div>
+
                                         <div class="col-2">
+                                            <a href="{{ route('perfiles.permisos.create', $perfil->id_perfil) }}" type="button">
+                                                <i class="fas fa-user-cog" data-toggle="tooltip" title="Gestionar Permisos"></i>
+                                            </a>
+                                        </div>
+                                        {{-- <div class="col-2">
                                             <a href="#" type="button">
                                                 <i class="far fa-trash-alt" data-toggle="tooltip" title="Eliminar Perfil"></i>
                                             </a>
-                                        </div>
+                                        </div> --}}
                                     </div>
                                 </td>
                             </tr>

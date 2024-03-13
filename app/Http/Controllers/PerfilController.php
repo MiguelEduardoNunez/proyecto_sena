@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Modulo;
 use App\Models\Perfil;
 use Illuminate\Http\Request;
 
@@ -63,6 +64,37 @@ class PerfilController extends Controller
      * Remove the specified resource from storage.
      */
     public function destroy(string $id)
+    {
+        //
+    }
+
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function createPermiso()
+    {
+        $modulos = Modulo::orderBy('orden', 'asc')->get();
+
+        $modulosAgrupados = array();
+
+        foreach ($modulos as $moduloPadre) {
+            foreach ($moduloPadre->moduloHijo as $item) {
+                $item->moduloHijo;
+            }
+            
+            if ($moduloPadre->modulo_id == null) {
+                $modulosAgrupados[] = $moduloPadre;
+            }
+        }
+
+        return view('perfiles.permiso', ['modulos' => $modulosAgrupados]);
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function storePermiso(Request $request)
     {
         //
     }

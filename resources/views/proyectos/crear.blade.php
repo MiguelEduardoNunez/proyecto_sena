@@ -22,6 +22,16 @@
                         </div>
 
                         <div class="form-group">
+                            <label>Date:</label>
+                            <div class="input-group date" id="reservationdate" data-target-input="nearest">
+                                <input type="text" class="form-control datetimepicker-input" data-target="#reservationdate"/>
+                                <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
+                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
                             <label for="fecha_inicio"><span class="text-danger" data-toggle="tooltip" title="Campo Obligatorio">*</span> Fecha Inicio</label>
                             <input type="date" class="form-control" id="fecha_inicio" name="fecha_inicio" value={{old('fecha_inicio')}}>
                         </div>

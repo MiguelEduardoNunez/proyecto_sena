@@ -5,8 +5,8 @@
     <div class="row justify-content-center">
         <div class="col-12 col-md-10 col-lg-6">
             <div class="card card-outline card-primary shadow">
-                <div class="card-header">
-                    <h4 class="text-primary text-center font-weight-bold">Registrar Usuario</h4>
+                <div class="card-header text-center">
+                    <h4 class="text-primary font-weight-bold">Registrar Usuario</h4>
                 </div>
                 <form method="POST" action="{{ route('usuarios.store') }}">
                     @csrf
@@ -78,7 +78,9 @@
                     </div>
 
                     <div class="card-footer bg-transparent mb-2">
-                        <button type="submit" class="btn btn-outline-primary btn-block font-weight-bold">Registrar</button>
+                        <x-button type="submit" style="primary">
+                            {{ __('Registrar') }}
+                        </x-button>
                     </div>
                 </form>
             </div>

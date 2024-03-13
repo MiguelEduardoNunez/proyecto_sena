@@ -33,7 +33,7 @@ class Modulo extends Model
     const UPDATED_AT = 'actualizado_en';
 
 
-    public function modulo(): HasMany
+    public function moduloHijo(): HasMany
     {
         return $this->hasMany(Modulo::class, 'modulo_id', 'id_modulo');
     }

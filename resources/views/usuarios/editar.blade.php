@@ -48,7 +48,9 @@
                     </div>
 
                     <div class="card-footer bg-transparent mb-2">
-                        <button type="submit" class="btn btn-outline-primary btn-block font-weight-bold">Actualizar</button>
+                        <x-button type="submit" style="primary">
+                            {{ __('Actualizar') }}
+                        </x-button>
                     </div>
                 </form>
             </div>

@@ -44,12 +44,12 @@
                                 <td class="text-center">
                                     <div class="row justify-content-center">
                                         <div class="col-2">
-                                            <a href="{{ route('stand.show', $stand->id_stand) }}" type="button">
+                                            <a href="{{ route('stands.show', $stand->id_stand) }}" type="button">
                                                 <i class="far fa-eye" data-toggle="tooltip" title="Detalles Stand"></i>
                                             </a>
                                         </div>
                                         <div class="col-2">
-                                            <a href={{ route('stand.edit', $stand->id_stand) }} type="button">
+                                            <a href={{ route('stands.edit', $stand->id_stand) }} type="button">
                                                 <i class="far fa-edit" data-toggle="tooltip" title="Actualizar Stand"></i>
                                             </a>
                                         </div>
