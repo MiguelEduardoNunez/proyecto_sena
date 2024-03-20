@@ -1,5 +1,8 @@
-@props(['value'])
+@props(['value', 'obligatorio' => true])
 
-<label {{ $attributes->merge(['class' => 'block font-medium text-sm text-gray-700 dark:text-gray-300']) }}>
-    {{ $value ?? $slot }}
+<label {{ $attributes }}>
+    @if ($obligatorio)
+        <span class="text-danger" data-toggle="tooltip" title="Campo Obligatorio">*</span>
+    @endif
+    {{ $value }}
 </label>

@@ -1,16 +1,15 @@
+@props(['style' => 'primary'])
 
-<!-- Because you are alive, everything is possible. - Thich Nhat Hanh -->
-
-<div {{ $attributes->merge(['class' => 'card card-outline card-primary shadow']) }}>
-    <div class="card-header text-center">
-        <h4 class="text-primary font-weight-bold">{{ $title }}</h4>
+<div {{ $attributes->merge(['class' => 'card card-outline card-'.$style.' shadow']) }}>
+    <div {{ $header->attributes->merge(['class' => 'card-header']) }}>
+        {{ $header }}
     </div>
 
-    <div class="card-body">
-        {{ $slot }}
+    <div {{ $body->attributes->merge(['class' => 'card-body']) }}>
+        {{ $body }}
     </div>
 
-    <div class="card-footer bg-transparent mb-2">
+    <div {{ $footer->attributes->merge(['class' => 'card-footer bg-transparent mb-2']) }}>
         {{ $footer }}
     </div>
 </div>

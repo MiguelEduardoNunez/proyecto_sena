@@ -74,19 +74,29 @@ class PerfilController extends Controller
      */
     public function createPermiso()
     {
-        $modulos = Modulo::orderBy('orden', 'asc')->get();
+        $modulos = Modulo::with('moduloHijo')->get();
 
         $modulosAgrupados = array();
 
-        foreach ($modulos as $moduloPadre) {
-            foreach ($moduloPadre->moduloHijo as $item) {
-                $item->moduloHijo;
-            }
-            
-            if ($moduloPadre->modulo_id == null) {
+        foreach($modulos as $moduloPadre) {
+           if($moduloPadre->modulo_id == null) {
                 $modulosAgrupados[] = $moduloPadre;
-            }
+           }  
         }
+        
+        return $modulosAgrupados;
+
+        // foreach($modulos as $moduloPadre) {
+        //     foreach($moduloPadre->moduloHijo as $moduloHijo) {
+        //         $moduloHijo;
+        //     }
+            
+        //     if ($moduloPadre->modulo_id == null) {
+        //         $modulosAgrupados[] = $moduloPadre;
+        //     }
+        // }
+
+        // return $modulosAgrupados;
 
         return view('perfiles.permiso', ['modulos' => $modulosAgrupados]);
     }

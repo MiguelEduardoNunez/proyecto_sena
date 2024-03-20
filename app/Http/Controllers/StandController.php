@@ -8,13 +8,14 @@ use RealRashid\SweetAlert\Facades\Alert;
 
 class StandController extends Controller
 {
-/**
+    /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $stands=Stand::all();
-        return view('stands.listar',['stands'=>$stands]);
+        $stands = Stand::orderBy('stand', 'asc')->paginate(3);
+
+        return view('stands.listar', ['stands' => $stands]);
     }
 
     /**
@@ -22,29 +23,27 @@ class StandController extends Controller
      */
     public function create()
     {
-        $stands = Stand::all();
-
-        return view('stands.crear', ['stands' => $stands]);
+        return view('stands.crear');
     }
-
 
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'stand' => ['required', 'string', 'max:60'],
-            'ubicacion' => ['required', 'string', 'max:80']
+        $validaciones = $request->validate([
+            'stand' => ['required', 'string', 'max:100', 'unique:stands,stand'],
+            'ubicacion' => ['required', 'string', 'max:100']
         ]);
+
         $stand = new Stand();
         $stand->stand = $request->stand;
         $stand->ubicacion = $request->ubicacion;
         $stand->save();
-        
-        Alert::success('Registrado', 'Stand con éxito');
-        return redirect(route('stands.index'));
 
+        Alert::success('Registrado', 'Stand con éxito');
+
+        return redirect(route('stands.index'));
     }
 
     /**
@@ -52,9 +51,9 @@ class StandController extends Controller
      */
     public function show(string $id)
     {
-        $stand= Stand::find($id);
-        return view('stands.mostrar', ['stand' => $stand]);
+        $stand = Stand::find($id);
 
+        return view('stands.mostrar', ['stand' => $stand]);
     }
 
     /**
@@ -62,30 +61,16 @@ class StandController extends Controller
      */
     public function edit(string $id)
     {
-        $stand = Stand::find($id);
-        return view('stands.editar', ['stand' => $stand]);
+        //
     }
 
     /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, string $id)
-        {
-            $validated = $request->validate([
-                'stand' => ['required', 'string', 'max:60'],
-                'ubicacion' =>['required', 'string', 'max:80']
-            ]);
-            $stand = Stand::find($id);
-            $stand->stand = $request->stand;
-            $stand->ubicacion = $request->ubicacion;
-            $stand->save();
+    {
 
-            Alert::success('Actualizado', 'Stand con éxito');
-
-            $stands=Stand::all();
-            return view('stands.listar',['stands'=>$stands]);
-
-        }
+    }
 
     /**
      * Remove the specified resource from storage.

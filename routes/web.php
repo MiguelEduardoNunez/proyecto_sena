@@ -44,7 +44,7 @@ Route::resource('/perfiles', PerfilController::class);
 
 Route::resource('/usuarios', UsuarioController::class);
 
-Route::resource('proyectos', ProyectoController::class);
+Route::resource('/proyectos', ProyectoController::class);
 
 Route::resource('/stands', StandController::class);
 

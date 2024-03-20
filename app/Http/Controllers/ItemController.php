@@ -37,19 +37,19 @@ class ItemController extends Controller
     public function store(Request $request)
     {
         $validaciones = $request->validate([
-            'subcategoria_id' => ['required', 'numeric'],
+            'subcategoria' => ['required', 'numeric'],
             'item' => ['required', 'string', 'max:100'],
-            'descripcion' => ['required', 'string'],
-            
+            'descripcion' => ['nullable', 'string']
         ]);
 
         $item = new Item();
-        $item->subcategoria_id = $request->subcategoria_id;
+        $item->subcategoria_id = $request->subcategoria;
         $item->item = $request->item;
         $item->descripcion = $request->descripcion;
         $item->save();
 
         Alert::success('Registrado', 'Item con éxito');
+
         return redirect(route('items.index'));
     }
 

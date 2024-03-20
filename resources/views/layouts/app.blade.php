@@ -14,14 +14,14 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="{{ asset('adminlte/plugins/fontawesome-free/css/all.min.css') }}">
 
-    <!-- iCheck -->
+    <!-- ICheck -->
     <link rel="stylesheet" href="{{ asset('adminlte/plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}">
 
-    <!-- overlayScrollbars -->
-    <link rel="stylesheet" href="{{ asset('adminlte/plugins/overlayScrollbars/css/OverlayScrollbars.min.css') }}">
+    <!-- Select2 -->
+    <link rel="stylesheet" href="{{ asset('adminlte/plugins/select2/css/select2.min.css') }}">
 
-    <!-- Daterange picker -->
-    <link rel="stylesheet" href="{{ asset('adminlte/plugins/daterangepicker/daterangepicker.css') }}">
+    <!-- OverlayScrollbars -->
+    <link rel="stylesheet" href="{{ asset('adminlte/plugins/overlayScrollbars/css/OverlayScrollbars.min.css') }}">
 
     <!-- Tempusdominus Bootstrap 4 -->
     <link rel="stylesheet" href="{{ asset('adminlte/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css') }}">
@@ -206,10 +206,9 @@
 
         <!-- Page Foot -->
         <footer class="main-footer">
-            <strong>Copyright &copy; 2014-2021 <a href="#">AdminLTE.io</a>.</strong>
-            All rights reserved.
+            <strong>Copyright &copy; 2024 - <a href="#">Fabrica de Software CTPI</a></strong>
             <div class="float-right d-none d-sm-inline-block">
-                <b>Version</b> 3.1.0
+                <b>Version</b> 1.0
             </div>
         </footer>
     </div>
@@ -228,11 +227,11 @@
     <!-- Bootstrap 4 -->
     <script src="{{ asset('adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 
+    <!-- Select2 -->
+    <script src="{{ asset('adminlte/plugins/select2/js/select2.full.min.js')}}"></script>
+
     <!-- Moment -->
     <script src="{{ asset('adminlte/plugins/moment/moment.min.js') }}"></script>
-
-    <!-- Daterange picker -->
-    <script src="{{ asset('adminlte/plugins/daterangepicker/daterangepicker.js')}}"></script>
 
     <!-- Tempusdominus Bootstrap 4 -->
     <script src="{{ asset('adminlte/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js')}}"></script>
@@ -243,12 +242,24 @@
     <script>
         $(function () {
             // Tooltip
-            $('[data-toggle="tooltip"]').tooltip()
+            $('[data-toggle="tooltip"]').tooltip();
+
+            // Select2
+            $(".select2").select2();
 
             // Date picker
-            $('#reservationdate').datetimepicker({
-                format: 'L'
-            })
+            $("#datepicker").datetimepicker({
+                format: 'L',
+                locale: 'es'
+            });
+
+            // Searcher table
+            $("#searchertable").on("keyup", function() {
+                var value = $(this).val().toLowerCase()
+                $("#datatable tbody tr").filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                })
+            });
         })
     </script>
 </body>

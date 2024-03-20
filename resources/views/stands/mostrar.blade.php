@@ -1,4 +1,7 @@
 <x-app-layout>
+    <x-slot:page>
+        {{ __('Detalles Stand') }}
+    </x-slot>
     <div class="row">
         <div class="col-1 d-none d-lg-flex">
             <a href="{{ route('stands.index') }}" type="button">
@@ -6,19 +9,22 @@
             </a>
         </div>
         <div class="col-12 col-md-10 col-lg-6 offset-2">
-            <div class="card card-outline card-primary shadow">
-                <div class="card-header">
-                    <h4 class="text-primary text-center font-weight-bold">Detalles Stand</h4>
-                </div>
-                <div class="card-body">
-                    <h6 class="font-weight-bold mt-4">Nombres</h6>
-                    <p>{{ $stand->stand }}</p>
+            <x-card>
+                <x-slot:header>
+                    <x-text :value="__('Detalles Stand')" class="text-center" />
+                </x-slot:header>
 
-                    <h6 class="font-weight-bold mt-4">Ubicacion</h6>
-                    <p>{{ $stand->ubicacion }}</p>
-                </div>
-            </div>
+                <x-slot:body>
+                    <x-text size="h6" color="dark" :value="__('Stand')" class="mt-4" />
+                    <x-text size="h6" style="font-weight-normal" color="dark" :value="$stand->stand" />
+
+                    <x-text size="h6" color="dark" :value="__('Ubicación')" class="mt-4" />
+                    <x-text size="h6" style="font-weight-normal" color="dark" :value="$stand->ubicacion" />
+                </x-slot:body>
+
+                <x-slot:footer>
+                </x-slot:footer>
+            </x-card>
         </div>
     </div>
-
 </x-app-layout>
