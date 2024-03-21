@@ -29,7 +29,6 @@
                         :actions="[ 
                             ['route' => 'stands.show', 'icono' => 'far fa-eye', 'title' => 'Detalles Stand', 'responsive' => 'col-4 col-md-3 col-lg-2'],
                             ['route' => 'stands.edit', 'icono' => 'far fa-edit', 'title' => 'Actualizar Stand', 'responsive' => 'col-4 col-md-3 col-lg-2'],
-                            ['route' => 'stands.show', 'icono' => 'far fa-eye', 'title' => 'Eliminar Stand', 'responsive' => 'col-4 col-md-3 col-lg-2']
                         ]" 
                         param="id_stand"
                     />
