@@ -22,7 +22,7 @@
                 <td class="text-center">
                     <div class="row justify-content-center">
                         @foreach ($actions as $action)
-                            <div class="col-2">
+                            <div class="{{ $action['responsive'] }}">
                                 <a href="{{ route($action['route'], $element->$param) }}" type="button">
                                     <i class="{{ $action['icono'] }}" data-toggle="tooltip" title="{{ $action['title'] }}"></i>
                                 </a>

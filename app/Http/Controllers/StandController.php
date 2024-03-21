@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\Stand;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class StandController extends Controller
@@ -61,7 +62,9 @@ class StandController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $stand = Stand::find($id);
+
+        return view('stands.editar', ['stand' => $stand]);
     }
 
     /**
@@ -69,7 +72,19 @@ class StandController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        $validaciones = $request->validate([
+            'stand' => ['required', 'string', 'max:100', Rule::unique('stands')->ignore($id, 'id_stand')],
+            'ubicacion' => ['required', 'string', 'max:100']
+        ]);
 
+        $stand = Stand::find($id);
+        $stand->stand = $request->stand;
+        $stand->ubicacion = $request->ubicacion;
+        $stand->save();
+        
+        Alert::success('Actualizado', 'Stand con éxito');
+
+        return redirect(route('stands.index'));
     }
 
     /**
