@@ -5,11 +5,11 @@ use App\Http\Controllers\NovedadController;
 use App\Http\Controllers\PerfilController;
 use App\Http\Controllers\EmpleadoController;
 use App\Http\Controllers\ItemController;
+use App\Http\Controllers\ModuloController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProyectoController;
 use App\Http\Controllers\StandController;
 use App\Http\Controllers\UsuarioController;
-use App\Models\Item;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -37,12 +37,14 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+Route::resource('/modulos', ModuloController::class)->middleware('auth');
+
 Route::get('/perfiles/permisos', [PerfilController::class, 'createPermiso'])->name('perfiles.permisos.create');
 Route::post('/perfiles/permisos', [PerfilController::class, 'storePermiso'])->name('perfiles.permisos.store');
 
-Route::resource('/perfiles', PerfilController::class);
+Route::resource('/perfiles', PerfilController::class)->middleware('auth');
 
-Route::resource('/usuarios', UsuarioController::class);
+Route::resource('/usuarios', UsuarioController::class)->middleware('auth');
 
 Route::resource('/proyectos', ProyectoController::class);
 

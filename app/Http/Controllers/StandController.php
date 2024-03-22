@@ -43,7 +43,6 @@ class StandController extends Controller
         $stand->save();
 
         Alert::success('Registrado', 'Stand con éxito');
-
         return redirect(route('stands.index'));
     }
 
@@ -83,7 +82,6 @@ class StandController extends Controller
         $stand->save();
         
         Alert::success('Actualizado', 'Stand con éxito');
-
         return redirect(route('stands.index'));
     }
 

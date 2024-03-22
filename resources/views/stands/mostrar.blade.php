@@ -15,11 +15,11 @@
                 </x-slot:header>
 
                 <x-slot:body>
-                    <x-text size="h6" color="dark" :value="__('Stand')" />
-                    <x-text size="h6" style="font-weight-normal" color="dark" :value="$stand->stand" />
+                    <x-text size="h6" color="black" :value="__('Stand')" />
+                    <x-text size="h6" style="font-weight-normal" color="black" :value="$stand->stand" />
 
-                    <x-text size="h6" color="dark" :value="__('Ubicación')" class="mt-4" />
-                    <x-text size="h6" style="font-weight-normal" color="dark" :value="$stand->ubicacion" />
+                    <x-text size="h6" color="black" :value="__('Ubicación')" class="mt-4" />
+                    <x-text size="h6" style="font-weight-normal" color="black" :value="$stand->ubicacion" />
                 </x-slot:body>
 
                 <x-slot:footer>
