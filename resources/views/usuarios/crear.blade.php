@@ -4,86 +4,60 @@
     </x-slot>
     <div class="row justify-content-center">
         <div class="col-12 col-md-10 col-lg-6">
-            <div class="card card-outline card-primary shadow">
-                <div class="card-header text-center">
-                    <h4 class="text-primary font-weight-bold">Registrar Usuario</h4>
-                </div>
-                <form method="POST" action="{{ route('usuarios.store') }}">
-                    @csrf
-                    <div class="card-body">
+            <form method="POST" action="{{ route('usuarios.store') }}">
+                @csrf
+                <x-card>
+                    <x-slot:header>
+                        <x-text :value="__('Registrar Usuario')" class="text-center" />
+                    </x-slot:header>
+
+                    <x-slot:body>
                         <div class="form-group">
-                            <label>Perfil</label>
-                            <select class="form-control @error('identificacion') is-invalid @enderror" id="perfil_id" name="perfil_id">
-                                <option selected disabled></option>
-                                @foreach($perfiles as $perfil)
-                                    <option value="{{ $perfil->id_perfil }}">{{ $perfil->perfil }}</option>
-                                @endforeach
-                            </select>
-                            @error('perfil_id')
-                                <div class="invalid-feedback">
-                                    {{ $message }}
-                                </div>
-                            @enderror
+                            <x-input-label :value="__('Perfil')" for="perfil" />
+                            <x-select :elements="$perfiles" identifier="id_perfil" label="perfil" id="perfil" name="perfil">
+                                <option selected disabled>{{ __('Seleccionar') }}</option>
+                            </x-select>
+                            <x-input-error :messages="$errors->get('perfil')" />
                         </div>
 
                         <div class="form-group">
-                            <label for="identificacion">Identificación</label>
-                            <input type="number" class="form-control @error('identificacion') is-invalid @enderror" id="identificacion" name="identificacion" value="{{ old('identificacion') }}">
-                            @error('identificacion')
-                                <div class="invalid-feedback">
-                                    {{ $message }}
-                                </div>
-                            @enderror  
+                            <x-input-label :value="__('Identificación')" for="identificacion" />
+                            <x-input type="number" id="identificacion" name="identificacion" :value="old('identificacion')" />
+                            <x-input-error :messages="$errors->get('identificacion')" />
                         </div>
 
                         <div class="form-group">
-                            <label for="nombres">Nombres</label>
-                            <input type="text" class="form-control @error('nombres') is-invalid @enderror" id="nombres" name="nombres" value="{{ old('nombres') }}">
-                            @error('nombres')
-                                <div class="invalid-feedback">
-                                    {{ $message }}
-                                </div>
-                            @enderror 
+                            <x-input-label :value="__('Nombres')" for="nombres" />
+                            <x-input type="text" id="nombres" name="nombres" :value="old('nombres')" />
+                            <x-input-error :messages="$errors->get('nombres')" />
                         </div>
 
                         <div class="form-group">
-                            <label for="telefono">Telefono</label>
-                            <input type="number" class="form-control @error('telefono') is-invalid @enderror" id="telefono" name="telefono" value="{{ old('telefono') }}">
-                            @error('telefono')
-                                <div class="invalid-feedback">
-                                    {{ $message }}
-                                </div>
-                            @enderror 
+                            <x-input-label :value="__('Telefono')" :obligatorio="false" for="telefono" />
+                            <x-input type="number" id="telefono" name="telefono" :value="old('telefono')" />
+                            <x-input-error :messages="$errors->get('telefono')" />
                         </div>
 
                         <div class="form-group">
-                            <label for="email">Email</label>
-                            <input type="email" class="form-control @error('email') is-invalid @enderror" id="email" name="email" value="{{ old('email') }}">
-                            @error('email')
-                                <div class="invalid-feedback">
-                                    {{ $message }}
-                                </div>
-                            @enderror 
+                            <x-input-label :value="__('Correo Electronico')" for="correo" />
+                            <x-input type="email" id="correo" name="correo" :value="old('correo')" />
+                            <x-input-error :messages="$errors->get('correo')" />
                         </div>
 
                         <div class="form-group">
-                            <label for="password">Password</label>
-                            <input type="password" class="form-control @error('password') is-invalid @enderror" id="password" name="password">
-                            @error('password')
-                                <div class="invalid-feedback">
-                                    {{ $message }}
-                                </div>
-                            @enderror 
+                            <x-input-label :value="__('Contraseña')" for="contrasena" />
+                            <x-input type="password" id="contrasena" name="contrasena" />
+                            <x-input-error :messages="$errors->get('contrasena')" />
                         </div>
-                    </div>
+                    </x-slot:body>
 
-                    <div class="card-footer bg-transparent mb-2">
-                        <x-button type="submit" style="primary">
+                    <x-slot:footer>
+                        <x-button type="submit">
                             {{ __('Registrar') }}
                         </x-button>
-                    </div>
-                </form>
-            </div>
+                    </x-slot:footer>
+                </x-card>
+            </form>
         </div>
     </div>
 </x-app-layout>

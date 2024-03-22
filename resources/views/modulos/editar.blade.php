@@ -24,7 +24,7 @@
                                 @if ($modulo->moduloPadre != null)
                                     <option value="{{ $modulo->modulo_id }}" selected>{{ $modulo->moduloPadre->modulo }}</option>
                                 @else
-                                    <option selected disabled>Seleccionar</option> 
+                                    <option selected disabled>{{ __('Seleccionar') }}</option> 
                                 @endif
                             </x-select>
                             <x-input-error :messages="$errors->get('modulo_padre')" />

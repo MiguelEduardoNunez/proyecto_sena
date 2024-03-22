@@ -1,32 +1,43 @@
 <x-app-layout>
+    <x-slot:page>
+        {{ __('Detalles Usuario') }}
+    </x-slot>
     <div class="row">
         <div class="col-1 d-none d-lg-flex">
-            <a href="{{ route('usuarios.index') }}" type="button">
+            <a href="{{ route('usuarios.index') }}">
                 <i class="far fa-arrow-alt-circle-left fa-2x" data-toggle="tooltip" title="Regresar"></i>
             </a>
         </div>
-        <div class="col-12 col-md-10 col-lg-6 offset-2">
-            <div class="card card-outline card-primary shadow">
-                <div class="card-header">
-                    <h4 class="text-primary text-center font-weight-bold">Detalles Usuario</h4>
-                </div>
-                <div class="card-body">
-                    <h6 class="font-weight-bold">Identificación</h6>
-                    <p>{{ $usuario->identificacion }}</p>
+        <div class="col-12 col-md-10 col-lg-6 offset-md-1 offset-lg-2">
+            <x-card>
+                <x-slot:header>
+                    <x-text :value="__('Detalles Usuario')" class="text-center" />
+                </x-slot:header>
 
-                    <h6 class="font-weight-bold mt-4">Nombres</h6>
-                    <p>{{ $usuario->nombres }}</p>
+                <x-slot:body>
+                    <x-text size="h6" color="black" :value="__('Perfil')" />
+                    <x-text size="h6" style="font-weight-normal" color="black" :value="$usuario->perfil->perfil" />
 
-                    <h6 class="font-weight-bold mt-4">Telefono</h6>
-                    <p>{{ $usuario->telefono }}</p>
+                    <x-text size="h6" color="black" :value="__('Identificación')" class="mt-4" />
+                    <x-text size="h6" style="font-weight-normal" color="black" :value="$usuario->identificacion" />
 
-                    <h6 class="font-weight-bold mt-4">Email</h6>
-                    <p>{{ $usuario->email }}</p>
+                    <x-text size="h6" color="black" :value="__('Nombres')" class="mt-4" />
+                    <x-text size="h6" style="font-weight-normal" color="black" :value="$usuario->nombres" />
 
-                    <h6 class="font-weight-bold mt-4">Perfil</h6>
-                    <p>{{ $usuario->perfil->perfil }}</p>
-                </div>
-            </div>
+                    <x-text size="h6" color="black" :value="__('Telefono')" class="mt-4" />
+                    @if ($usuario->telefono != null)
+                        <x-text size="h6" style="font-weight-normal" color="black" :value="$usuario->telefono" />
+                    @else
+                        {{ __('No registrado') }}
+                    @endif
+
+                    <x-text size="h6" color="black" :value="__('Correo Electronico')" class="mt-4" />
+                    <x-text size="h6" style="font-weight-normal" color="black" :value="$usuario->email" />
+                </x-slot:body>
+
+                <x-slot:footer>
+                </x-slot:footer>
+            </x-card>
         </div>
     </div>
 </x-app-layout>

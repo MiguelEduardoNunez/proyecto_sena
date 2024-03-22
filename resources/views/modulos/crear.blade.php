@@ -15,7 +15,7 @@
                         <div class="form-group">
                             <x-input-label :value="__('Modulo Padre')" :obligatorio="false" for="modulo_padre" />
                             <x-select :elements="$modulos" identifier="id_modulo" label="modulo" id="modulo_padre" name="modulo_padre">
-                                <option selected disabled>Seleccionar</option>
+                                <option selected disabled>{{ __('Seleccionar') }}</option>
                             </x-select>
                             <x-input-error :messages="$errors->get('modulo_padre')" />
                         </div>

@@ -37,7 +37,7 @@ class ModuloController extends Controller
         $validaciones = $request->validate([
             'modulo_padre' => ['nullable', 'numeric'],
             'modulo' => ['required', 'string', 'max:100', 'unique:modulos,modulo'],
-            'ruta' => ['nullable', 'string', 'max:200'],
+            'ruta' => ['nullable', 'string', 'max:200', 'unique:modulos,ruta'],
             'icono' => ['required', 'string', 'max:50'],
             'orden' => ['required', 'numeric']
         ]);
@@ -83,7 +83,7 @@ class ModuloController extends Controller
         $validaciones = $request->validate([
             'modulo_padre' => ['nullable', 'numeric'],
             'modulo' => ['required', 'string', 'max:100', Rule::unique('modulos')->ignore($id, 'id_modulo')],
-            'ruta' => ['nullable', 'string', 'max:200'],
+            'ruta' => ['nullable', 'string', 'max:200', Rule::unique('modulos')->ignore($id, 'id_modulo')],
             'icono' => ['required', 'string', 'max:50'],
             'orden' => ['required', 'numeric']
         ]);

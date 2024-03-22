@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Perfil;
 use App\Models\Usuario;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class UsuarioController extends Controller
@@ -14,7 +15,7 @@ class UsuarioController extends Controller
      */
     public function index()
     {
-        $usuarios = Usuario::all();
+        $usuarios = Usuario::orderBy('nombres', 'asc')->paginate(100);
 
         return view('usuarios.listar', ['usuarios' => $usuarios]);
     }
@@ -35,25 +36,24 @@ class UsuarioController extends Controller
     public function store(Request $request)
     {
         $validaciones = $request->validate([
-            'perfil_id' => ['required', 'numeric'],
-            'identificacion' => ['required', 'max:10'],
+            'perfil' => ['required', 'numeric'],
+            'identificacion' => ['required', 'numeric', 'unique:usuarios,identificacion'],
             'nombres' => ['required', 'string', 'max:100'],
-            'telefono' => ['nullable', 'max:10'],
-            'email' => ['required', 'email', 'max:50'],
-            'password' => ['required', 'string', 'max:255'],
+            'telefono' => ['nullable', 'numeric'],
+            'correo' => ['required', 'email', 'max:50', 'unique:usuarios,email'],
+            'contrasena' => ['required', 'string', 'max:50']
         ]);
 
         $usuario = new Usuario();
-        $usuario->perfil_id = $request->perfil_id;
+        $usuario->perfil_id = $request->perfil;
         $usuario->identificacion = $request->identificacion;
         $usuario->nombres = $request->nombres;
         $usuario->telefono = $request->telefono;
-        $usuario->email = $request->email;
-        $usuario->password = $request->password;
+        $usuario->email = $request->correo;
+        $usuario->password = $request->contrasena;
         $usuario->save();
 
         Alert::success('Registrado', 'Usuario con éxito');
-
         return redirect(route('usuarios.index'));
     }
 
@@ -85,16 +85,16 @@ class UsuarioController extends Controller
     public function update(Request $request, string $id)
     {
         $validaciones = $request->validate([
-            'perfil_id' => ['required', 'numeric'],
-            'identificacion' => ['required', 'max:10'],
+            'perfil' => ['required', 'numeric'],
+            'identificacion' => ['required', 'numeric', Rule::unique('usuarios')->ignore($id, 'id_usuario')],
             'nombres' => ['required', 'string', 'max:100'],
-            'telefono' => ['nullable', 'max:10'],
-            'email' => ['required', 'email', 'max:50'],
-            // 'password' => ['required', 'string', 'max:255'],
+            'telefono' => ['nullable', 'numeric'],
+            'email' => ['required', 'email', 'max:50', Rule::unique('usuarios')->ignore($id, 'id_usuario')],
+            'contrasena' => ['required', 'string', 'max:50']
         ]);
 
         $usuario = Usuario::find($id);
-        $usuario->perfil_id = $request->perfil_id;
+        $usuario->perfil_id = $request->perfil;
         $usuario->identificacion = $request->identificacion;
         $usuario->nombres = $request->nombres;
         $usuario->telefono = $request->telefono;
@@ -102,7 +102,6 @@ class UsuarioController extends Controller
         $usuario->save();
 
         Alert::success('Actualizado', 'Usuario con éxito');
-
         return redirect(route('usuarios.index'));
     }
 
