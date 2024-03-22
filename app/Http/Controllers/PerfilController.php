@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Modulo;
 use App\Models\Perfil;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class PerfilController extends Controller
 {
@@ -13,7 +15,7 @@ class PerfilController extends Controller
      */
     public function index()
     {
-        $perfiles = Perfil::all();
+        $perfiles = Perfil::orderBy('perfil', 'asc')->paginate(10);
 
         return view('perfiles.listar', ['perfiles' => $perfiles]);
     }
@@ -31,7 +33,18 @@ class PerfilController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validaciones = $request->validate([
+            'perfil' => ['required', 'string', 'max:50', 'unique:perfiles,perfil'],
+            'descripcion' => ['nullable', 'string']
+        ]);
+
+        $perfil = new Perfil();
+        $perfil->perfil = $request->perfil;
+        $perfil->descripcion = $request->descripcion;
+        $perfil->save();
+
+        Alert::success('Registrado', 'Perfil con éxito');
+        return redirect(route('perfiles.index'));
     }
 
     /**
@@ -49,7 +62,9 @@ class PerfilController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $perfil = Perfil::find($id);
+
+        return view('perfiles.editar', ['perfil' => $perfil]);
     }
 
     /**
@@ -57,7 +72,18 @@ class PerfilController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $validaciones = $request->validate([
+            'perfil' => ['required', 'string', 'max:50', Rule::unique('perfiles')->ignore($id, 'id_perfil')],
+            'descripcion' => ['nullable', 'string']
+        ]);
+
+        $perfil = Perfil::find($id);
+        $perfil->perfil = $request->perfil;
+        $perfil->descripcion = $request->descripcion;
+        $perfil->save();
+
+        Alert::success('Actualizado', 'Perfil con éxito');
+        return redirect(route('perfiles.index'));
     }
 
     /**

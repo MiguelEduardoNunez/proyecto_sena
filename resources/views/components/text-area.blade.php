@@ -1,2 +1,3 @@
-<textarea {{ $attributes->merge(['rows' => '4', 'class' => 'form-control']) }}>
-</textarea>
+@props(['value'])
+
+<textarea {{ $attributes->merge(['rows' => '4', 'class' => 'form-control']) }}>{{ $value }}</textarea>

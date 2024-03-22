@@ -2,24 +2,33 @@
     <x-slot:page>
         {{ __('Detalles Perfil') }}
     </x-slot>
-    <div class="row justify-content-center">
-        <div class="col-12 col-md-10 col-lg-6">
-            <div class="card card-outline card-primary">
-                <div class="card-header">
-                    <h4 class="text-primary text-center font-weight-bold">Detalles Perfil</h4>
-                </div>
-                <div class="card-body">
-                    <div class="form-group">
-                        <label for="perfil">Perfil</label>
-                        <h6>{{ $perfil->perfil }}</h6>
-                    </div>
+    <div class="row">
+        <div class="col-1 d-none d-lg-flex">
+            <a href="{{ route('perfiles.index') }}">
+                <i class="far fa-arrow-alt-circle-left fa-2x" data-toggle="tooltip" title="Regresar"></i>
+            </a>
+        </div>
+        <div class="col-12 col-md-10 col-lg-6 offset-md-1 offset-lg-2">
+            <x-card>
+                <x-slot:header>
+                    <x-text :value="__('Detalles Perfil')" class="text-center" />
+                </x-slot:header>
 
-                    <div class="form-group">
-                        <label for="descripcion">Descripción</label>
-                        <h6>{{ $perfil->descripcion }}</h6>
-                    </div>
-                </div>
-            </div>
+                <x-slot:body>
+                    <x-text size="h6" color="black" :value="__('Perfil')" />
+                    <x-text size="h6" style="font-weight-normal" color="black" :value="$perfil->perfil" />
+
+                    <x-text size="h6" color="black" :value="__('Descripción')" class="mt-4" />
+                    @if ($perfil->descripcion != null)
+                        <x-text size="h6" style="font-weight-normal" color="black" :value="$perfil->descripcion" />
+                    @else
+                        {{ __('No registrada') }}
+                    @endif
+                </x-slot:body>
+
+                <x-slot:footer>
+                </x-slot:footer>
+            </x-card>
         </div>
     </div>
 </x-app-layout>

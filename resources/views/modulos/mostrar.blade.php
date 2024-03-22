@@ -19,7 +19,7 @@
                     @if ($modulo->moduloPadre != null)
                         <x-text size="h6" style="font-weight-normal" color="black" :value="$modulo->moduloPadre->modulo" />
                     @else
-                        No tiene
+                        {{ __('No registrado') }}
                     @endif
 
                     <x-text size="h6" color="black" :value="__('Modulo')" class="mt-4" />
@@ -29,7 +29,7 @@
                     @if ($modulo->ruta != null)
                         <x-text size="h6" style="font-weight-normal" color="black" :value="$modulo->ruta" />
                     @else
-                        No tiene
+                        {{ __('No registrada') }}
                     @endif
 
                     <x-text size="h6" color="black" :value="__('Icono')" class="mt-4" />

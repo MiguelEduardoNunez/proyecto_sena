@@ -31,9 +31,9 @@
                                     <td>{{ $modulo->modulo }}</td>
                                     <td>{{ $modulo->ruta }}</td>
                                 @else
-                                    <td>No tiene modulo</td>
+                                    <td>{{ __('No registrado') }}</td>
                                     <td>{{ $modulo->modulo }}</td>
-                                    <td>No tiene ruta</td>
+                                    <td>{{ __('No registrada') }}</td>
                                 @endif
                                 <td class="text-center">
                                     <div class="row justify-content-center align-items-center">
