@@ -35,22 +35,28 @@ class UsuarioController extends Controller
      */
     public function store(Request $request)
     {
+        $mensajes = [
+            'email.required' => 'El campo correo es obligatorio.',
+            'email.unique' => 'El valor del campo correo ya está en uso.',
+            'password.required' => 'El campo contraseña es obligatorio.'
+        ];
+
         $validaciones = $request->validate([
             'perfil' => ['required', 'numeric'],
             'identificacion' => ['required', 'numeric', 'unique:usuarios,identificacion'],
             'nombres' => ['required', 'string', 'max:100'],
             'telefono' => ['nullable', 'numeric'],
-            'correo' => ['required', 'email', 'max:50', 'unique:usuarios,email'],
-            'contrasena' => ['required', 'string', 'max:50']
-        ]);
+            'email' => ['required', 'email', 'max:50', 'unique:usuarios,email'],
+            'password' => ['required', 'string', 'max:50']
+        ], $mensajes);
 
         $usuario = new Usuario();
         $usuario->perfil_id = $request->perfil;
         $usuario->identificacion = $request->identificacion;
         $usuario->nombres = $request->nombres;
         $usuario->telefono = $request->telefono;
-        $usuario->email = $request->correo;
-        $usuario->password = $request->contrasena;
+        $usuario->email = $request->email;
+        $usuario->password = $request->password;
         $usuario->save();
 
         Alert::success('Registrado', 'Usuario con éxito');
@@ -84,14 +90,20 @@ class UsuarioController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        $mensajes = [
+            'email.required' => 'El campo correo es obligatorio.',
+            'email.unique' => 'El valor del campo correo ya está en uso.',
+            'password.required' => 'El campo contraseña es obligatorio.'
+        ];
+
         $validaciones = $request->validate([
             'perfil' => ['required', 'numeric'],
             'identificacion' => ['required', 'numeric', Rule::unique('usuarios')->ignore($id, 'id_usuario')],
             'nombres' => ['required', 'string', 'max:100'],
             'telefono' => ['nullable', 'numeric'],
             'email' => ['required', 'email', 'max:50', Rule::unique('usuarios')->ignore($id, 'id_usuario')],
-            'contrasena' => ['required', 'string', 'max:50']
-        ]);
+            'password' => ['nullable', 'string', 'max:50']
+        ], $mensajes);
 
         $usuario = Usuario::find($id);
         $usuario->perfil_id = $request->perfil;

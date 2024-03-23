@@ -39,15 +39,15 @@
                         </div>
 
                         <div class="form-group">
-                            <x-input-label :value="__('Correo Electronico')" for="correo" />
-                            <x-input type="email" id="correo" name="correo" :value="old('correo')" />
-                            <x-input-error :messages="$errors->get('correo')" />
+                            <x-input-label :value="__('Correo Electronico')" for="email" />
+                            <x-input type="email" id="email" name="email" :value="old('email')" />
+                            <x-input-error :messages="$errors->get('email')" />
                         </div>
 
                         <div class="form-group">
-                            <x-input-label :value="__('Contraseña')" for="contrasena" />
-                            <x-input type="password" id="contrasena" name="contrasena" />
-                            <x-input-error :messages="$errors->get('contrasena')" />
+                            <x-input-label :value="__('Contraseña')" for="password" />
+                            <x-input type="password" id="password" name="password" />
+                            <x-input-error :messages="$errors->get('password')" />
                         </div>
                     </x-slot:body>
 

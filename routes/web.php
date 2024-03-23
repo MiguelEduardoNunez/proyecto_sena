@@ -8,6 +8,7 @@ use App\Http\Controllers\ItemController;
 use App\Http\Controllers\ModuloController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProyectoController;
+use App\Http\Controllers\ProyectoElementoController;
 use App\Http\Controllers\StandController;
 use App\Http\Controllers\UsuarioController;
 use Illuminate\Support\Facades\Route;
@@ -47,6 +48,8 @@ Route::resource('/perfiles', PerfilController::class)->middleware('auth');
 Route::resource('/usuarios', UsuarioController::class)->middleware('auth');
 
 Route::resource('/proyectos', ProyectoController::class);
+
+// Route::resource('/proyectos.elementos', ProyectoElementoController::class);
 
 Route::resource('/stands', StandController::class);
 
