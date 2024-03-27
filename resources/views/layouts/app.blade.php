@@ -152,25 +152,41 @@
                                             <i class="right fas fa-angle-left"></i>   
                                         </p>
                                     </a>
+                                    <ul class="nav nav-treeview">
+                                        @foreach($modulo->hijos as $submodulo)
+                                            <li class="nav-item">
+                                                @if($submodulo->ruta == null)
+                                                    <a class="nav-link" href="#">
+                                                        <i class="nav-icon {{ $submodulo->icono }}"></i>
+                                                        <p>
+                                                            {{ $submodulo->modulo }}
+                                                            <i class="right fas fa-angle-left"></i>   
+                                                        </p>
+                                                    </a>
+                                                    <ul class="nav nav-treeview">
+                                                        @foreach($submodulo->hijos as $itemModulo)
+                                                            <li class="nav-item">
+                                                                <a class="nav-link" href="{{ route($itemModulo->ruta) }}">
+                                                                    <i class="{{ $itemModulo->icono }} nav-icon"></i>
+                                                                    <p>{{ $itemModulo->modulo }}</p>
+                                                                </a>
+                                                            </li>
+                                                        @endforeach
+                                                    </ul>
+                                                @else
+                                                    <a class="nav-link" href="{{ route($submodulo->ruta) }}">
+                                                        <i class="{{ $submodulo->icono }} nav-icon"></i>
+                                                        <p>{{ $submodulo->modulo }}</p>
+                                                    </a>
+                                                @endif
+                                            </li>
+                                        @endforeach
+                                    </ul>
                                 @else
                                     <a class="nav-link" href="{{ route($modulo->ruta) }}">
-                                        <i class="nav-icon {{ $modulo->icono }}"></i>
-                                        <p>
-                                            {{ $modulo->modulo }}
-                                        </p>
+                                        <i class="{{ $modulo->icono }} nav-icon"></i>
+                                        <p>{{ $modulo->modulo }}</p>
                                     </a>
-                                @endif
-                                @if($modulo->hijos != null)
-                                    @foreach($modulo->hijos as $hijo)
-                                        <ul class="nav nav-treeview">
-                                            <li class="nav-item">
-                                                <a class="nav-link" href="{{ route($hijo->ruta) }}">
-                                                    <i class="{{ $hijo->icono }} nav-icon"></i>
-                                                    <p>{{ $hijo->modulo }}</p>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    @endforeach
                                 @endif
                             </li>
                         @endforeach

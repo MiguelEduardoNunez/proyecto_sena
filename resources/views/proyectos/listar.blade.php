@@ -64,10 +64,11 @@
                                              </div>
 
                                              <div class="col-3">
-                                                <a href={{ route('proyectos.edit', $proyecto->id_proyecto) }}
+                                                <a href={{ route('proyectos.elementos.index', $proyecto->id_proyecto) }}
                                                     type="button">
                                                     <i class="fas fa-tools" data-toggle="tooltip"
-                                                        title="Gestionar Elementos"></i>
+                                                        title="Gestionar Elementos">
+                                                    </i>
                                                 </a>
                                             </div>
 

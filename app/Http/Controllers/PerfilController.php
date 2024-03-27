@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Modulo;
+use App\Models\ModuloPerfil;
 use App\Models\Perfil;
+use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -96,42 +99,49 @@ class PerfilController extends Controller
 
 
     /**
-     * Show the form for creating a new resource.
+     * Show the form for editing the specified resource.
      */
-    public function createPermiso()
-    {
-        $modulos = Modulo::with('moduloHijo')->get();
+    public function editPermiso(string $id)
+    {   
+        $modulos = Modulo::with(['moduloHijo' => function (Builder $query) {
+                $query->orderBy('orden', 'asc');
+            }])
+            ->where('modulo_id', '=', null)
+            ->orderBy('orden', 'asc')
+            ->get();
 
-        $modulosAgrupados = array();
-
-        foreach($modulos as $moduloPadre) {
-           if($moduloPadre->modulo_id == null) {
-                $modulosAgrupados[] = $moduloPadre;
-           }  
-        }
+        $permisos = ModuloPerfil::where('perfil_id', '=', $id)->get();
         
-        return $modulosAgrupados;
-
-        // foreach($modulos as $moduloPadre) {
-        //     foreach($moduloPadre->moduloHijo as $moduloHijo) {
-        //         $moduloHijo;
-        //     }
+        $modulosAgrupados = array();
+        
+        foreach ($modulos as $modulo) {
+            foreach ($modulo->moduloHijo as $item) {
+                $item->moduloHijo;
+            }
             
-        //     if ($moduloPadre->modulo_id == null) {
-        //         $modulosAgrupados[] = $moduloPadre;
-        //     }
-        // }
+            $modulosAgrupados[] = $modulo;
+        }
 
-        // return $modulosAgrupados;
-
-        return view('perfiles.permiso', ['modulos' => $modulosAgrupados]);
+        return view('perfiles.permiso', ['modulos' => $modulosAgrupados, 'permisos' => $permisos, 'perfil' => $id]);
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Update the specified resource in storage.
      */
-    public function storePermiso(Request $request)
+    public function updatePermiso(Request $request, string $id)
     {
-        //
+        $permisos = $request->permisos;
+
+        ModuloPerfil::where('perfil_id', '=', $id)->delete();
+        
+        foreach ($permisos as $permiso) {
+            $modulo_perfil = new ModuloPerfil();
+            $modulo_perfil->modulo_id = $permiso;
+            $modulo_perfil->perfil_id = $id;
+            $modulo_perfil->save();
+        }
+
+        Alert::success('Actualizados', 'Permisos con éxito');
+        return redirect(route('perfiles.index'));
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Elemento;
 use Illuminate\Http\Request;
 
 class ProyectoElementoController extends Controller
@@ -11,7 +12,11 @@ class ProyectoElementoController extends Controller
      */
     public function index(string $proyecto)
     {
-        //
+        $elementos = Elemento::where('proyecto_id', '=', $proyecto)
+            ->orderBy('marca', 'asc')
+            ->paginate(10);
+
+        return view('proyectos.elementos.listar', ['elementos' => $elementos, 'proyecto' => $proyecto]);
     }
 
     /**
@@ -19,7 +24,7 @@ class ProyectoElementoController extends Controller
      */
     public function create(string $proyecto)
     {
-        //
+        return view('proyectos.elementos.crear', ['proyecto' => $proyecto]);
     }
 
     /**

@@ -66,7 +66,7 @@ class Modulo extends Model
         foreach ($modulos as $modulo) {
            $modulosAgrupados[$i] = $modulo;
 
-           if ($modulo->modulo_id == null) {
+           if ($modulo->modulo_id == null || $modulo->ruta == null) {
                 $modulosAgrupados[$i]->hijos = Modulo::permisos($modulo->id_modulo, $id);
            }
            $i++;

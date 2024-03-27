@@ -14,7 +14,7 @@ class ModuloController extends Controller
      */
     public function index()
     {
-        $modulos = Modulo::orderBy('modulo', 'asc')->paginate(20);
+        $modulos = Modulo::orderBy('modulo', 'asc')->paginate(50);
 
         return view('modulos.listar', ['modulos' => $modulos]);
     }
@@ -24,7 +24,7 @@ class ModuloController extends Controller
      */
     public function create()
     {
-        $modulos = Modulo::all();
+        $modulos = Modulo::orderBy('modulo', 'asc')->get();
 
         return view('modulos.crear', ['modulos' => $modulos]);
     }
@@ -70,7 +70,10 @@ class ModuloController extends Controller
     public function edit(string $id)
     {
         $modulo = Modulo::find($id);
-        $modulos = Modulo::all();
+
+        $modulos = Modulo::where('id_modulo', '!=', $modulo->modulo_id)
+            ->orderBy('modulo', 'asc')
+            ->get();
 
         return view('modulos.editar', ['modulo' => $modulo, 'modulos' => $modulos]);
     }

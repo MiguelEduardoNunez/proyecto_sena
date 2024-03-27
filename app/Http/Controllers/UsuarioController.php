@@ -15,7 +15,9 @@ class UsuarioController extends Controller
      */
     public function index()
     {
-        $usuarios = Usuario::orderBy('nombres', 'asc')->paginate(100);
+        $usuarios = Usuario::where('perfil_id', '!=', 2)
+            ->orderBy('nombres', 'asc')
+            ->paginate(100);
 
         return view('usuarios.listar', ['usuarios' => $usuarios]);
     }
@@ -25,7 +27,9 @@ class UsuarioController extends Controller
      */
     public function create()
     {
-        $perfiles = Perfil::all();
+        $perfiles = Perfil::where('id_perfil', '!=', 2)
+            ->orderBy('perfil', 'asc')
+            ->get();
 
         return view('usuarios.crear', ['perfiles' => $perfiles]);
     }
@@ -80,7 +84,10 @@ class UsuarioController extends Controller
     {
         $usuario = Usuario::find($id);
 
-        $perfiles = Perfil::all();
+        $perfiles = Perfil::where('id_perfil', '!=', 2)
+            ->where('id_perfil', '!=', $usuario->perfil_id)
+            ->orderBy('perfil', 'asc')
+            ->get();
 
         return view('usuarios.editar', ['usuario' => $usuario, 'perfiles' => $perfiles]);
     }
@@ -122,8 +129,8 @@ class UsuarioController extends Controller
      */
     public function destroy(string $id)
     {
-        Usuario::find($id)->delete();
+        // Usuario::find($id)->delete();
         
-        return redirect(route('usuarios.index'));
+        // return redirect(route('usuarios.index'));
     }
 }

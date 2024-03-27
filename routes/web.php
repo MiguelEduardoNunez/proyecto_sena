@@ -40,8 +40,8 @@ Route::middleware('auth')->group(function () {
 
 Route::resource('/modulos', ModuloController::class)->middleware('auth');
 
-Route::get('/perfiles/permisos', [PerfilController::class, 'createPermiso'])->name('perfiles.permisos.create');
-Route::post('/perfiles/permisos', [PerfilController::class, 'storePermiso'])->name('perfiles.permisos.store');
+Route::get('/perfiles/permisos/{perfil}', [PerfilController::class, 'editPermiso'])->name('perfiles.permisos.edit');
+Route::put('/perfiles/permisos/{perfil}', [PerfilController::class, 'updatePermiso'])->name('perfiles.permisos.update');
 
 Route::resource('/perfiles', PerfilController::class)->middleware('auth');
 
@@ -49,13 +49,11 @@ Route::resource('/usuarios', UsuarioController::class)->middleware('auth');
 
 Route::resource('/proyectos', ProyectoController::class);
 
-// Route::resource('/proyectos.elementos', ProyectoElementoController::class);
+Route::resource('/proyectos.elementos', ProyectoElementoController::class);
 
 Route::resource('/stands', StandController::class);
 
 Route::resource('/empleados', EmpleadoController::class);
-
-Route::resource('/elementos', ElementoController::class);
 
 Route::resource('/novedades', NovedadController::class);
 
