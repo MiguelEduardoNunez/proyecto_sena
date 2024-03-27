@@ -1,11 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Administracion;
 
-use App\Models\Modulo;
-use App\Models\ModuloPerfil;
+use App\Http\Controllers\Controller;
 use App\Models\Perfil;
-use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
@@ -18,7 +16,14 @@ class PerfilController extends Controller
      */
     public function index()
     {
-        $perfiles = Perfil::orderBy('perfil', 'asc')->paginate(10);
+        if (Auth::user()->perfil_id == 2) {
+            $perfiles = Perfil::orderBy('perfil', 'asc')->paginate(10);
+        }
+        else {
+            $perfiles = Perfil::where('id_perfil', '!=', 2)
+                ->orderBy('perfil', 'asc')
+                ->paginate(10);
+        }
 
         return view('perfiles.listar', ['perfiles' => $perfiles]);
     }
@@ -95,53 +100,5 @@ class PerfilController extends Controller
     public function destroy(string $id)
     {
         //
-    }
-
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function editPermiso(string $id)
-    {   
-        $modulos = Modulo::with(['moduloHijo' => function (Builder $query) {
-                $query->orderBy('orden', 'asc');
-            }])
-            ->where('modulo_id', '=', null)
-            ->orderBy('orden', 'asc')
-            ->get();
-
-        $permisos = ModuloPerfil::where('perfil_id', '=', $id)->get();
-        
-        $modulosAgrupados = array();
-        
-        foreach ($modulos as $modulo) {
-            foreach ($modulo->moduloHijo as $item) {
-                $item->moduloHijo;
-            }
-            
-            $modulosAgrupados[] = $modulo;
-        }
-
-        return view('perfiles.permiso', ['modulos' => $modulosAgrupados, 'permisos' => $permisos, 'perfil' => $id]);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function updatePermiso(Request $request, string $id)
-    {
-        $permisos = $request->permisos;
-
-        ModuloPerfil::where('perfil_id', '=', $id)->delete();
-        
-        foreach ($permisos as $permiso) {
-            $modulo_perfil = new ModuloPerfil();
-            $modulo_perfil->modulo_id = $permiso;
-            $modulo_perfil->perfil_id = $id;
-            $modulo_perfil->save();
-        }
-
-        Alert::success('Actualizados', 'Permisos con éxito');
-        return redirect(route('perfiles.index'));
     }
 }

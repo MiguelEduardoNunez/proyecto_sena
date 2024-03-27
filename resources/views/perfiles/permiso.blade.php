@@ -9,7 +9,7 @@
             </a>
         </div>
         <div class="col-12 col-md-10 col-lg-6 offset-md-1 offset-lg-2">
-            <form method="POST" action="{{ route('perfiles.permisos.update', $perfil) }}">
+            <form method="POST" action="{{ route('permisos.update', $perfil) }}">
                 @csrf
                 @method('PUT')
                 <x-card>

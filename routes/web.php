@@ -1,16 +1,16 @@
 <?php
 
-use App\Http\Controllers\ElementoController;
+use App\Http\Controllers\Administracion\ModuloController;
+use App\Http\Controllers\Administracion\PerfilController;
+use App\Http\Controllers\Administracion\PermisoController;
+use App\Http\Controllers\Administracion\UsuarioController;
 use App\Http\Controllers\NovedadController;
-use App\Http\Controllers\PerfilController;
 use App\Http\Controllers\EmpleadoController;
 use App\Http\Controllers\ItemController;
-use App\Http\Controllers\ModuloController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProyectoController;
 use App\Http\Controllers\ProyectoElementoController;
 use App\Http\Controllers\StandController;
-use App\Http\Controllers\UsuarioController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -40,10 +40,10 @@ Route::middleware('auth')->group(function () {
 
 Route::resource('/modulos', ModuloController::class)->middleware('auth');
 
-Route::get('/perfiles/permisos/{perfil}', [PerfilController::class, 'editPermiso'])->name('perfiles.permisos.edit');
-Route::put('/perfiles/permisos/{perfil}', [PerfilController::class, 'updatePermiso'])->name('perfiles.permisos.update');
-
 Route::resource('/perfiles', PerfilController::class)->middleware('auth');
+
+Route::get('/permisos/{perfil}', [PermisoController::class, 'edit'])->name('permisos.edit');
+Route::put('/permisos/{perfil}', [PermisoController::class, 'update'])->name('permisos.update');
 
 Route::resource('/usuarios', UsuarioController::class)->middleware('auth');
 

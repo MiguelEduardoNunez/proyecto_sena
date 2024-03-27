@@ -42,7 +42,7 @@
                                         </div>
 
                                         <div class="col-2">
-                                            <a href="{{ route('perfiles.permisos.edit', $perfil->id_perfil) }}">
+                                            <a href="{{ route('permisos.edit', $perfil->id_perfil) }}">
                                                 <i class="fas fa-user-cog text-info" data-toggle="tooltip" title="Gestionar Permisos"></i>
                                             </a>
                                         </div>
