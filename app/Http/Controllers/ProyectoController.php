@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Proyecto;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
+use Illuminate\Validation\Rule;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class ProyectoController extends Controller
@@ -14,9 +14,9 @@ class ProyectoController extends Controller
      */
     public function index()
     {
-        //   
-        $proyectos = Proyecto::all();
-        return view('proyectos.listar',['proyectos'=>$proyectos]);
+        $proyectos = Proyecto::orderBy('proyecto', 'asc')->paginate(100);
+
+        return view('proyectos.listar', ['proyectos' => $proyectos]);
     }
 
     /**
@@ -24,11 +24,7 @@ class ProyectoController extends Controller
      */
     public function create()
     {
-        //controlador crear proyecto
-
-        $proyectos = Proyecto::all();
-        return view('proyectos.crear',['proyectos'=>$proyectos]);
-       
+        return view('proyectos.crear');
     }
 
     /**
@@ -36,33 +32,30 @@ class ProyectoController extends Controller
      */
     public function store(Request $request)
     {
-        //
-        $validated=$request->validate([
-            'proyecto'=> 'required|string|max:200',
-            'fecha_inicio'=> 'required|date',
-            'fecha_fin'=> 'required|date',
-            'responsable_proyecto'=> 'required|string|max:100',
-            'correo_responsable'=> 'required|string|max:50'
+        $validaciones = $request->validate([
+            'proyecto' => ['required', 'string', 'max:200', 'unique:proyectos,proyecto'],
+            'descripcion' => ['nullable', 'string'],
+            'fecha_inicio' => ['required', 'date', 'before:fecha_fin'],
+            'fecha_fin' => ['required', 'date', 'after:fecha_inicio'],
+            'responsable' => ['required', 'string', 'max:100'],
+            'correo' => ['required', 'email', 'max:50'],
+            'telefono' => ['nullable', 'numeric'],
+            'direccion' => ['nullable', 'string', 'max:100']
         ]);
-        
+
         $proyecto = new Proyecto();
         $proyecto->proyecto = $request->proyecto;
         $proyecto->descripcion = $request->descripcion;
         $proyecto->fecha_inicio = $request->fecha_inicio;
         $proyecto->fecha_fin = $request->fecha_fin;
-        $proyecto->responsable_proyecto = $request->responsable_proyecto;
-        $proyecto->correo_responsable = $request->correo_responsable;
-        $proyecto->telefono_responsable = $request->telefono_responsable;
-        $proyecto->direccion_cliente = $request->direccion_cliente;
-        
-        //generar log de proyecto en storage/logs/laravel.log de tipo info
-        Log::info('Proyecto creado: '.$proyecto->proyecto);
+        $proyecto->responsable_proyecto = $request->responsable;
+        $proyecto->correo_responsable = $request->correo;
+        $proyecto->telefono_responsable = $request->telefono;
+        $proyecto->direccion_cliente = $request->direccion;
         $proyecto->save();
-        Alert::success('Registrado', 'proyecto con éxito');
 
-        $proyectos = Proyecto::all();
-        return view ('proyectos.listar',['proyectos'=>$proyectos]);
-
+        Alert::success('Registrado', 'Proyecto con éxito');
+        return redirect(route('proyectos.index'));
     }
 
     /**
@@ -70,10 +63,9 @@ class ProyectoController extends Controller
      */
     public function show(string $id)
     {
-        //
         $proyecto = Proyecto::find($id);
-        return view('proyectos.mostrar',['proyecto'=>$proyecto]);
-        
+
+        return view('proyectos.mostrar', ['proyecto' => $proyecto]);
     }
 
     /**
@@ -81,10 +73,9 @@ class ProyectoController extends Controller
      */
     public function edit(string $id)
     {
-        //
         $proyecto = Proyecto::find($id);
-        return view('proyectos.editar',['proyecto'=>$proyecto]);
 
+        return view('proyectos.editar', ['proyecto' => $proyecto]);
     }
 
     /**
@@ -92,11 +83,15 @@ class ProyectoController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
-        $validated=$request->validate([
-            'proyecto'=> 'required|string|max:200',
-            'fecha_inicio'=> 'required|date',
-            'fecha_fin'=> 'required|date'
+        $validaciones = $request->validate([
+            'proyecto' => ['required', 'string', 'max:200', Rule::unique('proyectos')->ignore($id, 'id_proyecto')],
+            'descripcion' => ['nullable', 'string'],
+            'fecha_inicio' => ['required', 'date', 'before:fecha_fin'],
+            'fecha_fin' => ['required', 'date', 'after:fecha_inicio'],
+            'responsable' => ['required', 'string', 'max:100'],
+            'correo' => ['required', 'email', 'max:50'],
+            'telefono' => ['nullable', 'numeric'],
+            'direccion' => ['nullable', 'string', 'max:100']
         ]);
 
         $proyecto = Proyecto::find($id);
@@ -104,17 +99,14 @@ class ProyectoController extends Controller
         $proyecto->descripcion = $request->descripcion;
         $proyecto->fecha_inicio = $request->fecha_inicio;
         $proyecto->fecha_fin = $request->fecha_fin;
-
+        $proyecto->responsable_proyecto = $request->responsable;
+        $proyecto->correo_responsable = $request->correo;
+        $proyecto->telefono_responsable = $request->telefono;
+        $proyecto->direccion_cliente = $request->direccion;
         $proyecto->save();
 
-        Alert::success('Actualizado', 'proyecto con éxito');
-
-        $proyectos = Proyecto::all();
-
-
-        return view('proyectos.listar',['proyectos'=>$proyectos]);
-
-
+        Alert::success('Actualizado', 'Proyecto con éxito');
+        return redirect(route('proyectos.index'));
     }
 
     /**

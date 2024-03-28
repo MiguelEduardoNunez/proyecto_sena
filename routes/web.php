@@ -47,9 +47,9 @@ Route::put('/permisos/{perfil}', [PermisoController::class, 'update'])->name('pe
 
 Route::resource('/usuarios', UsuarioController::class)->middleware('auth');
 
-Route::resource('/proyectos', ProyectoController::class);
+Route::resource('/proyectos', ProyectoController::class)->middleware('auth');
 
-Route::resource('/proyectos.elementos', ProyectoElementoController::class);
+Route::resource('/proyectos.elementos', ProyectoElementoController::class)->middleware('auth');
 
 Route::resource('/stands', StandController::class);
 

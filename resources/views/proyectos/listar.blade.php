@@ -1,102 +1,75 @@
- <x-app-layout>
-     <x-slot:page>
-         {{ __('Gestionar Proyecto') }}
-     </x-slot>
-     <div class="row">
-         <div class="col-12">
-             <div class="card card-outline card-primary shadow">
-                 <div class="card-header">
-                     <div class="row align-items-center">
-                         <div class="col-12 col-md-8 col-lg-9">
-                             <h4 class="text-primary font-weight-bold">Gestionar Proyectos</h4>
-                         </div>
-                         <div class="col-12 col-md-4 col-lg-3">
-                             <div class="card-tools">
-                                 <div class="input-group input-group">
-                                     <input type="text" name="table_search" class="form-control"
-                                         placeholder="Buscar">
-                                     <div class="input-group-append">
-                                         <button type="submit" class="btn btn-primary">
-                                             <i class="fas fa-search"></i>
-                                         </button>
-                                     </div>
-                                 </div>
-                             </div>
-                         </div>
-                     </div>
-                 </div>
+<x-app-layout>
+    <x-slot:page>
+        {{ __('Gestionar Proyectos') }}
+    </x-slot>
+    <div class="row">
+        <div class="col-12">
+            <x-card>
+                <x-slot:header>
+                    <div class="row align-items-center">
+                        <div class="col-12 col-md-8 col-lg-9">
+                            <x-text :value="__('Gestionar Proyectos')" />
+                        </div>
+                        <div class="col-12 col-md-4 col-lg-3">
+                            <x-input-group>
+                                <x-input type="text" id="searchertable" name="searcher" placeholder="Buscar" />
+                                <x-slot:icon>
+                                    <i class="fas fa-search text-primary"></i>
+                                </x-slot:icon>
+                            </x-input-group>
+                        </div>
+                    </div>
+                </x-slot:header>
 
-                 <div class="card-body table-responsive p-0" style="height: 400px;">
-                     <table class="table table-head-fixed text-nowrap">
-                         <thead>
-                             <tr>
-                                 <th>#</th>
-                                 <th>Proyecto</th>
-                                 <th>Descripcion</th>
-                                 <th>Fecha_inicio</th>
-                                 <th>Fecha_fin</th>
-                                 <th class="text-center">Acciones</th>
-                             </tr>
-                         </thead>
-                         <tbody>
-                             @foreach ($proyectos as $proyecto)
-                                 <tr>
-                                     <td>{{ $loop->iteration }}</td>
-                                     <td>{{ $proyecto->proyecto }}</td>
-                                     <td>{{ $proyecto->descripcion }}</td>
-                                     <td>{{ $proyecto->fecha_inicio }}</td>
-                                     <td>{{ $proyecto->fecha_fin }}</td>
-                                     <td class="text-center">
-                                         <div class="row justify-content-center">
-                                             <div class="col-3">
-                                                 <a href={{ route('proyectos.show', $proyecto->id_proyecto) }}
-                                                     type="button">
-                                                     <i class="far fa-eye" data-toggle="tooltip"
-                                                         title="Detalles Proyecto"></i>
-                                                 </a>
-                                             </div>
-                                             <div class="col-3">
-                                                 <a href={{ route('proyectos.edit', $proyecto->id_proyecto) }}
-                                                     type="button">
-                                                     <i class="far fa-edit" data-toggle="tooltip"
-                                                         title="Actualizar Proyecto"></i>
-                                                 </a>
-                                             </div>
+                <x-slot:body class="table-responsive p-0" style="height: 400px;">
+                    <x-data-table :headers="['#', 'Proyecto', 'Fecha Inicio', 'Fecha Fin', 'Responsable', 'Acciones']">
+                        @foreach ($proyectos as $proyecto)
+                            <tr>
+                                <td>{{ $loop->iteration }}</td>
+                                <td>{{ $proyecto->proyecto }}</td>
+                                <td>{{ $proyecto->fecha_inicio }}</td>
+                                <td>{{ $proyecto->fecha_fin }}</td>
+                                <td>{{ $proyecto->responsable_proyecto }}</td>
 
-                                             <div class="col-3">
-                                                <a href={{ route('proyectos.elementos.index', $proyecto->id_proyecto) }}
-                                                    type="button">
-                                                    <i class="fas fa-tools" data-toggle="tooltip"
-                                                        title="Gestionar Elementos">
-                                                    </i>
-                                                </a>
-                                            </div>
+                                <td class="text-center">
+                                    <div class="row justify-content-center align-items-center">
+                                        <div class="col-2">
+                                            <a href="{{ route('proyectos.show', $proyecto->id_proyecto) }}">
+                                                <i class="far fa-eye" data-toggle="tooltip" title="Detalles Proyecto"></i>
+                                            </a>
+                                        </div>
 
-                                            <div class="col-3">
-                                                <a href={{ route('proyectos.edit', $proyecto->id_proyecto) }}
-                                                    type="button">
-                                                    <i class="fas fa-truck-loading" data-toggle="tooltip"
-                                                        title="Entregar Elementos"></i>
-                                                </a>
-                                            </div>
-                                             {{-- <div class="col-2">
-                                                 <form method="POST" action="#">
-                                                     @csrf
-                                                     @method('DELETE')
-                                                     <button type="submit" class="btn p-0">
-                                                         <i class="far fa-trash-alt" data-toggle="tooltip"
-                                                             title="Eliminar Proyecto"></i>
-                                                     </button>
-                                                 </form>
-                                             </div> --}}
-                                         </div>
-                                     </td>
-                                 </tr>
-                             @endforeach
-                         </tbody>
-                     </table>
-                 </div>
-             </div>
-         </div>
-     </div>
- </x-app-layout>
+                                        <div class="col-2">
+                                            <a href="{{ route('proyectos.edit', $proyecto->id_proyecto) }}">
+                                                <i class="far fa-edit text-success" data-toggle="tooltip" title="Actualizar Proyecto"></i>
+                                            </a>
+                                        </div>
+
+                                        <div class="col-2">
+                                            <a href="#">
+                                                <i class="fas fa-tools text-info" data-toggle="tooltip" title="Gestionar Elementos"></i>
+                                            </a>
+                                        </div>
+
+                                        <div class="col-2">
+                                            <a href="#">
+                                                <i class="fas fa-truck-loading text-info" data-toggle="tooltip" title="Entregar Elementos"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </x-data-table>
+                </x-slot:body>
+
+                <x-slot:footer>
+                    <div class="float-right">
+                        {{ $proyectos->links() }}
+                    </div>
+                </x-slot:footer>
+            </x-card>
+        </div>
+    </div>
+</x-app-layout>
+ 

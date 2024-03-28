@@ -264,8 +264,8 @@
             $(".select2").select2();
 
             // Date picker
-            $("#datepicker").datetimepicker({
-                format: 'L',
+            $("#fecha_inicio, #fecha_fin").datetimepicker({
+                format: 'YYYY/MM/DD',
                 locale: 'es'
             });
 
