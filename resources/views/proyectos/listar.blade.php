@@ -30,7 +30,6 @@
                                 <td>{{ $proyecto->fecha_inicio }}</td>
                                 <td>{{ $proyecto->fecha_fin }}</td>
                                 <td>{{ $proyecto->responsable_proyecto }}</td>
-
                                 <td class="text-center">
                                     <div class="row justify-content-center align-items-center">
                                         <div class="col-2">
@@ -40,20 +39,20 @@
                                         </div>
 
                                         <div class="col-2">
-                                            <a href="{{ route('proyectos.edit', $proyecto->id_proyecto) }}">
-                                                <i class="far fa-edit text-success" data-toggle="tooltip" title="Actualizar Proyecto"></i>
+                                            <a href="{{ route('proyectos.edit', $proyecto->id_proyecto) }}" class="text-success">
+                                                <i class="far fa-edit" data-toggle="tooltip" title="Actualizar Proyecto"></i>
                                             </a>
                                         </div>
 
                                         <div class="col-2">
-                                            <a href="#">
-                                                <i class="fas fa-tools text-info" data-toggle="tooltip" title="Gestionar Elementos"></i>
+                                            <a href="#" class="text-info">
+                                                <i class="fas fa-tools" data-toggle="tooltip" title="Gestionar Elementos"></i>
                                             </a>
                                         </div>
 
                                         <div class="col-2">
-                                            <a href="#">
-                                                <i class="fas fa-truck-loading text-info" data-toggle="tooltip" title="Entregar Elementos"></i>
+                                            <a href="#" class="text-info">
+                                                <i class="fas fa-truck-loading" data-toggle="tooltip" title="Entregar Elementos"></i>
                                             </a>
                                         </div>
                                     </div>

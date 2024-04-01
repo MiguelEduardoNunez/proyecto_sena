@@ -1,41 +1,60 @@
 <x-app-layout>
+    <x-slot:page>
+        {{ __('Detalles Proyecto') }}
+    </x-slot>
     <div class="row">
         <div class="col-1 d-none d-lg-flex">
-            <a href={{ route('proyectos.index') }} type="button">
+            <a href="{{ route('proyectos.index') }}">
                 <i class="far fa-arrow-alt-circle-left fa-2x" data-toggle="tooltip" title="Regresar"></i>
             </a>
         </div>
-        <div class="col-12 col-md-10 col-lg-6 offset-2">
-            <div class="card card-outline card-primary shadow">
-                <div class="card-header">
-                    <h4 class="text-primary text-center font-weight-bold">Detalles Proyecto</h4>
-                </div>
-                <div class="card-body">
-                    <h6 class="font-weight-bold">Proyecto</h6>
-                    <p>{{ $proyecto->proyecto }}</p>
+        <div class="col-12 col-md-10 col-lg-6 offset-md-1 offset-lg-2">
+            <x-card>
+                <x-slot:header>
+                    <x-text :value="__('Detalles Proyecto')" class="text-center" />
+                </x-slot:header>
 
-                    <h6 class="font-weight-bold mt-4">Descripcion</h6>
-                    <p>{{ $proyecto->descripcion }}</p>
+                <x-slot:body>
+                    <x-text size="h6" color="black" :value="__('Proyecto')" />
+                    <x-text size="h6" style="font-weight-normal" color="black" :value="$proyecto->proyecto" />
 
-                    <h6 class="font-weight-bold mt-4">Fecha Inicio</h6>
-                    <p>{{ $proyecto->fecha_inicio }}</p>
+                    <x-text size="h6" color="black" :value="__('Descripcion')" class="mt-4" />
+                    @if ($proyecto->descripcion != null)
+                        <x-text size="h6" style="font-weight-normal" color="black" :value="$proyecto->descripcion" />
+                    @else
+                        {{ __('No registrada') }}
+                    @endif
 
-                    <h6 class="font-weight-bold mt-4">Fecha Fin</h6>
-                    <p>{{ $proyecto->fecha_fin }}</p>
+                    <x-text size="h6" color="black" :value="__('Fecha Inicio')" class="mt-4" />
+                    <x-text size="h6" style="font-weight-normal" color="black" :value="$proyecto->fecha_inicio" />
 
-                    <h6 class="font-weight-bold mt-4">Responsable del proyecto</h6>
-                    <p>{{ $proyecto->responsable_proyecto }}</p>
+                    <x-text size="h6" color="black" :value="__('Fecha Fin')" class="mt-4" />
+                    <x-text size="h6" style="font-weight-normal" color="black" :value="$proyecto->fecha_fin" />
 
-                    <h6 class="font-weight-bold mt-4">Correo del responsable</h6>
-                    <p>{{ $proyecto->correo_responsable }}</p>
+                    <x-text size="h6" color="black" :value="__('Responsable del proyecto')" class="mt-4" />
+                    <x-text size="h6" style="font-weight-normal" color="black" :value="$proyecto->responsable_proyecto" />
 
-                    <h6 class="font-weight-bold mt-4">Telefono del responsable</h6>
-                    <p>{{ $proyecto->telefono_responsable }}</p>
+                    <x-text size="h6" color="black" :value="__('Correo Electronico')" class="mt-4" />
+                    <x-text size="h6" style="font-weight-normal" color="black" :value="$proyecto->correo_responsable" />
 
-                    <h6 class="font-weight-bold mt-4">Direccion del cliente</h6>
-                    <p>{{ $proyecto->direccion_cliente }}</p>
-                </div>
-            </div>
+                    <x-text size="h6" color="black" :value="__('Telefono')" class="mt-4" />
+                    @if ($proyecto->telefono_responsable != null)
+                        <x-text size="h6" style="font-weight-normal" color="black" :value="$proyecto->telefono_responsable" />
+                    @else
+                        {{ __('No registrado') }}
+                    @endif
+
+                    <x-text size="h6" color="black" :value="__('Dirección')" class="mt-4" />
+                    @if ($proyecto->direccion_cliente != null)
+                        <x-text size="h6" style="font-weight-normal" color="black" :value="$proyecto->direccion_cliente" />    
+                    @else
+                        {{ __('No registrada') }}
+                    @endif
+                </x-slot:body>
+
+                <x-slot:footer>
+                </x-slot:footer>
+            </x-card>
         </div>
     </div>
 </x-app-layout>

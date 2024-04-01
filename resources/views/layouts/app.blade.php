@@ -145,48 +145,59 @@
                         @foreach($modulos as $modulo)
                             <li class="nav-item">
                                 @if($modulo->ruta == null)
-                                    <a class="nav-link" href="#">
+                                    <x-nav-link href="#">
                                         <i class="nav-icon {{ $modulo->icono }}"></i>
                                         <p>
                                             {{ $modulo->modulo }}
                                             <i class="right fas fa-angle-left"></i>   
                                         </p>
-                                    </a>
+                                    </x-nav-link>
                                     <ul class="nav nav-treeview">
                                         @foreach($modulo->hijos as $submodulo)
                                             <li class="nav-item">
                                                 @if($submodulo->ruta == null)
-                                                    <a class="nav-link" href="#">
-                                                        <i class="nav-icon {{ $submodulo->icono }}"></i>
-                                                        <p>
-                                                            {{ $submodulo->modulo }}
-                                                            <i class="right fas fa-angle-left"></i>   
-                                                        </p>
-                                                    </a>
+                                                    @if (ucfirst(explode(".", Route::currentRouteName())[0]) == $submodulo->modulo)
+                                                        <x-nav-link href="#" class="active">
+                                                            <i class="nav-icon {{ $submodulo->icono }}"></i>
+                                                            <p>
+                                                                {{ $submodulo->modulo }}
+                                                                <i class="right fas fa-angle-left"></i>   
+                                                            </p>
+                                                        </x-nav-link>  
+                                                    @else
+                                                        <x-nav-link href="#">  
+                                                            <i class="nav-icon {{ $submodulo->icono }}"></i>
+                                                            <p>
+                                                                {{ $submodulo->modulo }}
+                                                                <i class="right fas fa-angle-left"></i>   
+                                                            </p>
+                                                        </x-nav-link>
+                                                    @endif
+                                                        
                                                     <ul class="nav nav-treeview">
                                                         @foreach($submodulo->hijos as $itemModulo)
                                                             <li class="nav-item">
-                                                                <a class="nav-link" href="{{ route($itemModulo->ruta) }}">
+                                                                <x-nav-link :href="route($itemModulo->ruta)" :active="request()->routeIs($itemModulo->ruta)">
                                                                     <i class="{{ $itemModulo->icono }} nav-icon"></i>
                                                                     <p>{{ $itemModulo->modulo }}</p>
-                                                                </a>
+                                                                </x-nav-link>
                                                             </li>
                                                         @endforeach
                                                     </ul>
                                                 @else
-                                                    <a class="nav-link" href="{{ route($submodulo->ruta) }}">
+                                                    <x-nav-link :href="route($submodulo->ruta)" :active="request()->routeIs($submodulo->ruta)">
                                                         <i class="{{ $submodulo->icono }} nav-icon"></i>
                                                         <p>{{ $submodulo->modulo }}</p>
-                                                    </a>
+                                                    </x-nav-link>
                                                 @endif
                                             </li>
                                         @endforeach
                                     </ul>
                                 @else
-                                    <a class="nav-link" href="{{ route($modulo->ruta) }}">
+                                    <x-nav-link :href="route($modulo->ruta)" :active="request()->routeIs($modulo->ruta)">                                    
                                         <i class="{{ $modulo->icono }} nav-icon"></i>
                                         <p>{{ $modulo->modulo }}</p>
-                                    </a>
+                                    </x-nav-link>
                                 @endif
                             </li>
                         @endforeach

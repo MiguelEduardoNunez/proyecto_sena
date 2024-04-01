@@ -37,20 +37,10 @@
                                         </div>
 
                                         <div class="col-2">
-                                            <a href="{{ route('stands.edit', $stand->id_stand) }}">
-                                                <i class="far fa-edit text-success" data-toggle="tooltip" title="Actualizar Stand"></i>
+                                            <a href="{{ route('stands.edit', $stand->id_stand) }}" class="text-success">
+                                                <i class="far fa-edit" data-toggle="tooltip" title="Actualizar Stand"></i>
                                             </a>
                                         </div>
-                                        
-                                        {{-- <div class="col-2">
-                                            <form method="POST" action="#">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn p-0">
-                                                    <i class="far fa-trash-alt text-danger" data-toggle="tooltip" title="Eliminar Stand"></i>
-                                                </button>
-                                            </form>
-                                        </div> --}}
                                     </div>
                                 </td>
                             </tr>

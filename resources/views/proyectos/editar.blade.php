@@ -53,9 +53,9 @@
                         </div>
 
                         <div class="form-group">
-                            <x-input-label :value="__('Responsable Proyecto')" for="responsable" />
-                            <x-input type="text" id="responsable" name="responsable" :value="$proyecto->responsable_proyecto" />
-                            <x-input-error :messages="$errors->get('responsable')" />
+                            <x-input-label :value="__('Responsable del Proyecto')" for="responsable_proyecto" />
+                            <x-input type="text" id="responsable_proyecto" name="responsable_proyecto" :value="$proyecto->responsable_proyecto" />
+                            <x-input-error :messages="$errors->get('responsable_proyecto')" />
                         </div>
 
                         <div class="form-group">

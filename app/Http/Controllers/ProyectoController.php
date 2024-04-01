@@ -37,7 +37,7 @@ class ProyectoController extends Controller
             'descripcion' => ['nullable', 'string'],
             'fecha_inicio' => ['required', 'date', 'before:fecha_fin'],
             'fecha_fin' => ['required', 'date', 'after:fecha_inicio'],
-            'responsable' => ['required', 'string', 'max:100'],
+            'responsable_proyecto' => ['required', 'string', 'max:100'],
             'correo' => ['required', 'email', 'max:50'],
             'telefono' => ['nullable', 'numeric'],
             'direccion' => ['nullable', 'string', 'max:100']
@@ -48,7 +48,7 @@ class ProyectoController extends Controller
         $proyecto->descripcion = $request->descripcion;
         $proyecto->fecha_inicio = $request->fecha_inicio;
         $proyecto->fecha_fin = $request->fecha_fin;
-        $proyecto->responsable_proyecto = $request->responsable;
+        $proyecto->responsable_proyecto = $request->responsable_proyecto;
         $proyecto->correo_responsable = $request->correo;
         $proyecto->telefono_responsable = $request->telefono;
         $proyecto->direccion_cliente = $request->direccion;
@@ -88,7 +88,7 @@ class ProyectoController extends Controller
             'descripcion' => ['nullable', 'string'],
             'fecha_inicio' => ['required', 'date', 'before:fecha_fin'],
             'fecha_fin' => ['required', 'date', 'after:fecha_inicio'],
-            'responsable' => ['required', 'string', 'max:100'],
+            'responsable_proyecto' => ['required', 'string', 'max:100'],
             'correo' => ['required', 'email', 'max:50'],
             'telefono' => ['nullable', 'numeric'],
             'direccion' => ['nullable', 'string', 'max:100']
@@ -99,7 +99,7 @@ class ProyectoController extends Controller
         $proyecto->descripcion = $request->descripcion;
         $proyecto->fecha_inicio = $request->fecha_inicio;
         $proyecto->fecha_fin = $request->fecha_fin;
-        $proyecto->responsable_proyecto = $request->responsable;
+        $proyecto->responsable_proyecto = $request->responsable_proyecto;
         $proyecto->correo_responsable = $request->correo;
         $proyecto->telefono_responsable = $request->telefono;
         $proyecto->direccion_cliente = $request->direccion;
