@@ -1,34 +1,37 @@
 <x-app-layout>
-
+    <x-slot:page>
+        {{ __('Registrar Empleados') }}
+    </x-slot>
     <div class="row justify-content-center">
         <div class="col-12 col-md-10 col-lg-6">
-            <div class="card card-outline card-primary shadow">
-                <div class="card-header">
-                    <h4 class="text-primary text-center font-weight-bold">Registrar Empleado</h4>
-                </div>
-                <form method="POST" action="{{ route('empleados.store') }}">
-                    @csrf
-                    <div class="card-body">
+            <form method="POST" action="{{ route('empleados.store') }}">
+                @csrf
+                <x-card>
 
+                    <x-slot:header>
+                        <x-text :value="__('Registrar Empleados')" class="text-center" />
+                    
+                    </x-slot:header>
+                    <x-slot:body>
                         <div class="form-group">
-                            <label for="empleado"><span class="text-danger" data-toggle="tooltip" title="Campo Obligatorio">*</span> Empleado</label>
-                            <input type="text" class="form-control @error('empleado') is-invalid @enderror"
-                                id="empleado" name="empleado" value="{{ old('empleado') }}">
-                            @error('empleado')
-                                <div class="invalid-feedback">
-                                    {{ $message }}
-                                </div>
-                            @enderror
+
+                            <x-input-label :value="__('Empleado')" for="empleado" />
+                            <x-input type="text" id="empleado" name="empleado" :value="old('empleado')" />
+                            <x-input-error :messages="$errors->get('empleado')" />
                         </div>
 
-                    </div>
+                    </x-slot:body>
 
-                    <div class="card-footer bg-transparent mb-2">
-                        <button type="submit"
-                            class="btn btn-outline-primary btn-block font-weight-bold">Registrar</button>
-                    </div>
-                </form>
-            </div>
+                    <x-slot:footer>
+                        <x-button type="submit">
+                            {{ __('Registrar') }}
+                        </x-button>
+
+                    </x-slot:footer>
+
+                </x-card>
+            </form>
         </div>
     </div>
+
 </x-app-layout>
