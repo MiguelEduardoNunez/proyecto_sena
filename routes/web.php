@@ -11,6 +11,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProyectoController;
 use App\Http\Controllers\ProyectoElementoController;
 use App\Http\Controllers\StandController;
+use App\Http\Controllers\TipoNovedadController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -58,6 +59,7 @@ Route::resource('/empleados', EmpleadoController::class);
 Route::resource('/novedades', NovedadController::class);
 
 Route::resource('/items', ItemController::class);
+Route::resource('/tipo_novedades',TipoNovedadController::class);
 
 
 require __DIR__.'/auth.php';
