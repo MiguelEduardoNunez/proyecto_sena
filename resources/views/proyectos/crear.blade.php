@@ -38,7 +38,7 @@
                         <div class="form-group">
                             <x-input-label :value="__('Fecha Fin')" for="fecha_fin" />
                             <x-input-group id="fecha_fin" data-target-input="nearest">
-                                <x-input type="text" class="datetimepicker-input" name="fecha_fin" data-target="#fecha_fin" />
+                                <x-input type="text" class="datetimepicker-input" name="fecha_fin" :value="old('fecha_fin')" data-target="#fecha_fin" />
                                 <x-slot:icon data-target="#fecha_fin" data-toggle="datetimepicker">
                                     <i class="fas fa-calendar text-primary"></i>
                                 </x-slot:icon>

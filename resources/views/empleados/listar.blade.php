@@ -22,12 +22,11 @@
                 </x-slot:header>
 
                 <x-slot:body class="table-responsive p-0" style="height: 400px;">
-                    <x-data-table :headers="['#', 'Empleado','Acciones']">
+                    <x-data-table :headers="['#', 'Empleado', 'Acciones']">
                         @foreach ($empleados as $empleado)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
-                                <td>{{ $empleado->empleado}}</td>
-                                
+                                <td>{{ $empleado->empleado }}</td>
                                 <td class="text-center">
                                     <div class="row justify-content-center align-items-center">
                                         <div class="col-2">
@@ -37,20 +36,10 @@
                                         </div>
 
                                         <div class="col-2">
-                                            <a href="{{ route('empleados.edit', $empleado->id_empleado) }}">
-                                                <i class="far fa-edit text-success" data-toggle="tooltip" title="Actualizar Empleado"></i>
+                                            <a href="{{ route('empleados.edit', $empleado->id_empleado) }}" class="text-success">
+                                                <i class="far fa-edit" data-toggle="tooltip" title="Actualizar Empleado"></i>
                                             </a>
                                         </div>
-                                        
-                                        {{-- <div class="col-2">
-                                            <form method="POST" action="#">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn p-0">
-                                                    <i class="far fa-trash-alt text-danger" data-toggle="tooltip" title="Eliminar Stand"></i>
-                                                </button>
-                                            </form>
-                                        </div> --}}
                                     </div>
                                 </td>
                             </tr>
@@ -60,7 +49,7 @@
 
                 <x-slot:footer>
                     <div class="float-right">
-                        {{-- {{ $empleados->links() }} --}}
+                        {{ $empleados->links() }}
                     </div>
                 </x-slot:footer>
             </x-card>

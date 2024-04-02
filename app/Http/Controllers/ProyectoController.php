@@ -35,7 +35,7 @@ class ProyectoController extends Controller
         $validaciones = $request->validate([
             'proyecto' => ['required', 'string', 'max:200', 'unique:proyectos,proyecto'],
             'descripcion' => ['nullable', 'string'],
-            'fecha_inicio' => ['required', 'date', 'before:fecha_fin'],
+            'fecha_inicio' => ['required', 'date'],
             'fecha_fin' => ['required', 'date', 'after:fecha_inicio'],
             'responsable_proyecto' => ['required', 'string', 'max:100'],
             'correo' => ['required', 'email', 'max:50'],
@@ -86,7 +86,7 @@ class ProyectoController extends Controller
         $validaciones = $request->validate([
             'proyecto' => ['required', 'string', 'max:200', Rule::unique('proyectos')->ignore($id, 'id_proyecto')],
             'descripcion' => ['nullable', 'string'],
-            'fecha_inicio' => ['required', 'date', 'before:fecha_fin'],
+            'fecha_inicio' => ['required', 'date'],
             'fecha_fin' => ['required', 'date', 'after:fecha_inicio'],
             'responsable_proyecto' => ['required', 'string', 'max:100'],
             'correo' => ['required', 'email', 'max:50'],
