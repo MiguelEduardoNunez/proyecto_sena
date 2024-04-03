@@ -15,9 +15,10 @@ class ItemController extends Controller
      */
     public function index()
     {
-        $items = Item::all();
+        $items = Item::orderBy('item', 'asc')->paginate();
 
         return view('items.listar', ['items' => $items]);
+
     }
 
     /**
@@ -37,8 +38,8 @@ class ItemController extends Controller
     public function store(Request $request)
     {
         $validaciones = $request->validate([
-            'subcategoria' => ['required', 'numeric'],
-            'item' => ['required', 'string', 'max:100'],
+            'subcategoria' => ['required', 'numeric',],
+            'item' => ['required', 'string', 'max:100', 'unique:items,item'],
             'descripcion' => ['nullable', 'string']
         ]);
 
@@ -49,7 +50,6 @@ class ItemController extends Controller
         $item->save();
 
         Alert::success('Registrado', 'Item con éxito');
-
         return redirect(route('items.index'));
     }
 
@@ -58,7 +58,9 @@ class ItemController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $item = Item::find($id);
+
+        return view('items.mostrar', ['item' => $item]);
     }
 
     /**
@@ -66,7 +68,10 @@ class ItemController extends Controller
      */
     public function edit(string $id)
     {
-        
+        $item = Item::find($id);
+        $categorias = Categoria::all();
+        $subcategorias = Subcategoria::all();
+        return view('items.editar', ['item'=>$item, 'subcategorias'=>$subcategorias, 'categorias'=>$categorias]);
     }
 
     /**
@@ -74,7 +79,21 @@ class ItemController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $validaciones = $request->validate([
+            'subcategoria' => ['required', 'numeric'],
+            'item' => ['required', 'string', 'max:100', 'unique:items,item'],
+            'descripcion' => ['nullable', 'string']
+        ]);
+
+        $item = Item::find($id);
+        $item->subcategoria_id = $request->subcategoria;
+        $item->item = $request->item;
+        $item->descripcion = $request->descripcion;
+        $item->save();
+
+        Alert::success('Registrado', 'Item con éxito');
+        return redirect(route('items.index'));
+
     }
 
     /**

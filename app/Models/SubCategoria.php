@@ -17,7 +17,7 @@ class Subcategoria extends Model
     */
     public function item(): HasMany
     {
-        return $this->hasMany(Item::class);
+        return $this->hasMany(Item::class, 'subcategoria_id', 'id_subcategoria');
     }
 
     
@@ -26,7 +26,7 @@ class Subcategoria extends Model
     */
     public function categoria(): BelongsTo
     {
-        return $this->belongsTo(Categoria::class);
+        return $this->belongsTo(Categoria::class, 'categoria_id', 'id_categoria');
     }
 
 }

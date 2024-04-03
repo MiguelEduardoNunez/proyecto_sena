@@ -20,7 +20,7 @@ class Item extends Model
     */
     public function subcategoria(): BelongsTo
     {
-        return $this->belongsTo(Subcategoria::class);
+        return $this->belongsTo(Subcategoria::class, 'subcategoria_id', 'id_subcategoria');
     }
 
     /**
