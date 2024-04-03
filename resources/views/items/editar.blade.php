@@ -19,16 +19,23 @@
 
                     <x-slot:body>
 
-                        <div class="form-group">
-                            <x-input-label :value="__('Categoria')" for="categoria" />
-                            <x-select :elements="$categorias" identifier="id_categoria" label="categoria"  id="categoria_id" name="categoria" />
-                            <x-input-error :messages="$errors->get('categoria')" />
-                        </div>
+                    <div class="form-group">
+                        <x-input-label :value="__('Categoria')" for="categoria" />
+                        <x-select :elements="$categorias" identifier="id_categoria" label="categoria"  id="categoria_id" name="categoria"> 
+
+                            <option value="{{ $item->subcategoria->categoria->categoria }}" selected>{{ $item->subcategoria->categoria->categoria }}</option> 
+                        
+                        </x-select>
+                       
+                        <x-input-error :messages="$errors->get('categoria')" />
+                    </div>
                     
 
                         <div class="form-group">
                             <x-input-label :value="__('Subcategoria')" for="subcategoria" />
-                            <x-select :elements="$subcategorias" identifier="id_subcategoria" label="subcategoria" id="subcategoria" name="subcategoria" />
+                            <x-select :elements="$subcategorias" identifier="id_subcategoria" label="subcategoria" id="subcategoria" name="subcategoria">
+                                <option value="{{ $item->subcategoria->subcategoria }}" selected>{{ $item->subcategoria->subcategoria }}</option>
+                            </x-select>
                             <x-input-error :messages="$errors->get('subcategoria')" />
                         </div>
 
