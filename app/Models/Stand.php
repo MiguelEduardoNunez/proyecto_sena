@@ -15,7 +15,6 @@ class Stand extends Model
      *
      * @var string
      */
-    
     protected $table = 'stands';
 
 
@@ -24,16 +23,21 @@ class Stand extends Model
      *
      * @var string
      */
-
     protected $primaryKey = 'id_stand';
 
 
+    /**
+     * Names of the timestamps.
+     */
     const CREATED_AT='creado_en';
     const UPDATED_AT='actualizado_en';
 
 
+    /**
+     * Relationships associated with the model.
+     */
     public function elemento(): HasMany
     {
-        return $this->hasMany(Elemento::class);
+        return $this->hasMany(Elemento::class, 'stand_id', 'id_stand');
     }
 }
