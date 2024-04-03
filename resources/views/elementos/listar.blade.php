@@ -27,7 +27,7 @@
                         </div>
 
                         <div class="col-auto">
-                            <a href="{{ route('proyectos.elementos.create', $proyecto) }}">
+                            <a href="{{ route('proyectos.elementos.create', $proyecto->id_proyecto) }}">
                                 <i class="fas fa-plus-circle fa-2x" data-toggle="tooltip" title="Registrar Elemento"></i>
                             </a>
                         </div>
@@ -35,24 +35,25 @@
                 </x-slot:header>
 
                 <x-slot:body class="table-responsive p-0" style="height: 400px;">
-                    <x-data-table :headers="['#', 'Item', 'Marca', 'Modelo', 'Serial', 'Acciones']">
+                    <x-data-table :headers="['#', 'Proyecto', 'Item', 'Marca', 'Modelo', 'Serial', 'Acciones']">
                         @foreach ($elementos as $elemento)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
+                                <td>{{ $proyecto->proyecto }}</td>
                                 <td>{{ $elemento->item->item }}</td>
                                 <td>{{ $elemento->marca }}</td>
                                 <td>{{ $elemento->modelo }}</td>
                                 <td>{{ $elemento->serial }}</td>
                                 <td class="text-center">
                                     <div class="row justify-content-center align-items-center">
-                                        <div class="col-2">
-                                            <a href="#">
+                                        <div class="col-3">
+                                            <a href="{{ route('proyectos.elementos.show', [$proyecto->id_proyecto, $elemento->id_elemento]) }}">
                                                 <i class="far fa-eye" data-toggle="tooltip" title="Detalles Elemento"></i>
                                             </a>
                                         </div>
 
-                                        <div class="col-2">
-                                            <a href="#" class="text-success">
+                                        <div class="col-3">
+                                            <a href="{{ route('proyectos.elementos.edit', [$proyecto->id_proyecto, $elemento->id_elemento]) }}" class="text-success">
                                                 <i class="far fa-edit" data-toggle="tooltip" title="Actualizar Elemento"></i>
                                             </a>
                                         </div>
