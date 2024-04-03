@@ -10,6 +10,8 @@ class TipoNovedad extends Model
 {
     protected $table = 'tipos_novedades';
     protected $primaryKey = 'id_tipo_novedad';
+    const CREATED_AT='creado_en';
+    const UPDATED_AT='actualizado_en';
 
     /**
     * Get the comments for the blog post.
