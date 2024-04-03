@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('identificacion', '15');    
             $table->string('nombres', '100');
             $table->string('telefono', '10')->nullable();
-            $table->string('correo', '50');
+            $table->string('email', '50');
             $table->string('password');
             $table->boolean('estado')->default(true);
             $table->timestamp('creado_en');

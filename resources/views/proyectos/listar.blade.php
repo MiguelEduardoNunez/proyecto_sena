@@ -45,7 +45,7 @@
                                         </div>
 
                                         <div class="col-2">
-                                            <a href="#" class="text-info">
+                                            <a href="{{ route('proyectos.elementos.index', $proyecto->id_proyecto) }}" class="text-info">
                                                 <i class="fas fa-tools" data-toggle="tooltip" title="Gestionar Elementos"></i>
                                             </a>
                                         </div>
