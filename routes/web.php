@@ -4,6 +4,7 @@ use App\Http\Controllers\Administracion\ModuloController;
 use App\Http\Controllers\Administracion\PerfilController;
 use App\Http\Controllers\Administracion\PermisoController;
 use App\Http\Controllers\Administracion\UsuarioController;
+use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\NovedadController;
 use App\Http\Controllers\EmpleadoController;
 use App\Http\Controllers\ItemController;
@@ -11,6 +12,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProyectoController;
 use App\Http\Controllers\ProyectoElementoController;
 use App\Http\Controllers\StandController;
+use App\Models\Categoria;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -58,6 +60,8 @@ Route::resource('/empleados', EmpleadoController::class);
 Route::resource('/novedades', NovedadController::class);
 
 Route::resource('/items', ItemController::class);
+
+Route::resource('/categorias', CategoriaController::class);
 
 
 require __DIR__.'/auth.php';
