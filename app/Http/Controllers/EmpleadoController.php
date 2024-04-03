@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Empleado;
 use Illuminate\Http\Request;
-use PHPUnit\Event\Emitter;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class EmpleadoController extends Controller
@@ -14,7 +13,7 @@ class EmpleadoController extends Controller
      */
     public function index()
     {
-        $empleados = Empleado::all();
+        $empleados = Empleado::orderBy('empleado', 'asc')->paginate(100);
 
         return view('empleados.listar', ['empleados' => $empleados]);
     }
@@ -24,9 +23,7 @@ class EmpleadoController extends Controller
      */
     public function create()
     {
-        $empleados = Empleado::all();
-
-        return view('empleados.crear', ['empleados' => $empleados]);
+        return view('empleados.crear');
     }
 
     /**
@@ -34,10 +31,8 @@ class EmpleadoController extends Controller
      */
     public function store(Request $request)
     {
-        
         $validaciones = $request->validate([
-            'empleado' => ['required','string','max:100']
-        
+            'empleado' => ['required', 'string', 'max:100']
         ]);
 
         $empleado = new Empleado();
@@ -45,7 +40,6 @@ class EmpleadoController extends Controller
         $empleado->save();
 
         Alert::success('Registrado', 'Empleado con éxito');
-
         return redirect(route('empleados.index'));
     }
 
@@ -54,9 +48,9 @@ class EmpleadoController extends Controller
      */
     public function show(string $id)
     {
-    
         $empleado = Empleado::find($id);
-        return view ('empleados.mostrar',['empleado'=>$empleado]);
+
+        return view('empleados.mostrar', ['empleado' => $empleado]);
     }
 
     /**
@@ -75,16 +69,14 @@ class EmpleadoController extends Controller
     public function update(Request $request, string $id)
     {
         $validaciones = $request->validate([
-            'empleado' => ['required','string','max:100']
-        
+            'empleado' => ['required', 'string', 'max:100']
         ]);
 
-        $empleado =  Empleado::find($id);
+        $empleado = Empleado::find($id);
         $empleado->empleado = $request->empleado;
         $empleado->save();
 
         Alert::success('Actualizado', 'Empleado con éxito');
-
         return redirect(route('empleados.index'));
     }
 
