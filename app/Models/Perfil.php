@@ -27,11 +27,16 @@ class Perfil extends Model
 
     protected $primaryKey = 'id_perfil';
 
-
+    /**
+     * Names of the timestamps.
+     */
     const CREATED_AT = 'creado_en';
     const UPDATED_AT = 'actualizado_en';
 
-
+    /**
+     * 
+    * Relationships associated with the model.
+    */
     public function usuario(): HasMany
     {
         return $this->hasMany(Usuario::class, 'perfil_id', 'id_perfil');

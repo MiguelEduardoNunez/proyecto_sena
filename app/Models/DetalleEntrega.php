@@ -8,22 +8,36 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class DetalleEntrega extends Model
 {
+    use HasFactory;
+
+    /**
+     * The table associated with the model.
+     *
+     * @var string
+     */
     protected $table = 'detalles_entregas';
+        /**
+     * The primary key associated with the table.
+     *
+     * @var string
+     */
     protected $primaryKey = 'id_detalle_entrega';
 
     /**
-    * Get the post that owns the comment.
-    */
+     * Names of the timestamps.
+     */
+    const CREATED_AT='creado_en';
+    const UPDATED_AT='actualizado_en';
+    /**
+     * Relationships associated with the model.
+     */
     public function entregaElemento(): BelongsTo
     {
-        return $this->belongsTo(EntregaElemento::class);
+        return $this->belongsTo(EntregaElemento::class, 'entrega_elemento_id', 'id_entrega_elemento');
     }
-
-    /**
-    * Get the post that owns the comment.
-    */
+    
     public function elemento(): BelongsTo
     {
-        return $this->belongsTo(Elemento::class);
+        return $this->belongsTo(Elemento::class, 'elemento_id', 'id_elemento');
     }
 }

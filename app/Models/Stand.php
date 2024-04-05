@@ -34,8 +34,9 @@ class Stand extends Model
 
 
     /**
-     * Relationships associated with the model.
-     */
+     * 
+    * Relationships associated with the model.
+    */
     public function elemento(): HasMany
     {
         return $this->hasMany(Elemento::class, 'stand_id', 'id_stand');
