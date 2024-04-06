@@ -9,13 +9,13 @@ use Illuminate\View\View;
 
 class AppLayout extends Component
 {
-
     public function modulos()
     {
         $modulos = Modulo::permisos(null, Auth::user()->id_usuario);
 
         return $modulos;
     }
+    
     /**
      * Get the view / contents that represents the component.
      */
