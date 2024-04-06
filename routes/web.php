@@ -11,6 +11,7 @@ use App\Http\Controllers\ItemController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProyectoController;
 use App\Http\Controllers\ProyectoElementoController;
+use App\Http\Controllers\CategoriaSubcategoriaController;
 use App\Http\Controllers\StandController;
 use App\Models\Categoria;
 use App\Http\Controllers\TipoNovedadController;
@@ -64,6 +65,7 @@ Route::resource('/items', ItemController::class);
 Route::resource('/tipo_novedades',TipoNovedadController::class);
 
 Route::resource('/categorias', CategoriaController::class);
+Route::resource('/categorias.subcategorias',CategoriaSubcategoriaController::class);
 
 
 require __DIR__.'/auth.php';

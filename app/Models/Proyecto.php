@@ -2,31 +2,46 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Proyecto extends Model
-{
+{  
+      use HasFactory;
+
+    /**
+     * The table associated with the model.
+     *
+     * @var string
+     */
     protected $table = 'proyectos';
+
+    /**
+     * The primary key associated with the table.
+     *
+     * @var string
+     */
     protected $primaryKey = 'id_proyecto';
+
+    /**
+     * Names of the timestamps.
+     */
     const CREATED_AT = 'creado_en';
     const UPDATED_AT = 'actualizado_en';
 
-
     /**
-    * Get the comments for the blog post.
+     * 
+    * Relationships associated with the model.
     */
     public function elemento(): HasMany
     {
-        return $this->hasMany(Elemento::class);
+        return $this->hasMany(Elemento::class, 'proyecto_id', 'id_proyecto');
     }
 
-    /**
-    * Get the comments for the blog post.
-    */
     public function entregaElemento(): HasMany
     {
-        return $this->hasMany(EntregaElemento::class);
+        return $this->hasMany(EntregaElemento::class, 'proyecto_id', 'id_proyecto' );
     }   
 
     

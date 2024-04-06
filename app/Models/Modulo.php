@@ -28,11 +28,16 @@ class Modulo extends Model
 
     protected $primaryKey = 'id_modulo';
 
-
+    /**
+     * Names of the timestamps.
+     */
     const CREATED_AT = 'creado_en';
     const UPDATED_AT = 'actualizado_en';
 
-
+    /**
+     * 
+    * Relationships associated with the model.
+    */
     public function moduloHijo(): HasMany
     {
         return $this->hasMany(Modulo::class, 'modulo_id', 'id_modulo');

@@ -69,8 +69,15 @@ class ItemController extends Controller
     public function edit(string $id)
     {
         $item = Item::find($id);
-        $categorias = Categoria::all();
-        $subcategorias = Subcategoria::all();
+        $categorias = Categoria::where('id_categoria', '!=', $item->subcategoria->categoria->id_categoria)
+        ->orderBy('categoria', 'asc')
+        ->get();
+
+        $subcategorias = Subcategoria::where('id_subcategoria', '!=',$item->subcategoria->id_subcategoria)
+        ->orderBy('subcategoria', 'asc')
+        ->get();
+
+
         return view('items.editar', ['item'=>$item, 'subcategorias'=>$subcategorias, 'categorias'=>$categorias]);
     }
 
