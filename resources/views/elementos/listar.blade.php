@@ -52,6 +52,12 @@
                                             </a>
                                         </div>
 
+                                        <div class="col-2">
+                                            <a href="{{ route('elementos.novedades.index', $elemento->id_elemento) }}" class="text-info">
+                                                <i class="fas fa-tools" data-toggle="tooltip" title="Gestionar Novedades"></i>
+                                            </a>
+                                        </div>
+
                                         <div class="col-3">
                                             <a href="{{ route('proyectos.elementos.edit', [$proyecto->id_proyecto, $elemento->id_elemento]) }}" class="text-success">
                                                 <i class="far fa-edit" data-toggle="tooltip" title="Actualizar Elemento"></i>

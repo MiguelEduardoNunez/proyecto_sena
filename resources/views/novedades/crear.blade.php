@@ -1,114 +1,112 @@
 <x-app-layout>
+    <x-slot:page>
+        {{ __('Registrar Novedad') }}
+    </x-slot>
 
-    <div class="row justify-content-center">
+    <div class="row">
+        <div class="col-1 d-none d-lg-flex">
+            <a href="{{ route('elementos.novedades.index', $elemento->id_elemento) }}">
+                <i class="far fa-arrow-alt-circle-left fa-2x" data-toggle="tooltip" title="Regresar"></i>
+            </a>
+        </div>
+        <div class="col-12 col-md-10 col-lg-6 offset-md-1 offset-lg-2">
+            <form method="POST" action="{{ route('elementos.novedades.store', $elemento->id_elemento) }}">
+                @csrf
+                <x-card>
+                    <x-slot:header>
+                        <x-text :value="__('Registrar Novedad')" class="text-center" />
+                    </x-slot:header>   
 
-        <div class="col-12 col-md-10 col-lg-6">
-            <div class="card card-outline card-primary shadow">
-                <div class="card-header">
-                    <h4 class="text-primary text-center font-weight-bold">Registrar Novedad</h4>
-                </div>
-
-                <form method="POST" action="{{ route('novedades.store') }}">
-                    @csrf
-                    <div class="card-body">
+                    <x-slot:body>
 
                         <div class="form-group">
-                            <label><span class="text-danger" data-toggle="tooltip" title="Campo Obligatorio">*</span> Tipo novedad</label>
-                            <select class="form-control @error('tipo_novedad') is-invalid @enderror" id="tipo_novedad_id" name="tipo_novedad_id">
-                                <option selected disabled></option>
-                                @foreach ($tipos_novedades as $tipo_novedad)
-                                <option value="{{$tipo_novedad->id_tipo_novedad}}">{{$tipo_novedad->tipo_novedad}}</option>
-                                @endforeach
-                            </select>
-                            @error('perfil_id')
-                            <div class="invalid-feedback">
-                                {{ $message }}
-                            </div>
-                            @enderror
+                            <x-input-label :value="__('Proyecto')" for="proyecto" :obligatorio="false"/>
+                            <x-input type="text" id="proyecto" name="proyecto" :value="$elemento->proyecto->proyecto" disabled />
                         </div>
 
                         <div class="form-group">
-                            <label><span class="text-danger" data-toggle="tooltip" title="Campo Obligatorio">*</span> Elemento</label>
-                            <select class="form-control @error('elemento') is-invalid @enderror" id="elemento_id" name="elemento_id">
-                                <option selected disabled></option>
-                                @foreach ($elementos as $elemento)
-                                <option value="{{$elemento->id_elemento}}">{{$elemento->marca}}</option>
-                                @endforeach
-                            </select>
-                            @error('elemento_id')
-                            <div class="invalid-feedback">
-                                {{ $message }}
-                            </div>
-                            @enderror
+                            <x-input-label :value="__('Item')" for="elemento" :obligatorio="false"/>
+                            <x-input type="text" id="elemento" name="elemento" :value="$elemento->item->item" disabled />
                         </div>
 
                         <div class="form-group">
-                            <label><span class="text-danger" data-toggle="tooltip" title="Campo Obligatorio">*</span> Empleado</label>
-                            <select class="form-control @error('empleado') is-invalid @enderror" id="empleado_id" name="empleado_id">
-                                <option selected disabled></option>
-                                @foreach ($empleados as $empleado)
-                                <option value="{{$empleado->id_empleado}}">{{$empleado->empleado}}</option>
-                                @endforeach
-                            </select>
-                            @error('empleado_id')
-                            <div class="invalid-feedback">
-                                {{ $message }}
-                            </div>
-                            @enderror
-                        </div>
-
-               
-
-                        <div class="form-group">
-                            <label for="novedad"><span class="text-danger" data-toggle="tooltip" title="Campo Obligatorio">*</span> Novedad</label>
-                            <input type="text" class="form-control @error('novedad') is-invalid @enderror" id="novedad" name="novedad" value="{{ old('novedad') }}">
-                            @error('novedad')
-                            <div class="invalid-feedback">
-                                {{ $message }}
-                            </div>
-                            @enderror
+                            <x-input-label :value="__('Marca')" for="elemento" :obligatorio="false"/>
+                            <x-input type="text" id="elemento" name="elemento" :value="$elemento->marca" disabled />
                         </div>
 
                         <div class="form-group">
-                            <label for="fecha_reporte"><span class="text-danger" data-toggle="tooltip" title="Campo Obligatorio">*</span> Fecha reporte</label>
-                            <input type="date" class="form-control @error('fecha_reporte') is-invalid @enderror" id="fecha_reporte" name="fecha_reporte" value="{{ old('fecha_reporte') }}">
-                            @error('fecha_reporte')
-                            <div class="invalid-feedback">
-                                {{ $message }}
-                            </div>
-                            @enderror
+                            <x-input-label :value="__('Modelo')" for="elemento" :obligatorio="false"/>
+                            <x-input type="text" id="elemento" name="elemento" :value="$elemento->modelo" disabled />
                         </div>
 
                         <div class="form-group">
-                            <label for="fecha_cierre"><span class="text-danger" data-toggle="tooltip" title="Campo Obligatorio">*</span> Fecha cierre</label>
-                            <input type="date" class="form-control @error('fecha_cierre') is-invalid @enderror" id="fecha_cierre" name="fecha_cierre" value="{{ old('fecha_cierre') }}">
-                            @error('fecha_cierre')
-                            <div class="invalid-feedback">
-                                {{ $message }}
-                            </div>
-                            @enderror
+                            <x-input-label :value="__('Tipos Novedades')" for="tipo_novedad" />
+                            <x-select :elements="$tipos_novedades" identifier="id_tipo_novedad" label="tipo_novedad"
+                                id="tipo_novedad" name="tipo_novedad">
+                                <option selected disabled>{{ __('Seleccionar') }}</option>
+                            </x-select>
+                            <x-input-error :messages="$errors->get('tipo_novedad')" />
                         </div>
 
+
+                        <div class="form-group">
+                            <x-input-label :value="__('Empleados')" for="empleado" />
+                            <x-select :elements="$empleados" identifier="id_empleado" label="empleado" id="empleado"
+                                name="empleado">
+                                <option selected disabled>{{ __('Seleccionar') }}</option>
+                            </x-select>
+                            <x-input-error :messages="$errors->get('empleado')" />
+                        </div>
 
                         
-
-                        <div class="card-footer bg-transparent mb-2">
-                            <button type="submit" class="btn btn-outline-primary btn-block font-weight-bold">Registrar</button>
+                        <div class="form-group">
+                            <x-input-label :value="__('Novedad')" for="novedad" />
+                            <x-text-area id="novedad" name="novedad" :value="old('novedad')" />
+                            <x-input-error :messages="$errors->get('novedad')" />
                         </div>
-                    </div>
 
-                </form>
+                        <div class="form-group">
+                            <x-input-label :value="__('Fecha Reporte')" for="fecha_reporte" />
+                            <x-input-group id="fecha_reporte" data-target-input="nearest">
+                                <x-input type="text" class="datetimepicker-input" name="fecha_reporte"
+                                    :value="old('fecha_reporte')" data-target="#fecha_reporte" />
+                                <x-slot:icon data-target="#fecha_reporte" data-toggle="datetimepicker">
+                                    <i class="fas fa-calendar text-primary"></i>
+                                </x-slot:icon>
+                            </x-input-group>
+                            <x-input-error :messages="$errors->get('fecha_reporte')" />
+                        </div>
 
-            </div>
+                        <div class="form-group">
+                            <x-input-label :value="__('Fecha Cierre')" for="fecha_cierre" />
+                            <x-input-group id="fecha_cierre" data-target-input="nearest">
+                                <x-input type="text" class="datetimepicker-input" name="fecha_cierre"
+                                    :value="old('fecha_cierre')" data-target="#fecha_cierre" />
+                                <x-slot:icon data-target="#fecha_cierre" data-toggle="datetimepicker">
+                                    <i class="fas fa-calendar text-primary"></i>
+                                </x-slot:icon>
+                            </x-input-group>
+                            <x-input-error :messages="$errors->get('fecha_cierre')" />
+                        </div>
+                    </x-slot:body>
+
+                    <x-slot:footer>
+                        <x-button type="submit">
+                            {{ __('Registrar') }}
+                        </x-button>
+                    </x-slot:footer>
+
+                </x-card>
+            </form>
         </div>
-
-
-
     </div>
-
-
-
-
-
 </x-app-layout>
 
+<script>
+    // Date picker
+    $("#fecha_reporte, #fecha_cierre").datetimepicker({
+                format: 'YYYY/MM/DD',
+                locale: 'es'
+            });
+
+</script>
