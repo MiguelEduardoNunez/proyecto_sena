@@ -41,6 +41,12 @@
                                                 <i class="far fa-edit" data-toggle="tooltip" title="Actualizar Categoria"></i>
                                             </a>
                                         </div>
+
+                                        <div class="col-2">
+                                            <a href="{{ route('categorias.subcategorias.index',$categoria->id_categoria)}}" class="text-info">
+                                                <i class="fas fa-tools" data-toggle="tooltip" title="Gestionar Subcategorias"></i>
+                                            </a>
+                                        </div>
                                     </div>
                                 </td>
                             </tr>
