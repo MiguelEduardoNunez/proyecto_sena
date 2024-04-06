@@ -58,4 +58,9 @@ class Elemento extends Model
     {
         return $this->hasMany(Novedad::class, 'elemento_id', 'id_elemento');
     }
+    
+    public function detalleEntrega(): HasOne
+    {
+        return $this->hasOne(DetalleEntrega::class, 'elemento_id', 'id_elemento');
+    }
 }

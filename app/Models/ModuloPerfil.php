@@ -27,11 +27,16 @@ class ModuloPerfil extends Model
 
     protected $primaryKey = 'modulo_id';
 
-
+    /**
+     * Names of the timestamps.
+     */
     const CREATED_AT = 'creado_en';
     const UPDATED_AT = 'actualizado_en';
 
-
+    /**
+     * 
+    * Relationships associated with the model.
+    */
     public function modulo(): BelongsTo
     {
         return $this->belongsTo(Modulo::class, 'modulo_id', 'id_modulo');
