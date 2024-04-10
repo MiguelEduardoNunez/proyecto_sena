@@ -1,83 +1,79 @@
 <x-app-layout>
     <x-slot:page>
-        {{ __('Gestionar Elementos') }}
+        {{ __('Gestionar Novedades') }}
     </x-slot>
     <div class="row">
         <div class="col-12">
-            <div class="card card-outline card-primary shadow">
-                <div class="card-header">
+            <x-card>
+                <x-slot:header>
                     <div class="row align-items-center">
-                        <div class="col-12 col-md-8 col-lg-9">
-                            <h4 class="text-primary font-weight-bold">Gestionar Novedad</h4>
+                        <div class="col-auto d-none d-lg-flex">
+                            <a href="{{ route('proyectos.elementos.index', $proyecto->id_proyecto) }}">
+                                <i class="far fa-arrow-alt-circle-left fa-2x" data-toggle="tooltip" title="Regresar"></i>
+                            </a>
                         </div>
-                        <div class="col-12 col-md-4 col-lg-3">
-                            <div class="card-tools">
-                                <div class="input-group input-group">
-                                    <input type="text" name="table_search" class="form-control" placeholder="Buscar">
-                                    <div class="input-group-append">
-                                        <button type="submit" class="btn btn-primary">
-                                            <i class="fas fa-search"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
+                        <div class="col-10 col-md-7 col-lg-8">
+                            <x-text :value="__('Gestionar Novedades')" />
+                        </div>
+                        <div class="col-10 col-md-4 col-lg-3">
+                            <x-input-group>
+                                <x-input type="text" id="searchertable" name="searcher" placeholder="Buscar" />
+                                <x-slot:icon>
+                                    <i class="fas fa-search text-primary"></i>
+                                </x-slot:icon>
+                            </x-input-group>
+                        </div>
+
+                        <div class="col-auto">
+                            <a href="{{ route('elementos.novedades.create', $elemento->id_elemento) }}">
+                                <i class="fas fa-plus-circle fa-2x" data-toggle="tooltip" title="Registrar Novedad"></i>
+                            </a>
                         </div>
                     </div>
-                </div>
-                
-                <div class="card-body table-responsive p-0" style="height: 400px;">
-                    <table class="table table-head-fixed text-nowrap">
+
+                </x-slot:header>
+
+                <x-slot:body class="table-responsive p-0" style="height: 400px;">
+                    <x-data-table :headers="['#', 'Item', 'Proyecto', 'Novedad', 'Fecha Reporte', 'Fecha Cierre', 'Acciones']">
+                        @foreach ($novedades as $novedad)
                         <tr>
-                            <th>#</th>
-                            <th>Novedad</th>
+                            <td>{{ $loop->iteration }}</td>
+                            <td>{{ $elemento->item->item }}</td>
+                            <td>{{ $elemento->proyecto->proyecto }}</td>
+                            <td>{{ $novedad->novedad }}</td>
+                            <td>{{ $novedad->fecha_reporte }}</td>
+                            <td>{{ $novedad->fecha_cierre }}</td>
 
-                            <th class="text-center">Acciones</th>
-                        </tr>
+                            <td class="text-center">
+                                <div class="row justify-content-center align-items-center">
 
-                        <tbody>
-                            @foreach ($novedades as $novedad)
-                            <tr>
-                                <td>{{ $loop->iteration }}</td>
-                                <td>{{ $novedad->novedad }}</td>
-                              
-    
-    
-                                <td class="text-center">
-                                    <div class="row justify-content-center">
-                                        <div class="col-2">
-                                            <a href="{{route('novedades.show', $novedad->id_novedad)}}" type="button">
-                                                <i class="far fa-eye" data-toggle="tooltip" title="Detalles Novedad"></i>
-                                            </a>
-                                        </div>
-                                        <div class="col-2">
-                                            <a href="{{route('novedades.edit', $novedad->id_novedad) }}" type="button">
-                                                <i class="far fa-edit" data-toggle="tooltip" title="Actualizar Novedad"></i>
-                                            </a>
-                                        </div>
-                                        <div class="col-2">
-                                            <form method="POST" action="">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn p-0">
-                                                    <i class="far fa-trash-alt" data-toggle="tooltip" title="Eliminar Novedad"></i>
-                                                </button>
-                                            </form>
-                                        </div>
+                                    <div class="col-2">
+                                        <a href="{{route('elementos.novedades.show', [$elemento->id_elemento, $novedad->id_novedad])}}">
+                                            <i class="far fa-eye" data-toggle="tooltip" title="Detalles Novedad"></i>
+                                        </a>
                                     </div>
-                                </td>
-                            </tr>
-                            @endforeach
-                        </tbody>
 
+                                    <div class="col-2">
+                                        <a href="{{route('elementos.novedades.edit', [$elemento->id_elemento, $novedad->id_novedad]) }}" class="text-success">
+                                            <i class="far fa-edit" data-toggle="tooltip" title="Actualizar Novedad"></i>
+                                        </a>
+                                    </div>
 
+                                </div>
+                            </td>
+                        </tr>
+                        @endforeach
+                    </x-data-table>
+                </x-slot:body>
 
+                <x-slot:footer>
+                    <div class="float-right">
+                        {{ $novedades->links() }}
+                    </div>
+                </x-slot:footer>
 
-                    </table>
-
-                   
-
-                </div>
-            </div>
+            </x-card>
         </div>
     </div>
+
 </x-app-layout>

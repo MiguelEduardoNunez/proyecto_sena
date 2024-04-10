@@ -5,7 +5,7 @@ use App\Http\Controllers\Administracion\PerfilController;
 use App\Http\Controllers\Administracion\PermisoController;
 use App\Http\Controllers\Administracion\UsuarioController;
 use App\Http\Controllers\CategoriaController;
-use App\Http\Controllers\NovedadController;
+use App\Http\Controllers\ElementoNovedadController;
 use App\Http\Controllers\EmpleadoController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\ProfileController;
@@ -55,11 +55,12 @@ Route::resource('/proyectos', ProyectoController::class)->middleware('auth');
 
 Route::resource('/proyectos.elementos', ProyectoElementoController::class)->middleware('auth');
 
+Route::resource('/elementos.novedades', ElementoNovedadController::class)->middleware('auth');
+
 Route::resource('/stands', StandController::class);
 
 Route::resource('/empleados', EmpleadoController::class);
 
-Route::resource('/novedades', NovedadController::class);
 
 Route::resource('/items', ItemController::class);
 Route::resource('/tipo_novedades',TipoNovedadController::class);
