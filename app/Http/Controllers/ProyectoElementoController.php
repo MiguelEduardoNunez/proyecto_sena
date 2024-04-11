@@ -8,6 +8,7 @@ use App\Models\Item;
 use App\Models\Proyecto;
 use App\Models\Stand;
 use App\Models\Subcategoria;
+use App\Models\TipoCantidad;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -20,8 +21,9 @@ class ProyectoElementoController extends Controller
     {
         $proyecto = Proyecto::find($id_proyecto);
 
-        $elementos = Elemento::with('item')
-            ->orderBy('marca', 'asc')
+        $elementos = Elemento::with(['item', 'tipoCantidad'])
+            ->where('proyecto_id', '=', $id_proyecto)
+            ->orderBy('modelo', 'asc')
             ->paginate(100);
 
         return view('elementos.listar', ['proyecto' => $proyecto, 'elementos' => $elementos]);
@@ -40,11 +42,13 @@ class ProyectoElementoController extends Controller
 
         $subcategorias = Subcategoria::orderBy('subcategoria', 'asc')->get();
 
+        $tipos_cantidad = TipoCantidad::orderBy('tipo_cantidad', 'asc')->get();
+
         $items = Item::orderBy('item', 'asc')->get();
 
         return view('elementos.crear', [
             'proyecto' => $proyecto, 'stands' => $stands, 'categorias' => $categorias, 
-            'subcategorias' => $subcategorias, 'items' => $items
+            'subcategorias' => $subcategorias, 'tipos_cantidad' => $tipos_cantidad, 'items' => $items
         ]);
     }
 
@@ -55,7 +59,7 @@ class ProyectoElementoController extends Controller
     {
         $validaciones = $request->validate([
             'stand' => ['required', 'numeric'],
-            'item' => ['required', 'numeric'],
+            'elemento' => ['required', 'numeric'],
             'marca' => ['required', 'string', 'max:50'],
             'modelo' => ['required', 'string', 'max:50'],
             'serial' => ['required', 'string', 'max:50'],
@@ -63,27 +67,42 @@ class ProyectoElementoController extends Controller
             'codigo_barras' => ['required', 'string', 'max:100'],
             'grosor' => ['required', 'string', 'max:50'],
             'peso' => ['required', 'string', 'max:30'],
+            'tipo_cantidad' => ['required', 'numeric'],
             'cantidad' => ['required', 'numeric'],
             'cantidad_minima' => ['required', 'numeric']
         ]);
 
-        $elemento = new Elemento();
-        $elemento->proyecto_id = $id_proyecto;
-        $elemento->stand_id = $request->stand;
-        $elemento->item_id = $request->item;
-        $elemento->marca = $request->marca;
-        $elemento->modelo = $request->modelo;
-        $elemento->serial = $request->serial;
-        $elemento->span = $request->span;
-        $elemento->codigo_barras = $request->codigo_barras;
-        $elemento->grosor = $request->grosor;
-        $elemento->peso = $request->peso;
-        $elemento->cantidad = $request->cantidad;
-        $elemento->cantidad_minima = $request->cantidad_minima;
-        $elemento->save();
+        $elemento_registrado = Elemento::where('item_id', '=', $request->elemento)
+            ->where('marca', '=', $request->marca)
+            ->where('modelo', '=', $request->modelo)
+            ->first();
+        
+        if ($elemento_registrado == null) 
+        {
+            $elemento = new Elemento();
+            $elemento->proyecto_id = $id_proyecto;
+            $elemento->stand_id = $request->stand;
+            $elemento->item_id = $request->elemento;
+            $elemento->marca = $request->marca;
+            $elemento->modelo = $request->modelo;
+            $elemento->serial = $request->serial;
+            $elemento->span = $request->span;
+            $elemento->codigo_barras = $request->codigo_barras;
+            $elemento->grosor = $request->grosor;
+            $elemento->peso = $request->peso;
+            $elemento->tipo_cantidad_id = $request->tipo_cantidad;
+            $elemento->cantidad = $request->cantidad;
+            $elemento->cantidad_minima = $request->cantidad_minima;
+            $elemento->save();
 
-        Alert::success('Registrado', 'Elemento con éxito');
-        return redirect(route('proyectos.elementos.index', $id_proyecto));
+            Alert::success('Registrado', 'Elemento con éxito');
+            return redirect()->route('proyectos.elementos.index', $id_proyecto);
+        }
+        else 
+        {
+            Alert::error('Error', 'El elemento ya esta registrado, actualice su cantidad');
+            return back()->withInput();
+        }
     }
 
     /**
@@ -119,13 +138,17 @@ class ProyectoElementoController extends Controller
             ->orderBy('subcategoria', 'asc')
             ->get();
 
-        $items = Item::where('id_item', '!=', $elemento->item->id_item)
+        $tipos_cantidad = TipoCantidad::where('id_tipo_cantidad', '!=', $elemento->tipo_cantidad_id)
+            ->orderBy('tipo_cantidad', 'asc')
+            ->get();
+
+        $items = Item::where('id_item', '!=', $elemento->item_id)
             ->orderBy('item', 'asc')
             ->get();
 
         return view('elementos.editar', [
             'proyecto' => $proyecto, 'elemento' => $elemento, 'stands' => $stands, 'categorias' => $categorias, 
-            'subcategorias' => $subcategorias, 'items' => $items
+            'subcategorias' => $subcategorias, 'tipos_cantidad' => $tipos_cantidad, 'items' => $items
         ]);
     }
 
@@ -136,7 +159,7 @@ class ProyectoElementoController extends Controller
     {
         $validaciones = $request->validate([
             'stand' => ['required', 'numeric'],
-            'item' => ['required', 'numeric'],
+            'elemento' => ['required', 'numeric'],
             'marca' => ['required', 'string', 'max:50'],
             'modelo' => ['required', 'string', 'max:50'],
             'serial' => ['required', 'string', 'max:50'],
@@ -144,27 +167,43 @@ class ProyectoElementoController extends Controller
             'codigo_barras' => ['required', 'string', 'max:100'],
             'grosor' => ['required', 'string', 'max:50'],
             'peso' => ['required', 'string', 'max:30'],
+            'tipo_cantidad' => ['required', 'numeric'],
             'cantidad' => ['required', 'numeric'],
             'cantidad_minima' => ['required', 'numeric']
         ]);
 
-        $elemento = Elemento::find($id_elemento);
-        $elemento->proyecto_id = $id_proyecto;
-        $elemento->stand_id = $request->stand;
-        $elemento->item_id = $request->item;
-        $elemento->marca = $request->marca;
-        $elemento->modelo = $request->modelo;
-        $elemento->serial = $request->serial;
-        $elemento->span = $request->span;
-        $elemento->codigo_barras = $request->codigo_barras;
-        $elemento->grosor = $request->grosor;
-        $elemento->peso = $request->peso;
-        $elemento->cantidad = $request->cantidad;
-        $elemento->cantidad_minima = $request->cantidad_minima;
-        $elemento->save();
+        $elemento_registrado = Elemento::where('id_elemento', '!=', $id_elemento)
+            ->where('item_id', '=', $request->elemento)
+            ->where('marca', '=', $request->marca)
+            ->where('modelo', '=', $request->modelo)
+            ->first();
+        
+        if ($elemento_registrado == null) 
+        {
+            $elemento = Elemento::find($id_elemento);
+            $elemento->proyecto_id = $id_proyecto;
+            $elemento->stand_id = $request->stand;
+            $elemento->item_id = $request->elemento;
+            $elemento->marca = $request->marca;
+            $elemento->modelo = $request->modelo;
+            $elemento->serial = $request->serial;
+            $elemento->span = $request->span;
+            $elemento->codigo_barras = $request->codigo_barras;
+            $elemento->grosor = $request->grosor;
+            $elemento->peso = $request->peso;
+            $elemento->tipo_cantidad_id = $request->tipo_cantidad;
+            $elemento->cantidad = $request->cantidad;
+            $elemento->cantidad_minima = $request->cantidad_minima;
+            $elemento->save();
 
-        Alert::success('Actualizado', 'Elemento con éxito');
-        return redirect(route('proyectos.elementos.index', $id_proyecto));
+            Alert::success('Actualizado', 'Elemento con éxito');
+            return redirect()->route('proyectos.elementos.index', $id_proyecto);
+        }
+        else 
+        {
+            Alert::error('Error', 'El elemento ya esta registrado, actualice su cantidad');
+            return back()->withInput();
+        }
     }
 
     /**

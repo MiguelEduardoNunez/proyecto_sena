@@ -66,8 +66,8 @@ class Usuario extends Authenticatable
     ];
 
     /**
-    * Get the post that owns the comment.
-    */
+     * Relationships associated with the model.
+     */
     public function perfil(): BelongsTo
     {
         return $this->belongsTo(Perfil::class, 'perfil_id', 'id_perfil');

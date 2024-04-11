@@ -5,7 +5,6 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
@@ -47,6 +46,11 @@ class Elemento extends Model
     public function stand(): BelongsTo
     {
         return $this->belongsTo(Stand::class, 'stand_id', 'id_stand');
+    }
+
+    public function tipoCantidad(): BelongsTo
+    {
+        return $this->belongsTo(TipoCantidad::class, 'tipo_cantidad_id', 'id_tipo_cantidad');
     }
 
     public function item(): BelongsTo

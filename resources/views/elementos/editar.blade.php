@@ -19,7 +19,7 @@
 
                     <x-slot:body>
                         <div class="form-group">
-                            <x-input-label :value="__('Proyecto')" for="proyecto" />
+                            <x-input-label :value="__('Proyecto')" :obligatorio="false" for="proyecto" />
                             <x-input type="text" id="proyecto" name="proyecto" :value="$proyecto->proyecto" disabled />
                         </div>
 
@@ -48,11 +48,11 @@
                         </div>
 
                         <div class="form-group">
-                            <x-input-label :value="__('Item')" for="item" />
-                            <x-select :elements="$items" identifier="id_item" label="item" id="item" name="item">
+                            <x-input-label :value="__('Elemento')" for="elemento" />
+                            <x-select :elements="$items" identifier="id_item" label="item" id="elemento" name="elemento">
                                 <option value="{{ $elemento->item_id }}" selected>{{ $elemento->item->item }}</option>
                             </x-select>
-                            <x-input-error :messages="$errors->get('item')" />
+                            <x-input-error :messages="$errors->get('elemento')" />
                         </div>
 
                         <div class="form-group">
@@ -98,6 +98,14 @@
                         </div>
 
                         <div class="form-group">
+                            <x-input-label :value="__('Tipo de Cantidad')" for="tipo_cantidad" />
+                            <x-select :elements="$tipos_cantidad" identifier="id_tipo_cantidad" label="tipo_cantidad" id="tipo_cantidad" name="tipo_cantidad">
+                                <option value="{{ $elemento->tipo_cantidad_id }}" selected>{{ $elemento->tipoCantidad->tipo_cantidad }}</option>
+                            </x-select>
+                            <x-input-error :messages="$errors->get('tipo_cantidad')" />
+                        </div>
+
+                        <div class="form-group">
                             <x-input-label :value="__('Cantidad')" for="cantidad" />
                             <x-input type="number" id="cantidad" name="cantidad" :value="$elemento->cantidad" />
                             <x-input-error :messages="$errors->get('cantidad')" />
@@ -110,14 +118,13 @@
                         </div>
                     </x-slot:body>
 
-                       <x-button type="submit">
+                    <x-slot:footer>
+                        <x-button type="submit">
                             {{ __('Actualizar') }}
                         </x-button>
-                    </x-slot:footer><x-slot:footer>
-                     
+                    </x-slot:footer>  
                 </x-card>
             </form>
         </div>
     </div>
 </x-app-layout>
-

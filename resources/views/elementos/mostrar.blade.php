@@ -27,7 +27,7 @@
                     <x-text size="h6" color="black" :value="__('Subcategoria')" class="mt-4" />
                     <x-text size="h6" style="font-weight-normal" color="black" :value="$elemento->item->subcategoria->subcategoria" />
 
-                    <x-text size="h6" color="black" :value="__('Item')" class="mt-4" />
+                    <x-text size="h6" color="black" :value="__('Elemento')" class="mt-4" />
                     <x-text size="h6" style="font-weight-normal" color="black" :value="$elemento->item->item" />
 
                     <x-text size="h6" color="black" :value="__('Marca')" class="mt-4" />
@@ -50,6 +50,9 @@
 
                     <x-text size="h6" color="black" :value="__('Peso')" class="mt-4" />
                     <x-text size="h6" style="font-weight-normal" color="black" :value="$elemento->peso" />
+
+                    <x-text size="h6" color="black" :value="__('Tipo de Cantidad')" class="mt-4" />
+                    <x-text size="h6" style="font-weight-normal" color="black" :value="$elemento->tipoCantidad->tipo_cantidad" />
 
                     <x-text size="h6" color="black" :value="__('Cantidad')" class="mt-4" />
                     <x-text size="h6" style="font-weight-normal" color="black" :value="$elemento->cantidad" />

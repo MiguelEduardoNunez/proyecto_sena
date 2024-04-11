@@ -19,7 +19,7 @@
 
                     <x-slot:body>
                         <div class="form-group">
-                            <x-input-label :value="__('Proyecto')" for="proyecto" />
+                            <x-input-label :value="__('Proyecto')" :obligatorio="false" for="proyecto" />
                             <x-input type="text" id="proyecto" name="proyecto" :value="$proyecto->proyecto" disabled />
                         </div>
 
@@ -48,11 +48,11 @@
                         </div>
 
                         <div class="form-group">
-                            <x-input-label :value="__('Item')" for="item" />
-                            <x-select :elements="$items" identifier="id_item" label="item" id="item" name="item">
+                            <x-input-label :value="__('Elemento')" for="elemento" />
+                            <x-select :elements="$items" identifier="id_item" label="item" id="elemento" name="elemento">
                                 <option selected disabled>{{ __('Seleccionar') }}</option>
                             </x-select>
-                            <x-input-error :messages="$errors->get('item')" />
+                            <x-input-error :messages="$errors->get('elemento')" />
                         </div>
 
                         <div class="form-group">
@@ -95,6 +95,14 @@
                             <x-input-label :value="__('Peso')" for="peso" />
                             <x-input type="text" id="peso" name="peso" :value="old('peso')" />
                             <x-input-error :messages="$errors->get('peso')" />
+                        </div>
+
+                        <div class="form-group">
+                            <x-input-label :value="__('Tipo de Cantidad')" for="tipo_cantidad" />
+                            <x-select :elements="$tipos_cantidad" identifier="id_tipo_cantidad" label="tipo_cantidad" id="tipo_cantidad" name="tipo_cantidad">
+                                <option selected disabled>{{ __('Seleccionar') }}</option>
+                            </x-select>
+                            <x-input-error :messages="$errors->get('tipo_cantidad')" />
                         </div>
 
                         <div class="form-group">
