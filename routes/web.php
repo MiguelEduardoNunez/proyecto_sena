@@ -13,7 +13,6 @@ use App\Http\Controllers\ProyectoController;
 use App\Http\Controllers\ProyectoElementoController;
 use App\Http\Controllers\CategoriaSubcategoriaController;
 use App\Http\Controllers\StandController;
-use App\Models\Categoria;
 use App\Http\Controllers\TipoNovedadController;
 use Illuminate\Support\Facades\Route;
 
