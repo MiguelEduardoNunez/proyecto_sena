@@ -41,7 +41,7 @@
                         
                         <div class="form-group">
                             <x-input-label :value="__('Subcategoria')" for="subcategoria" />
-                            <x-select :elements="$subcategorias" identifier="id_subcategoria" label="subcategoria" id="subcategoria" name="subcategoria">
+                            <x-select :elements="[]" identifier="id_subcategoria" label="subcategoria" id="subcategoria" name="subcategoria">
                                 <option value="{{ $elemento->item->subcategoria->id_subcategoria }}" selected>{{ $elemento->item->subcategoria->subcategoria }}</option>
                             </x-select>
                             <x-input-error :messages="$errors->get('subcategoria')" />
@@ -49,7 +49,7 @@
 
                         <div class="form-group">
                             <x-input-label :value="__('Elemento')" for="elemento" />
-                            <x-select :elements="$items" identifier="id_item" label="item" id="elemento" name="elemento">
+                            <x-select :elements="[]" identifier="id_item" label="item" id="elemento" name="elemento">
                                 <option value="{{ $elemento->item_id }}" selected>{{ $elemento->item->item }}</option>
                             </x-select>
                             <x-input-error :messages="$errors->get('elemento')" />
@@ -128,3 +128,41 @@
         </div>
     </div>
 </x-app-layout>
+
+<script>
+    $(function () {
+        // Select dinamic
+        var subcategorias = {{ Js::from($subcategorias) }};
+        $("#categoria").on("change", function() {
+            $("#subcategoria").empty()
+            $("#subcategoria").prepend("<option selected disabled>Seleccionar</option>")
+
+            $("#elemento").empty()
+            $("#elemento").prepend("<option selected disabled>Seleccionar</option>")
+            
+            var categoria = $(this).val()
+            const resultado = subcategorias.filter(function(subcategoria) {
+                return subcategoria.categoria_id == categoria
+            })
+
+            resultado.forEach(function(res) {
+                $("#subcategoria").append("<option value="+res.id_subcategoria+">"+res.subcategoria+"</option>")
+            })
+        });
+
+        var items = {{ Js::from($items) }};
+        $("#subcategoria").on("change", function() {
+            $("#elemento").empty()
+            $("#elemento").prepend("<option selected disabled>Seleccionar</option>")
+            
+            var subcategoria = $(this).val()
+            const resultado = items.filter(function(item) {
+                return item.subcategoria_id == subcategoria
+            })
+
+            resultado.forEach(function(res) {
+                $("#elemento").append("<option value="+res.id_item+">"+res.item+"</option>")
+            })
+        });
+    })
+</script>

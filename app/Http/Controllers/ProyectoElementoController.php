@@ -42,13 +42,13 @@ class ProyectoElementoController extends Controller
 
         $subcategorias = Subcategoria::orderBy('subcategoria', 'asc')->get();
 
-        $tipos_cantidad = TipoCantidad::orderBy('tipo_cantidad', 'asc')->get();
-
         $items = Item::orderBy('item', 'asc')->get();
 
+        $tipos_cantidad = TipoCantidad::orderBy('tipo_cantidad', 'asc')->get();
+
         return view('elementos.crear', [
-            'proyecto' => $proyecto, 'stands' => $stands, 'categorias' => $categorias, 
-            'subcategorias' => $subcategorias, 'tipos_cantidad' => $tipos_cantidad, 'items' => $items
+            'proyecto' => $proyecto, 'stands' => $stands, 'categorias' => $categorias, 'subcategorias' => $subcategorias, 
+            'items' => $items, 'tipos_cantidad' => $tipos_cantidad
         ]);
     }
 
@@ -138,17 +138,17 @@ class ProyectoElementoController extends Controller
             ->orderBy('subcategoria', 'asc')
             ->get();
 
-        $tipos_cantidad = TipoCantidad::where('id_tipo_cantidad', '!=', $elemento->tipo_cantidad_id)
-            ->orderBy('tipo_cantidad', 'asc')
-            ->get();
-
         $items = Item::where('id_item', '!=', $elemento->item_id)
             ->orderBy('item', 'asc')
             ->get();
 
+        $tipos_cantidad = TipoCantidad::where('id_tipo_cantidad', '!=', $elemento->tipo_cantidad_id)
+            ->orderBy('tipo_cantidad', 'asc')
+            ->get();
+
         return view('elementos.editar', [
             'proyecto' => $proyecto, 'elemento' => $elemento, 'stands' => $stands, 'categorias' => $categorias, 
-            'subcategorias' => $subcategorias, 'tipos_cantidad' => $tipos_cantidad, 'items' => $items
+            'subcategorias' => $subcategorias, 'items' => $items, 'tipos_cantidad' => $tipos_cantidad
         ]);
     }
 
