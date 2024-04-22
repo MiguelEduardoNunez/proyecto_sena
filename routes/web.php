@@ -52,6 +52,8 @@ Route::resource('/usuarios', UsuarioController::class)->middleware('auth');
 
 Route::resource('/proyectos', ProyectoController::class)->middleware('auth');
 
+Route::get('proyectos/{id_proyecto}/elementos/pdf-elementos', [ProyectoElementoController::class, 'pdfElementos'])->name('proyectos.elementos.pdf');
+
 Route::resource('/proyectos.elementos', ProyectoElementoController::class)->middleware('auth');
 
 Route::resource('/elementos.novedades', ElementoNovedadController::class)->middleware('auth');
@@ -66,6 +68,10 @@ Route::resource('/tipo_novedades',TipoNovedadController::class);
 
 Route::resource('/categorias', CategoriaController::class);
 Route::resource('/categorias.subcategorias',CategoriaSubcategoriaController::class);
+
+
+
+
 
 
 require __DIR__.'/auth.php';

@@ -13,11 +13,17 @@
                             </a>
                         </div>
                         
-                        <div class="col-10 col-md-7 col-lg-8">
+                        <div class="col-10 col-md-7 col-lg-7">
                             <x-text :value="__('Gestionar Elementos')" />
                         </div>
 
-                        <div class="col-10 col-md-4 col-lg-3">
+                        <div class="col-auto">
+                            <a href="{{ route('proyectos.elementos.pdf', $proyecto->id_proyecto) }}" target="_blank">
+                                <i class="fas fa-file-pdf" data-toggle="tooltip" title="imprimir"></i>
+                            </a>
+                        </div>
+
+                        <div class="col-10 col-md-4 col-lg-3 ml-auto">
                             <x-input-group>
                                 <x-input type="text" id="searchertable" name="searcher" placeholder="Buscar" />
                                 <x-slot:icon>
@@ -26,11 +32,13 @@
                             </x-input-group>
                         </div>
 
-                        <div class="col-auto">
+                        <div class="col-auto ml-auto">
                             <a href="{{ route('proyectos.elementos.create', $proyecto->id_proyecto) }}">
                                 <i class="fas fa-plus-circle fa-2x" data-toggle="tooltip" title="Registrar Elemento"></i>
                             </a>
                         </div>
+                        
+
                     </div>
                 </x-slot:header>
 

@@ -9,6 +9,9 @@ use App\Models\Proyecto;
 use App\Models\Stand;
 use App\Models\Subcategoria;
 use App\Models\TipoCantidad;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Barryvdh\DomPDF\PDF as DomPDFPDF;
+use Dompdf\Dompdf;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -213,4 +216,17 @@ class ProyectoElementoController extends Controller
     {
         //
     }
+
+
+    public function pdfElementos(string $id)
+    {
+        $proyecto = Proyecto::find($id);
+        $elementos = Elemento::where('proyecto_id', $id)->get();
+       
+        
+
+        $pdf = PDF::loadView('elementos.pdf', ['proyecto' => $proyecto, 'elementos' => $elementos]);
+        return $pdf->download('elementos-'.$proyecto->proyecto.'.pdf');
+    }
+
 }
