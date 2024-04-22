@@ -32,7 +32,7 @@ class EmpleadoController extends Controller
     public function store(Request $request)
     {
         $validaciones = $request->validate([
-            'empleado' => ['required', 'string', 'max:100']
+            'empleado' => ['required', 'string', 'max:100', 'regex:/^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+$/']
         ]);
 
         $empleado = new Empleado();
