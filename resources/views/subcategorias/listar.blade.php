@@ -21,7 +21,7 @@
                             <x-text :value="__('Gestionar Subcategorías')" />
                         </div>
 
-                        <div class="col-10 col-md-4 col-lg-3">
+                        <div class="col-10 col-md-4 col-lg-3 ml-auto">
                             <x-input-group>
                                 <x-input type="text" id="searchertable" name="searcher" placeholder="Buscar" />
                                 <x-slot:icon>

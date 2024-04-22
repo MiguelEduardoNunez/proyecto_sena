@@ -6,12 +6,13 @@ use App\Http\Controllers\Administracion\PermisoController;
 use App\Http\Controllers\Administracion\UsuarioController;
 use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\ElementoNovedadController;
-use App\Http\Controllers\EmpleadoController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\CategoriaSubcategoriaController;
+use App\Http\Controllers\EmpleadoController;
 use App\Http\Controllers\ProyectoController;
 use App\Http\Controllers\ProyectoElementoController;
-use App\Http\Controllers\CategoriaSubcategoriaController;
+use App\Http\Controllers\ProyectoEntregaElementoController;
 use App\Http\Controllers\StandController;
 use App\Http\Controllers\TipoNovedadController;
 use Illuminate\Support\Facades\Route;
@@ -41,14 +42,29 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+// Rutas Administracion
 Route::resource('/modulos', ModuloController::class)->middleware('auth');
 
 Route::resource('/perfiles', PerfilController::class)->middleware('auth');
 
-Route::get('/permisos/{perfil}', [PermisoController::class, 'edit'])->name('permisos.edit');
-Route::put('/permisos/{perfil}', [PermisoController::class, 'update'])->name('permisos.update');
+Route::get('/permisos/{perfil}', [PermisoController::class, 'edit'])->name('permisos.edit')->middleware('auth');
+Route::put('/permisos/{perfil}', [PermisoController::class, 'update'])->name('permisos.update')->middleware('auth');
 
 Route::resource('/usuarios', UsuarioController::class)->middleware('auth');
+
+
+// Rutas Inventarios
+Route::resource('/stands', StandController::class)->middleware('auth');
+
+Route::resource('/empleados', EmpleadoController::class)->middleware('auth');
+
+Route::resource('/categorias', CategoriaController::class)->middleware('auth');
+
+Route::resource('/categorias.subcategorias', CategoriaSubcategoriaController::class)->middleware('auth');
+
+Route::resource('/items', ItemController::class)->middleware('auth');
+
+Route::resource('/tipo_novedades', TipoNovedadController::class)->middleware('auth');
 
 Route::resource('/proyectos', ProyectoController::class)->middleware('auth');
 
@@ -58,17 +74,7 @@ Route::resource('/proyectos.elementos', ProyectoElementoController::class)->midd
 
 Route::resource('/elementos.novedades', ElementoNovedadController::class)->middleware('auth');
 
-Route::resource('/stands', StandController::class);
-
-Route::resource('/empleados', EmpleadoController::class);
-
-
-Route::resource('/items', ItemController::class);
-Route::resource('/tipo_novedades',TipoNovedadController::class);
-
-Route::resource('/categorias', CategoriaController::class);
-Route::resource('/categorias.subcategorias',CategoriaSubcategoriaController::class);
-
+Route::resource('/proyectos.entregas-elementos', ProyectoEntregaElementoController::class)->middleware('auth');
 
 
 

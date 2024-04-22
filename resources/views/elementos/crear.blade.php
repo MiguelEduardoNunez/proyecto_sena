@@ -128,3 +128,41 @@
         </div>
     </div>
 </x-app-layout>
+
+<script>
+    $(function () {
+        // Select dinamic
+        var subcategorias = {{ Js::from($subcategorias) }};
+        $("#categoria").on("change", function() {
+            $("#subcategoria").empty()
+            $("#subcategoria").prepend("<option selected disabled>Seleccionar</option>")
+
+            $("#elemento").empty()
+            $("#elemento").prepend("<option selected disabled>Seleccionar</option>")
+            
+            var categoria = $(this).val()
+            const resultado = subcategorias.filter(function(subcategoria) {
+                return subcategoria.categoria_id == categoria
+            })
+
+            resultado.forEach(function(res) {
+                $("#subcategoria").append("<option value="+res.id_subcategoria+">"+res.subcategoria+"</option>")
+            })
+        });
+
+        var items = {{ Js::from($items) }};
+        $("#subcategoria").on("change", function() {
+            $("#elemento").empty()
+            $("#elemento").prepend("<option selected disabled>Seleccionar</option>")
+            
+            var subcategoria = $(this).val()
+            const resultado = items.filter(function(item) {
+                return item.subcategoria_id == subcategoria
+            })
+
+            resultado.forEach(function(res) {
+                $("#elemento").append("<option value="+res.id_item+">"+res.item+"</option>")
+            })
+        });
+    })
+</script>
