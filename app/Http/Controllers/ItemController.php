@@ -68,18 +68,19 @@ class ItemController extends Controller
      */
     public function edit(string $id)
     {
-        $item = Item::find($id);
-        $categorias = Categoria::where('id_categoria', '!=', $item->subcategoria->categoria->id_categoria)
-        ->orderBy('categoria', 'asc')
-        ->get();
+        $item = Item::with('subcategoria')->find($id);
 
-        $subcategorias = Subcategoria::where('id_subcategoria', '!=',$item->subcategoria->id_subcategoria)
+        $categorias = Categoria::where('id_categoria', '!=', $item->subcategoria->categoria->id_categoria)
+            ->orderBy('categoria', 'asc')
+            ->get();
+    
+        $subcategorias = Subcategoria::where('id_subcategoria', '!=', $item->subcategoria->id_subcategoria)
         ->orderBy('subcategoria', 'asc')
         ->get();
-
-
-        return view('items.editar', ['item'=>$item, 'subcategorias'=>$subcategorias, 'categorias'=>$categorias]);
+    
+        return view('items.editar', ['item' => $item, 'subcategorias' => $subcategorias, 'categorias' => $categorias]);
     }
+    
 
     /**
      * Update the specified resource in storage.
@@ -98,7 +99,7 @@ class ItemController extends Controller
         $item->descripcion = $request->descripcion;
         $item->save();
 
-        Alert::success('Registrado', 'Item con éxito');
+        Alert::success('Actualizado', 'Item con éxito');
         return redirect(route('items.index'));
 
     }
