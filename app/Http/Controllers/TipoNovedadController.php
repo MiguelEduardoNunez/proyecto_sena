@@ -35,7 +35,8 @@ class TipoNovedadController extends Controller
     {
 
         $request->validate([
-            'tipo_novedad' => ['required', 'string', 'max:100', 'unique:tipos_novedades,tipo_novedad'],
+            //regex para que solo acepte letras y espacios 
+            'tipo_novedad' => ['required', 'string', 'max:100','unique:tipos_novedades'],
             'descripcion' => ['nullable', 'string', 'max:100']
         ]);
         $tipoNovedad = new TipoNovedad();
@@ -84,7 +85,7 @@ class TipoNovedadController extends Controller
         $tipoNovedad->descripcion = $request->descripcion;
         $tipoNovedad->save();
 
-        Alert::success('Actualizado', 'Tipo de novedad con éxito');
+        Alert::success('Actualizada', 'Tipo de novedad con éxito');
 
         return redirect(route('tipo_novedades.index'));
     }

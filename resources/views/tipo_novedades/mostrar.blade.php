@@ -19,7 +19,11 @@
                     <x-text size="h6" style="font-weight-normal" color="black" :value="$tipoNovedad->tipo_novedad" />
 
                     <x-text size="h6" color="black" :value="__('Descripción')" class="mt-4" />
-                    <x-text size="h6" style="font-weight-normal" color="black" :value="$tipoNovedad->descripcion" />
+                    @if ($tipoNovedad->descripcion != null)
+                        <x-text size="h6" style="font-weight-normal" color="black" :value="$tipoNovedad->descripcion" />
+                    @else
+                        {{ __('No registrada') }}
+                    @endif
                 </x-slot:body>
 
                 <x-slot:footer>
