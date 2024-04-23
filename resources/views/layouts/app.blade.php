@@ -280,6 +280,11 @@
                 locale: 'es'
             });
 
+            $("#fecha_reporte, #fecha_cierre").datetimepicker({
+                format: 'YYYY/MM/DD',
+                locale: 'es'
+            });
+
             // Searcher table
             $("#searchertable").on("keyup", function() {
                 var value = $(this).val().toLowerCase()

@@ -62,17 +62,40 @@
                             <x-input-error :messages="$errors->get('novedad')" />
                         </div>
 
-                        <div class="form-group">
+                        {{-- <div class="form-group">
                             <x-input-label :value="__('Fecha Reporte')" for="fecha_reporte" />
                             <x-input type="text" id="fecha_reporte" name="fecha_reporte" :value="$novedad->fecha_reporte" />
+                            <x-input-error :messages="$errors->get('fecha_reporte')" />
+                        </div> --}}
+
+                        <div class="form-group">
+                            <x-input-label :value="__('Fecha Reporte')" for="fecha_reporte" />
+                            <x-input-group id="fecha_reporte" data-target-input="nearest">
+                                <x-input type="text" class="datetimepicker-input" name="fecha_reporte" :value="$novedad->fecha_reporte" data-target="#fecha_reporte" />
+                                <x-slot:icon data-target="#fecha_reporte" data-toggle="datetimepicker">
+                                    <i class="fas fa-calendar text-primary"></i>
+                                </x-slot:icon>
+                            </x-input-group>
                             <x-input-error :messages="$errors->get('fecha_reporte')" />
                         </div>
 
                         <div class="form-group">
                             <x-input-label :value="__('Fecha Cierre')" for="fecha_cierre" />
-                            <x-input type="text" id="fecha_cierre" name="fecha_cierre" :value="$novedad->fecha_cierre" />
+                            <x-input-group id="fecha_cierre" data-target-input="nearest">
+                                <x-input type="text" class="datetimepicker-input" name="fecha_cierre" :value="$novedad->fecha_cierre" data-target="#fecha_cierre" />
+                                <x-slot:icon data-target="#fecha_cierre" data-toggle="datetimepicker">
+                                    <i class="fas fa-calendar text-primary"></i>
+                                </x-slot:icon>
+                            </x-input-group>
                             <x-input-error :messages="$errors->get('fecha_cierre')" />
                         </div>
+
+
+                        {{-- <div class="form-group">
+                            <x-input-label :value="__('Fecha Cierre')" for="fecha_cierre" />
+                            <x-input type="text" id="fecha_cierre" name="fecha_cierre" :value="$novedad->fecha_cierre" />
+                            <x-input-error :messages="$errors->get('fecha_cierre')" />
+                        </div> --}}
 
                     </x-slot:body>
 

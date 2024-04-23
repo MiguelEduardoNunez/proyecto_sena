@@ -153,7 +153,7 @@ class ElementoNovedadController extends Controller
             'empleado' => ['required', 'numeric'],
             'novedad' => ['required', 'string'],
             'fecha_reporte' => ['required', 'date'],
-            'fecha_cierre' => ['required', 'date', 'after:fecha_reporte ']
+            'fecha_cierre' => ['required', 'date', 'after:fecha_reporte']
             
         ]);
 
