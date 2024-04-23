@@ -74,7 +74,6 @@ Route::resource('/proyectos.elementos', ProyectoElementoController::class)->midd
 
 Route::resource('/elementos.novedades', ElementoNovedadController::class)->middleware('auth');
 
-Route::resource('/proyectos.entregas-elementos', ProyectoEntregaElementoController::class)->middleware('auth');
 
 
 
