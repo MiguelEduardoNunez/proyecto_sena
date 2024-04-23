@@ -44,7 +44,7 @@
 
                         <div class="form-group">
                             <x-input-label :value="__('Item')" for="item" />
-                            <x-input type="text" id="stand" name="item" :value="$item->item" />
+                            <x-input type="text" id="item" name="item" :value="$item->item" />
                             <x-input-error :messages="$errors->get('item')" />
                         </div>
 

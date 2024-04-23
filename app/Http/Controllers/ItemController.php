@@ -6,6 +6,7 @@ use App\Models\Categoria;
 use App\Models\Item;
 use App\Models\Subcategoria;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class ItemController extends Controller
@@ -15,7 +16,7 @@ class ItemController extends Controller
      */
     public function index()
     {
-        $items = Item::orderBy('item', 'asc')->paginate();
+        $items = Item::orderBy('item', 'asc')->paginate('4');
 
         return view('items.listar', ['items' => $items]);
 
@@ -89,7 +90,7 @@ class ItemController extends Controller
     {
         $validaciones = $request->validate([
             'subcategoria' => ['required', 'numeric'],
-            'item' => ['required', 'string', 'max:100', 'unique:items,item'],
+            'item' => ['required', 'string', 'max:100', Rule::unique('items')->ignore($id, 'id_item')],
             'descripcion' => ['nullable', 'string']
         ]);
 
