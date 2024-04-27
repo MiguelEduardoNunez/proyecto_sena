@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class DetalleEntrega extends Model
+class DetalleEntregaElemento extends Model
 {
     use HasFactory;
 
@@ -15,19 +15,21 @@ class DetalleEntrega extends Model
      *
      * @var string
      */
-    protected $table = 'detalles_entregas';
-        /**
+    protected $table = 'detalles_entregas_elementos';
+        
+    /**
      * The primary key associated with the table.
      *
      * @var string
      */
-    protected $primaryKey = 'id_detalle_entrega';
+    protected $primaryKey = 'entrega_elemento_id';
 
     /**
      * Names of the timestamps.
      */
     const CREATED_AT='creado_en';
     const UPDATED_AT='actualizado_en';
+    
     /**
      * Relationships associated with the model.
      */

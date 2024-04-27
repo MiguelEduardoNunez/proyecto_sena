@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class EntregaElemento extends Model
 {
@@ -34,25 +33,20 @@ class EntregaElemento extends Model
 
     /**
      * 
-    * Relationships associated with the model.
-    */
+     * Relationships associated with the model.
+     */
     public function proyecto(): BelongsTo
     {
         return $this->belongsTo(Proyecto::class, 'proyecto_id', 'id_proyecto');
     }
 
-    public function elemento(): BelongsTo
-    {
-        return $this->belongsTo(Elemento::class, 'elemento_id', 'id_elemento');
-    }
-
     public function empleado(): BelongsTo
     {
-        return $this->belongsTo(Empleado::class,'empleado_id', 'id_empleado');
+        return $this->belongsTo(Empleado::class, 'empleado_id', 'id_empleado');
     }
 
-    public function detalleEntrega(): HasOne
+    public function detalleEntregaElemento(): HasMany
     {
-        return $this->hasOne(DetalleEntrega::class, 'entrega_elemento_id', 'id_entrega_elemento');
+        return $this->hasMany(DetalleEntregaElemento::class, 'entrega_elemento_id', 'id_entrega_elemento');
     }
 }

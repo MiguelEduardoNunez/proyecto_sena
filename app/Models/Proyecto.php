@@ -32,8 +32,8 @@ class Proyecto extends Model
 
     /**
      * 
-    * Relationships associated with the model.
-    */
+     * Relationships associated with the model.
+     */
     public function elemento(): HasMany
     {
         return $this->hasMany(Elemento::class, 'proyecto_id', 'id_proyecto');
@@ -41,8 +41,7 @@ class Proyecto extends Model
 
     public function entregaElemento(): HasMany
     {
-        return $this->hasMany(EntregaElemento::class, 'proyecto_id', 'id_proyecto' );
+        return $this->hasMany(EntregaElemento::class, 'proyecto_id', 'id_proyecto');
     }   
-
     
 }

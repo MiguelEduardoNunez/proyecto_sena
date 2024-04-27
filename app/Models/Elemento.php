@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Elemento extends Model
 {
@@ -63,8 +62,8 @@ class Elemento extends Model
         return $this->hasMany(Novedad::class, 'elemento_id', 'id_elemento');
     }
     
-    public function detalleEntrega(): HasOne
+    public function detalleEntregaElemento(): HasMany
     {
-        return $this->hasOne(DetalleEntrega::class, 'elemento_id', 'id_elemento');
+        return $this->hasMany(DetalleEntregaElemento::class, 'elemento_id', 'id_elemento');
     }
 }

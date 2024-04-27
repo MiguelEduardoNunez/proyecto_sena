@@ -23,6 +23,7 @@ class Empleado extends Model
      * @var string
      */
     protected $primaryKey = 'id_empleado';
+
     /**
      * Names of the timestamps.
      */ 
@@ -31,15 +32,15 @@ class Empleado extends Model
 
     /**
      * 
-    * Relationships associated with the model.
-    */
+     * Relationships associated with the model.
+     */
     public function novedad(): HasMany
     {
-        return $this->hasMany(Novedad::class, 'empleado_id','id_empleado');
+        return $this->hasMany(Novedad::class, 'empleado_id', 'id_empleado');
     }
     
     public function entregaElemento(): HasMany
     {
-        return $this->hasMany(EntregaElemento::class,'empleado_id','id_empleado');
+        return $this->hasMany(EntregaElemento::class, 'empleado_id', 'id_empleado');
     }
 }

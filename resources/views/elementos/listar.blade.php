@@ -29,7 +29,7 @@
 
                             <div class="dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="dropdownMenuLink" data-toggle="dropdown">
-                                    <i class="fas fa-plus-circle fa-2x text-primary" data-toggle="tooltip" title="Opciones"></i>
+                                    <i class="fas fa-plus-circle fa-2x text-primary"></i>
                                 </a>
                             
                                 <div class="dropdown-menu dropdown-menu-right">

@@ -51,8 +51,8 @@
                                         </div>
 
                                         <div class="col-2">
-                                            <a href="#" class="text-info">
-                                                <i class="fas fa-truck-loading" data-toggle="tooltip" title="Entregar Elementos"></i>
+                                            <a href="{{ route('proyectos.entregas-elementos.index', $proyecto->id_proyecto) }}" class="text-info">
+                                                <i class="fas fa-truck-loading" data-toggle="tooltip" title="Gestionar Entregas"></i>
                                             </a>
                                         </div>
                                     </div>
