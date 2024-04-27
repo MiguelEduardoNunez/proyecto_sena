@@ -22,12 +22,11 @@
                 </x-slot:header>
 
                 <x-slot:body class="table-responsive p-0" style="height: 400px;">
-                    <x-data-table :headers="['#', 'Tipo de Novedad','Descripcion', 'Acciones']">
+                    <x-data-table :headers="['#', 'Tipo de Novedad', 'Acciones']">
                         @foreach ($tipoNovedades as $tipo_novedad)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $tipo_novedad->tipo_novedad }}</td>
-                                <td>{{ $tipo_novedad->descripcion }}</td>
                                 <td class="text-center">
                                     <div class="row justify-content-center align-items-center">
                                         <div class="col-2">

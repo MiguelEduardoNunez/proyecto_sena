@@ -52,6 +52,7 @@
         </div>
     </div>
 </x-app-layout>
+
 <script>
     $(function() {
         // Select dinamic

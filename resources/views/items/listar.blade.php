@@ -21,13 +21,14 @@
                     </div>
                 </x-slot:header>
 
-                <x-slot:body class="table-responsive p-0" style="height: 400px;">
-                    <x-data-table :headers="['#', 'Item', 'Descripcion', 'Acciones']">
+                <x-slot:body class="table-responsive p-0 w-100 " style="height: 400px;">
+                    <x-data-table :headers="['#', 'Item', 'Subcategoria', 'Acciones']">
                         @foreach ($items as $item)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $item->item }}</td>
-                                <td>{{ $item->descripcion }}</td>
+                                <td>{{ $item->subcategoria->subcategoria }}</td>
+
                                 <td class="text-center">
                                     <div class="row justify-content-center align-items-center">
                                         <div class="col-2">

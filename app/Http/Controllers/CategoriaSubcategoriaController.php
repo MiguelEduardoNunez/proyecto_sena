@@ -16,10 +16,10 @@ class CategoriaSubcategoriaController extends Controller
     public function index(string $id_categoria)
     {
         //
-
         $categoria = Categoria::find($id_categoria);
 
-        $subcategorias = Subcategoria::with('categoria')
+        $subcategorias = Subcategoria::with(['categoria'])
+        ->where('categoria_id', '=', $id_categoria)
         ->orderBy('subcategoria', 'asc')
         ->paginate(10);
 
