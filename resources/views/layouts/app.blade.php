@@ -26,6 +26,9 @@
     <!-- Tempusdominus Bootstrap 4 -->
     <link rel="stylesheet" href="{{ asset('adminlte/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css') }}">
 
+    <!-- Sweet Alert2 -->
+    <link rel="stylesheet" href="{{ asset('adminlte/plugins/sweetalert2/sweetalert2.min.css') }}">
+
     <!-- AdminLTE App -->
     <link rel="stylesheet" href="{{ asset('adminlte/css/adminlte.css') }}">
 </head>
@@ -262,6 +265,9 @@
 
     <!-- Tempusdominus Bootstrap 4 -->
     <script src="{{ asset('adminlte/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js')}}"></script>
+
+    <!-- Sweet Alert2 -->
+    <script src="{{ asset('adminlte/plugins/sweetalert2/sweetalert2.min.js') }}"></script>
 
     <!-- AdminLTE App -->
     <script src="{{ asset('adminlte/js/adminlte.js') }}"></script>

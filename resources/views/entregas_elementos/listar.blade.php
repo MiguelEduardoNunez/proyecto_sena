@@ -57,9 +57,13 @@
                                         </div>
 
                                         <div class="col-2">
-                                            <a href="#" class="text-info">
-                                                <i class="fas fa-tools" data-toggle="tooltip" title="Otros"></i>
-                                            </a>
+                                            <form method="POST" action="#" id="form-eliminar">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn p-0">
+                                                    <i class="far fa-trash-alt text-danger" data-toggle="tooltip" title="Eliminar Entrega"></i>
+                                                </button>
+                                            </form>
                                         </div>
                                     </div>
                                 </td>
@@ -77,3 +81,24 @@
         </div>
     </div>
 </x-app-layout>
+
+<script>
+    $(function () {
+        $("#form-eliminar").on("submit", function(evento) {
+            evento.preventDefault()
+            Swal.fire({
+                title: "Estas seguro",
+                text: "Quieres eliminar",
+                icon: "info",
+                showCancelButton: true,
+                cancelButtonColor: "#dc3545",
+                cancelButtonText: "No, Cancelar",
+                confirmButtonText: "Si, Eliminar"
+            }).then((result) => {
+                if (result.value) {
+                    // this.submit()
+                }
+            })
+        });
+    });
+</script>

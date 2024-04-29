@@ -73,7 +73,7 @@
                         
                         <div class="form-group" id="val_cantidad">
                             <x-input-label :value="__('Cantidad a Entregar')" for="cantidad" />
-                            <x-input type="number" id="cantidad" name="cantidad" :value="old('cantidad')" />
+                            <x-input type="number" id="cantidad" name="cantidad" :value="old('cantidad')" min="1" />
                             <x-input-error :messages="$errors->get('cantidad')" />
                         </div>
 
@@ -195,8 +195,8 @@
         let validacion_formulario = []
         $("#btn-agregar").on("click", function() {
             // Resetear validaciones del formulario
-            validacion_formulario.forEach(function(validacion) {
-                $(validacion+" p").remove()
+            validacion_formulario.forEach(function(regla_validacion) {
+                $(regla_validacion+" p").remove()
             })
 
             $("#val_elemento p, #val_cantidad p").remove()
@@ -222,22 +222,26 @@
 
             // Validacion del formulario
             if (validacion_formulario.length == 0) {
-                // Validacion cantidad disponible del elemento
-                if ($("#cantidad").val() > $("#cantidad_disponible").val() || $("#cantidad_disponible").val() == 0) {
-                    $("#val_cantidad").append("<p class='text-sm text-danger'>La cantidad a entregar debe ser menor o igual a la cantidad disponible</p>")
-                }
-                else {
-                    // Mostrar encabezado de la entrega
-                    $("#proyecto_seleccionado").text($("#proyecto").val())
-                    $("#empleado_seleccionado").text($("#empleado option:selected").text())
-                    $("#fecha_entrega_seleccionada").text($("#fecha_entregas").val())
+                // Validacion elemento agregado
+                const elemento_agregado = entregas.find(function(entrega) {
+                    return entrega.id_elemento == $("#elemento").val()
+                })
 
-                    // Validacion elementos agregados
-                    const elemento_agregado = entregas.find(function(entrega) {
-                        return entrega.id_elemento == $("#elemento").val()
-                    })
+                if (elemento_agregado == null) {
+                    // Validacion cantidad disponible del elemento
+                    if ($("#cantidad").val() > $("#cantidad_disponible").val()) {
+                        $("#val_cantidad").append("<p class='text-sm text-danger'>La cantidad a entregar debe ser menor o igual a la cantidad disponible</p>")
+                    }
+                    // Validacion cantidad a entregar
+                    else if ($("#cantidad").val() == 0) {
+                        $("#val_cantidad").append("<p class='text-sm text-danger'>La cantidad a entregar debe ser mayor a 0</p>")
+                    }
+                    else {
+                        // Mostrar encabezado de la entrega
+                        $("#proyecto_seleccionado").text($("#proyecto").val())
+                        $("#empleado_seleccionado").text($("#empleado option:selected").text())
+                        $("#fecha_entrega_seleccionada").text($("#fecha_entregas").val())    
 
-                    if (elemento_agregado == null) {
                         // Almacenar elementos en el array
                         entregas.push({ id_elemento: $("#elemento").val(), elemento: $("#elemento option:selected").text(), tipo_cantidad: $("#tipo_cantidad").val(), cantidad: $("#cantidad").val() })
 
@@ -264,15 +268,16 @@
                         $("#subcategoria, #elemento").empty()
                         $("#tipo_cantidad, #cantidad_disponible, #cantidad").val("")
                     }
-                    else {
-                        $("#val_elemento").append("<p class='text-sm text-danger'>Este elemento ya esta agregado</p>")
-                    } 
                 }
+                else {
+                    $("#val_elemento").append("<p class='text-sm text-danger'>Este elemento ya esta agregado</p>")
+                } 
 
+                // Validacion desabilitar boton registrar
                 if (entregas.length > 0) {
                     $("#btn-registrar").attr("disabled", false)
                 }
             }
         });
-    })
+    });
 </script>
