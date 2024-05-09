@@ -45,7 +45,7 @@ class CategoriaSubcategoriaController extends Controller
         //
         $validaciones = $request->validate([
         'subcategoria' => ['required', 'string', 'max:100', 'unique:subcategorias'],
-        'descripcion' => ['nullable', 'string', 'max:255']
+        'descripcion' => ['nullable', 'string']
         ]);
 
         $subcategoria = new Subcategoria();

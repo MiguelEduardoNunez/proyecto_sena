@@ -16,7 +16,7 @@ class ItemController extends Controller
      */
     public function index()
     {
-        $items = Item::orderBy('item', 'asc')->paginate('4');
+        $items = Item::orderBy('item', 'asc')->paginate();
 
         return view('items.listar', ['items' => $items]);
 
