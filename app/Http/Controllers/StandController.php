@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
+use App\Models\Elemento;
 use App\Models\Stand;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -90,6 +91,16 @@ class StandController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $elemento = Elemento::where('stand_id', '=', $id)->first();
+
+        if ($elemento != null) {
+            Alert::error('Error', 'El Stand tiene registros asociados');
+        }
+        else {
+            Stand::find($id)->delete();
+            Alert::success('Eliminado', 'Stand con éxito');
+        }
+
+        return redirect(route('stands.index'));
     }
 }  

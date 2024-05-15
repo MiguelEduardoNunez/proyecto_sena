@@ -57,7 +57,13 @@
                                         </div>
 
                                         <div class="col-2">
-                                            <form method="POST" action="#" id="form-eliminar">
+                                            <a href="#" class="text-info">
+                                                <i class="far fa-eye" data-toggle="tooltip" title="Descargar Reporte de Entrega"></i>
+                                            </a>
+                                        </div>
+
+                                        <div class="col-2">
+                                            <form method="POST" action="{{ route('proyectos.entregas-elementos.destroy', [$proyecto->id_proyecto, $entrega_elemento->id_entrega_elemento]) }}">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="btn p-0">
@@ -84,19 +90,20 @@
 
 <script>
     $(function () {
-        $("#form-eliminar").on("submit", function(evento) {
-            evento.preventDefault()
+        $("form").on("submit", function(evento) {
+            evento.preventDefault();
             Swal.fire({
-                title: "Estas seguro",
-                text: "Quieres eliminar",
-                icon: "info",
+                title: "¿Esta seguro?",
+                text: "Desea eliminar la entrega de elementos",
+                icon: "warning",
                 showCancelButton: true,
                 cancelButtonColor: "#dc3545",
+                confirmButtonColor: "#007bff",
                 cancelButtonText: "No, Cancelar",
                 confirmButtonText: "Si, Eliminar"
             }).then((result) => {
                 if (result.value) {
-                    // this.submit()
+                    this.submit();
                 }
             })
         });

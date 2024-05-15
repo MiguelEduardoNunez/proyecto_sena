@@ -128,6 +128,18 @@ class ProyectoEntregaElementoController extends Controller
      */
     public function destroy(string $id_proyecto, string $id_entrega_elemento)
     {
-        //
+        $detalle_entrega_elementos = DetalleEntregaElemento::where('entrega_elemento_id', '=', $id_entrega_elemento)->get();
+
+        foreach ($detalle_entrega_elementos as $detalle_entrega_elemento) {
+            $elemento = Elemento::find($detalle_entrega_elemento->elemento_id);
+            $elemento->cantidad = $elemento->cantidad+$detalle_entrega_elemento->cantidad;
+            $elemento->save();
+        }
+
+        $detalle_entrega_elemento->delete();
+        EntregaElemento::find($id_entrega_elemento)->delete();
+
+        Alert::success('Eliminada', 'Entrega de elementos con éxito');
+        return redirect()->route('proyectos.entregas-elementos.index', $id_proyecto);
     }
 }

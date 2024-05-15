@@ -7,7 +7,7 @@
             <x-card>
                 <x-slot:header>
                     <div class="row align-items-center">
-                        <div class="col-12 col-md-8 col-lg-9">
+                        <div class="col-12 col-md-7 col-lg-8">
                             <x-text :value="__('Gestionar Items')" />
                         </div>
                         <div class="col-12 col-md-4 col-lg-3">
@@ -17,6 +17,11 @@
                                     <i class="fas fa-search text-primary"></i>
                                 </x-slot:icon>
                             </x-input-group>
+                        </div>
+                        <div class="col-1">
+                            <a href="{{ route('items.createImport') }}">
+                                <i class="fas fa-plus-circle fa-2x" data-toggle="tooltip" title="Importar Items"></i>
+                            </a>
                         </div>
                     </div>
                 </x-slot:header>

@@ -26,6 +26,19 @@ class Item extends Model
      */
     protected $primaryKey = 'id_item';
 
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'subcategoria_id', 
+        'item', 
+        'descripcion'
+    ];
+
+
     /**
      * Names of the timestamps.
      */

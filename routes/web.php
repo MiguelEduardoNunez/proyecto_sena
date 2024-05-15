@@ -62,6 +62,8 @@ Route::resource('/categorias', CategoriaController::class)->middleware('auth');
 
 Route::resource('/categorias.subcategorias', CategoriaSubcategoriaController::class)->middleware('auth');
 
+Route::get('/items-importar/create', [ItemController::class, 'createImport'])->name('items.createImport')->middleware('auth');
+Route::post('/items-importar', [ItemController::class, 'storeImport'])->name('items.storeImport')->middleware('auth');
 Route::resource('/items', ItemController::class)->middleware('auth');
 
 Route::resource('/tipo_novedades', TipoNovedadController::class)->middleware('auth');

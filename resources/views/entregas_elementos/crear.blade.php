@@ -94,14 +94,6 @@
 
                         <div class="form-group">
                             <x-data-table :headers="['Elemento', 'Tipo de Cantidad', 'Cantidad']" id="tabla_entregas">
-                                {{-- <tr>
-                                    <td>1</td>
-                                    <td>Elemento1</td>
-                                    <td>4</td>
-                                    <td class="text-center">
-                                        <i class="far fa-trash-alt text-danger" data-toggle="tooltip" title="Eliminar Elemento"></i>
-                                    </td>
-                                </tr> --}}
                             </x-data-table>
                         </div>
                     </x-slot:body>
@@ -193,7 +185,7 @@
         // Table elementos agregados
         const entregas = []
         let validacion_formulario = []
-        $("#btn-agregar").on("click", function() {
+        $("#btn-agregar").click(function() {
             // Resetear validaciones del formulario
             validacion_formulario.forEach(function(regla_validacion) {
                 $(regla_validacion+" p").remove()
@@ -228,13 +220,13 @@
                 })
 
                 if (elemento_agregado == null) {
-                    // Validacion cantidad disponible del elemento
-                    if ($("#cantidad").val() > $("#cantidad_disponible").val()) {
-                        $("#val_cantidad").append("<p class='text-sm text-danger'>La cantidad a entregar debe ser menor o igual a la cantidad disponible</p>")
-                    }
                     // Validacion cantidad a entregar
-                    else if ($("#cantidad").val() == 0) {
+                    if (parseFloat($("#cantidad").val()) < 1) {
                         $("#val_cantidad").append("<p class='text-sm text-danger'>La cantidad a entregar debe ser mayor a 0</p>")
+                    }
+                    // Validacion cantidad disponible del elemento
+                    else if (parseFloat($("#cantidad").val()) > parseFloat($("#cantidad_disponible").val())) {
+                        $("#val_cantidad").append("<p class='text-sm text-danger'>La cantidad a entregar debe ser menor o igual a la cantidad disponible</p>")
                     }
                     else {
                         // Mostrar encabezado de la entrega

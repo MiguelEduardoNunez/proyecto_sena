@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Imports\ItemImport;
 use App\Models\Categoria;
 use App\Models\Item;
 use App\Models\Subcategoria;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Maatwebsite\Excel\Facades\Excel;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class ItemController extends Controller
@@ -19,7 +21,6 @@ class ItemController extends Controller
         $items = Item::orderBy('item', 'asc')->paginate('4');
 
         return view('items.listar', ['items' => $items]);
-
     }
 
     /**
@@ -111,5 +112,27 @@ class ItemController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    /**
+     * Muestra el formulario para importar nuevos recursos
+     */
+    public function createImport()
+    {
+        return view('items.importar');
+    }
+
+
+    /**
+     * Almacena nuevos recursos creados en el almacenamiento
+     */
+    public function storeImport(Request $request) 
+    {
+        $archivo = $request->file('archivo_excel');
+
+        Excel::import(new ItemImport, $archivo);
+        
+        Alert::success('Importado', 'Archivo con éxito');
+        return redirect(route('items.index'));
     }
 }

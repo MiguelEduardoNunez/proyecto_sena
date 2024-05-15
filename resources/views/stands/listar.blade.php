@@ -41,6 +41,16 @@
                                                 <i class="far fa-edit" data-toggle="tooltip" title="Actualizar Stand"></i>
                                             </a>
                                         </div>
+
+                                        <div class="col-2">
+                                            <form method="POST" action="{{ route('stands.destroy', $stand->id_stand) }}">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn text-danger p-0">
+                                                    <i class="far fa-trash-alt" data-toggle="tooltip" title="Eliminar Stand"></i>
+                                                </button>
+                                            </form>
+                                        </div>
                                     </div>
                                 </td>
                             </tr>
@@ -57,3 +67,25 @@
         </div>
     </div>
 </x-app-layout>
+
+<script>
+    $(function () {
+        $("form").on("submit", function(evento) {
+            evento.preventDefault();
+            Swal.fire({
+                title: "¿Esta seguro?",
+                text: "Desea eliminar el stand",
+                icon: "warning",
+                showCancelButton: true,
+                cancelButtonColor: "#dc3545",
+                confirmButtonColor: "#007bff",
+                cancelButtonText: "No, Cancelar",
+                confirmButtonText: "Si, Eliminar"
+            }).then((result) => {
+                if (result.value) {
+                    this.submit();
+                }
+            })
+        });
+    });
+</script>
