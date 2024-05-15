@@ -70,6 +70,10 @@ Route::resource('/tipo_novedades', TipoNovedadController::class)->middleware('au
 
 Route::resource('/proyectos', ProyectoController::class)->middleware('auth');
 
+Route::get('/migrar-elementos/{id_proyecto}', [ProyectoElementoController::class, 'migrarElementosCreate'])->name('proyectos.migrar.elementos');
+Route::post('/migrar-elementos/{id_proyecto}', [ProyectoElementoController::class, 'migrarElementosStore'])->name('proyectos.migrar.elementos.store');
+
+
 Route::get('proyectos/{id_proyecto}/elementos/pdf-elementos', [ProyectoElementoController::class, 'pdfElementos'])->name('proyectos.elementos.pdf');
 
 Route::resource('/proyectos.elementos', ProyectoElementoController::class)->middleware('auth');

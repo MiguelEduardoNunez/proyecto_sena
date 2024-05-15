@@ -39,6 +39,11 @@
                                     <a class="dropdown-item" href="{{ route('proyectos.elementos.pdf', $proyecto->id_proyecto) }}" target="_blank">
                                         <i class="fas fa-file-pdf text-primary mr-2"></i>Generar PDF
                                     </a>
+                                    <a class="dropdown-item" href="{{ route('proyectos.migrar.elementos', $proyecto->id_proyecto)}}">
+                                        <i class="fas fa-share text-primary mr-2"></i>Migrar Elementos
+                                    </a>
+                                </a>
+                                
                                 </div>
                             </div>
                         </div>

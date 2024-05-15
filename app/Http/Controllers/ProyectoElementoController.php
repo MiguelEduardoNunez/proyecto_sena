@@ -6,13 +6,16 @@ use App\Models\Categoria;
 use App\Models\Elemento;
 use App\Models\Item;
 use App\Models\Proyecto;
+use App\Models\ProyectoElemento;
 use App\Models\Stand;
 use App\Models\Subcategoria;
 use App\Models\TipoCantidad;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Barryvdh\DomPDF\PDF as DomPDFPDF;
 use Dompdf\Dompdf;
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class ProyectoElementoController extends Controller
@@ -50,7 +53,7 @@ class ProyectoElementoController extends Controller
         $tipos_cantidad = TipoCantidad::orderBy('tipo_cantidad', 'asc')->get();
 
         return view('elementos.crear', [
-            'proyecto' => $proyecto, 'stands' => $stands, 'categorias' => $categorias, 'subcategorias' => $subcategorias, 
+            'proyecto' => $proyecto, 'stands' => $stands, 'categorias' => $categorias, 'subcategorias' => $subcategorias,
             'items' => $items, 'tipos_cantidad' => $tipos_cantidad
         ]);
     }
@@ -79,9 +82,8 @@ class ProyectoElementoController extends Controller
             ->where('marca', '=', $request->marca)
             ->where('modelo', '=', $request->modelo)
             ->first();
-        
-        if ($elemento_registrado == null) 
-        {
+
+        if ($elemento_registrado == null) {
             $elemento = new Elemento();
             $elemento->proyecto_id = $id_proyecto;
             $elemento->stand_id = $request->stand;
@@ -100,9 +102,7 @@ class ProyectoElementoController extends Controller
 
             Alert::success('Registrado', 'Elemento con éxito');
             return redirect()->route('proyectos.elementos.index', $id_proyecto);
-        }
-        else 
-        {
+        } else {
             Alert::error('Error', 'El elemento ya esta registrado, actualice su cantidad');
             return back()->withInput();
         }
@@ -150,7 +150,7 @@ class ProyectoElementoController extends Controller
             ->get();
 
         return view('elementos.editar', [
-            'proyecto' => $proyecto, 'elemento' => $elemento, 'stands' => $stands, 'categorias' => $categorias, 
+            'proyecto' => $proyecto, 'elemento' => $elemento, 'stands' => $stands, 'categorias' => $categorias,
             'subcategorias' => $subcategorias, 'items' => $items, 'tipos_cantidad' => $tipos_cantidad
         ]);
     }
@@ -180,9 +180,8 @@ class ProyectoElementoController extends Controller
             ->where('marca', '=', $request->marca)
             ->where('modelo', '=', $request->modelo)
             ->first();
-        
-        if ($elemento_registrado == null) 
-        {
+
+        if ($elemento_registrado == null) {
             $elemento = Elemento::find($id_elemento);
             $elemento->proyecto_id = $id_proyecto;
             $elemento->stand_id = $request->stand;
@@ -201,9 +200,7 @@ class ProyectoElementoController extends Controller
 
             Alert::success('Actualizado', 'Elemento con éxito');
             return redirect()->route('proyectos.elementos.index', $id_proyecto);
-        }
-        else 
-        {
+        } else {
             Alert::error('Error', 'El elemento ya esta registrado, actualice su cantidad');
             return back()->withInput();
         }
@@ -222,11 +219,103 @@ class ProyectoElementoController extends Controller
     {
         $proyecto = Proyecto::find($id);
         $elementos = Elemento::where('proyecto_id', $id)->get();
-       
-        
+
+
 
         $pdf = PDF::loadView('elementos.pdf', ['proyecto' => $proyecto, 'elementos' => $elementos]);
-        return $pdf->download('elementos-'.$proyecto->proyecto.'.pdf');
+        return $pdf->download('elementos-' . $proyecto->proyecto . '.pdf');
     }
 
+
+    public function migrarElementosCreate(string $id_proyecto)
+    {
+        $proyecto = Proyecto::findOrFail($id_proyecto);
+
+        $proyectos = Proyecto::where('id_proyecto', '!=', $id_proyecto)
+            ->orderBy('proyecto', 'asc')
+            ->get();
+
+        $elementos = Elemento::with(['item', 'tipoCantidad'])
+            ->where('proyecto_id', $id_proyecto)
+            ->orderBy('modelo', 'asc')
+            ->get();
+
+
+
+        return view('elementos.migrar', ['proyecto' => $proyecto, 'elementos' => $elementos, 'proyectos' => $proyectos]);
+    }
+
+
+    public function migrarElementosStore(Request $request, string $id_proyecto)
+    {
+        $elementosSeleccionados = $request->elementos_seleccionados;
+        $idProyectoDestino = $request->proyecto_destino;
+        $cantidades = $request->cantidades;
+    
+        $request->validate([
+            'elementos_seleccionados' => 'required|array|min:1',
+            'proyecto_destino' => 'required'
+        ]);
+    
+        try {
+            DB::beginTransaction();
+    
+            foreach ($elementosSeleccionados as $elementoId) {
+                $elemento = Elemento::findOrFail($elementoId);
+                $cantidadMigrada = $cantidades[$elementoId];
+                $cantidadTotal = $elemento->cantidad;
+    
+                $elementoExistente = Elemento::where('proyecto_id', $idProyectoDestino)
+                    ->where('item_id', '=', $elemento->item_id)
+                    ->where('marca', '=', $elemento->marca)
+                    ->where('modelo', '=', $elemento->modelo)
+                    ->first();
+    
+                if ($cantidadMigrada < $cantidadTotal) {
+                    $elementoClonado = $elemento->replicate();
+                    $elementoClonado->proyecto_id = $idProyectoDestino;
+                    $elementoClonado->cantidad = $cantidadMigrada;
+                    $elementoClonado->save();
+    
+                    $elemento->decrement('cantidad', $cantidadMigrada);
+                    $elementoMigrado = $elementoClonado;
+                } elseif ($cantidadMigrada == $cantidadTotal) {
+                    if ($elementoExistente) {
+                        $elementoExistente->cantidad += $cantidadMigrada;
+                        $elementoExistente->save();
+                        $elemento->delete();
+                        $elementoMigrado = $elementoExistente;
+                    } else {
+                        $elemento->proyecto_id = $idProyectoDestino;
+                        $elemento->save();
+                        $elementoMigrado = $elemento;
+                    }
+                }
+    
+                $registroExistente = ProyectoElemento::where('proyecto_id', $elemento->proyecto_id)
+                    ->where('elemento_id', $elemento->id_elemento)
+                    ->first();
+    
+                if ($registroExistente) {
+                    $registroExistente->proyecto_id = $idProyectoDestino;
+                    $registroExistente->cantidad = $cantidadMigrada;
+                    $registroExistente->save();
+                } else {
+                    ProyectoElemento::create([
+                        'proyecto_id' => $idProyectoDestino,
+                        'elemento_id' => $elementoMigrado->id_elemento,
+                        'cantidad' => $cantidadMigrada
+                    ]);
+                }
+            }
+    
+            DB::commit();
+            Alert::success('Migrados', 'Elementos con éxito');
+            return redirect()->route('proyectos.elementos.index', $id_proyecto);
+        } catch (\Exception $e) {
+            DB::rollback();
+            Alert::error('Error', 'Hubo un error al migrar elementos.');
+            return back()->withErrors(['error' => $e->getMessage()]);
+        }
+    }
 }
