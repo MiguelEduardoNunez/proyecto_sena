@@ -9,6 +9,7 @@ use App\Models\Empleado;
 use App\Models\EntregaElemento;
 use App\Models\Proyecto;
 use App\Models\Subcategoria;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -102,7 +103,9 @@ class ProyectoEntregaElementoController extends Controller
 
         $entrega_elemento = EntregaElemento::find($id_entrega_elemento);
 
-        $detalle_entrega_elementos = DetalleEntregaElemento::where('entrega_elemento_id', '=', $id_entrega_elemento)->get();
+        $detalle_entrega_elementos = DetalleEntregaElemento::with(['elemento' => ['stand', 'item', 'tipoCantidad']])
+            ->where('entrega_elemento_id', '=', $id_entrega_elemento)
+            ->get();
 
         return view('entregas_elementos.mostrar', ['proyecto' => $proyecto, 'entrega_elemento' => $entrega_elemento, 'detalle_entrega_elementos' => $detalle_entrega_elementos]);
     }
@@ -141,5 +144,25 @@ class ProyectoEntregaElementoController extends Controller
 
         Alert::success('Eliminada', 'Entrega de elementos con éxito');
         return redirect()->route('proyectos.entregas-elementos.index', $id_proyecto);
+    }
+
+    /**
+     * Download the specified resource from storage.
+     */
+    public function reporte(string $id_proyecto, string $id_entrega_elemento)
+    {
+        $proyecto = Proyecto::find($id_proyecto);
+
+        $entrega_elemento = EntregaElemento::find($id_entrega_elemento);
+
+        $detalle_entrega_elementos = DetalleEntregaElemento::with(['elemento' => ['item', 'tipoCantidad']])
+            ->where('entrega_elemento_id', '=', $id_entrega_elemento)
+            ->get();
+
+        $reporte = Pdf::loadView('entregas_elementos.reporte', [
+            'proyecto' => $proyecto, 'entrega_elemento' => $entrega_elemento, 'detalle_entrega_elementos' => $detalle_entrega_elementos
+        ]);
+
+        return $reporte->download('Entrega-Elementos-'.$proyecto->proyecto.'.pdf');
     }
 }

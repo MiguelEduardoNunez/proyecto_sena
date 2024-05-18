@@ -28,32 +28,41 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// Ruta Inicio Sesion
 Route::get('/', function () {
     return view('auth.login');
 });
 
+// Ruta Dashboard
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+// Rutas Perfil Usuario
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-// Rutas Administracion
+
+// Rutas Administracion //
+// Rutas Modulos
 Route::resource('/modulos', ModuloController::class)->middleware('auth');
 
+// Rutas Perfiles
 Route::resource('/perfiles', PerfilController::class)->middleware('auth');
 
+// Rutas Permisos
 Route::get('/permisos/{perfil}', [PermisoController::class, 'edit'])->name('permisos.edit')->middleware('auth');
 Route::put('/permisos/{perfil}', [PermisoController::class, 'update'])->name('permisos.update')->middleware('auth');
 
+// Rutas Usuarios
 Route::resource('/usuarios', UsuarioController::class)->middleware('auth');
 
 
-// Rutas Inventarios
+// Rutas Inventarios //
+// Rutas Stands
 Route::resource('/stands', StandController::class)->middleware('auth');
 
 Route::resource('/empleados', EmpleadoController::class)->middleware('auth');
@@ -62,6 +71,7 @@ Route::resource('/categorias', CategoriaController::class)->middleware('auth');
 
 Route::resource('/categorias.subcategorias', CategoriaSubcategoriaController::class)->middleware('auth');
 
+// Rutas Items
 Route::get('/items-importar/create', [ItemController::class, 'createImport'])->name('items.createImport')->middleware('auth');
 Route::post('/items-importar', [ItemController::class, 'storeImport'])->name('items.storeImport')->middleware('auth');
 Route::resource('/items', ItemController::class)->middleware('auth');
@@ -70,18 +80,18 @@ Route::resource('/tipo_novedades', TipoNovedadController::class)->middleware('au
 
 Route::resource('/proyectos', ProyectoController::class)->middleware('auth');
 
+// Rutas Elementos
+Route::get('proyectos/{id_proyecto}/elementos/pdf-elementos', [ProyectoElementoController::class, 'pdfElementos'])->name('proyectos.elementos.pdf');
 Route::get('/migrar-elementos/{id_proyecto}', [ProyectoElementoController::class, 'migrarElementosCreate'])->name('proyectos.migrar.elementos');
 Route::post('/migrar-elementos/{id_proyecto}', [ProyectoElementoController::class, 'migrarElementosStore'])->name('proyectos.migrar.elementos.store');
-
-
-Route::get('proyectos/{id_proyecto}/elementos/pdf-elementos', [ProyectoElementoController::class, 'pdfElementos'])->name('proyectos.elementos.pdf');
-
 Route::resource('/proyectos.elementos', ProyectoElementoController::class)->middleware('auth');
 
+// Rutas Novedades
 Route::resource('/elementos.novedades', ElementoNovedadController::class)->middleware('auth');
 
+// Rutas Entregas de Elementos
+Route::get('/proyectos/{proyecto}/entregas-elementos/{entrega_elemento}/reporte', [ProyectoEntregaElementoController::class, 'reporte'])->name('proyectos.entregas-elementos.reporte');
 Route::resource('/proyectos.entregas-elementos', ProyectoEntregaElementoController::class)->middleware('auth');
-
 
 
 

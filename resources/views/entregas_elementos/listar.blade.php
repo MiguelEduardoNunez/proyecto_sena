@@ -28,7 +28,7 @@
 
                         <div class="col-auto">
                             <a href="{{ route('proyectos.entregas-elementos.create', $proyecto->id_proyecto) }}">
-                                <i class="fas fa-plus-circle fa-2x" data-toggle="tooltip" title="Registrar Entrega"></i>
+                                <i class="fas fa-plus-circle fa-2x" data-toggle="tooltip" title="Registrar Entrega de Elementos"></i>
                             </a>
                         </div>
                     </div>
@@ -46,19 +46,19 @@
                                     <div class="row justify-content-center align-items-center">
                                         <div class="col-2">
                                             <a href="{{ route('proyectos.entregas-elementos.show', [$proyecto->id_proyecto, $entrega_elemento->id_entrega_elemento]) }}">
-                                                <i class="far fa-eye" data-toggle="tooltip" title="Detalles Entrega"></i>
+                                                <i class="far fa-eye" data-toggle="tooltip" title="Detalles Entrega de Elementos"></i>
                                             </a>
                                         </div>
 
                                         <div class="col-2">
                                             <a href="#" class="text-success">
-                                                <i class="far fa-edit" data-toggle="tooltip" title="Actualizar Entrega"></i>
+                                                <i class="far fa-edit" data-toggle="tooltip" title="Actualizar Entrega de Elementos"></i>
                                             </a>
                                         </div>
-
+                                        
                                         <div class="col-2">
-                                            <a href="#" class="text-info">
-                                                <i class="far fa-eye" data-toggle="tooltip" title="Descargar Reporte de Entrega"></i>
+                                            <a href="{{ route('proyectos.entregas-elementos.reporte', [$proyecto->id_proyecto, $entrega_elemento->id_entrega_elemento]) }}" class="text-info">
+                                                <i class="fas fa-file-download" data-toggle="tooltip" title="Descargar Entrega de Elementos"></i>
                                             </a>
                                         </div>
 
@@ -67,7 +67,7 @@
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="btn p-0">
-                                                    <i class="far fa-trash-alt text-danger" data-toggle="tooltip" title="Eliminar Entrega"></i>
+                                                    <i class="far fa-trash-alt text-danger" data-toggle="tooltip" title="Eliminar Entrega de Elementos"></i>
                                                 </button>
                                             </form>
                                         </div>
