@@ -9,6 +9,7 @@ use App\Models\Subcategoria;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Maatwebsite\Excel\Facades\Excel;
+use Maatwebsite\Excel\Validators\ValidationException;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class ItemController extends Controller
@@ -122,7 +123,6 @@ class ItemController extends Controller
         return view('items.importar');
     }
 
-
     /**
      * Almacena nuevos recursos creados en el almacenamiento
      */
@@ -130,9 +130,19 @@ class ItemController extends Controller
     {
         $archivo = $request->file('archivo_excel');
 
-        Excel::import(new ItemImport, $archivo);
-        
-        Alert::success('Importado', 'Archivo con éxito');
-        return redirect(route('items.index'));
+        try {
+            Excel::import(new ItemImport, $archivo);
+            Alert::success('Importado', 'Archivo con éxito');
+        } catch (ValidationException $exception) {
+            $failures = $exception->failures();
+
+            $fila = $failures[0]->row();
+            $columna = $failures[0]->attribute();
+            $error = implode("", $failures[0]->errors());
+             
+            Alert::error('Error', 'Revise la Fila '.$fila.' en la Columna '.$columna.' '.$error);
+        }
+
+        return redirect()->route('items.index');
     }
 }

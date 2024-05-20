@@ -4,8 +4,10 @@ namespace App\Imports;
 
 use App\Models\Item;
 use Maatwebsite\Excel\Concerns\ToModel;
+use Maatwebsite\Excel\Concerns\WithHeadingRow;
+use Maatwebsite\Excel\Concerns\WithValidation;
 
-class ItemImport implements ToModel
+class ItemImport implements ToModel, WithHeadingRow, WithValidation
 {
     /**
     * @param array $row
@@ -15,9 +17,18 @@ class ItemImport implements ToModel
     public function model(array $row)
     {
         return new Item([
-            'subcategoria_id' => 3,
-            'item' => $row[0],
-            'descripcion' => $row[1]
+            'subcategoria_id' => $row['subcategoria'],
+            'item' => $row['item'],
+            'descripcion' => $row['descripcion']
         ]);
+    }
+
+    public function rules(): array
+    {
+        return [
+            'subcategoria' => ['required', 'numeric',],
+            'item' => ['required', 'string', 'max:100', 'unique:items,item'],
+            'descripcion' => ['nullable', 'string']
+        ];
     }
 }
