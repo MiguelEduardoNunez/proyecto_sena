@@ -24,10 +24,10 @@ class ElementoNovedadController extends Controller
         $elemento = Elemento::find($id_elemento);
         $proyecto = Proyecto::find($elemento->proyecto_id);
 
-
-        $novedades = Novedad::with('elemento')
-            ->orderBy('novedad', 'asc')
-            ->paginate(100);
+        $novedades = Novedad::with(['elemento'])
+        ->where('elemento_id', '=', $id_elemento)
+        ->orderBy('novedad', 'asc')
+        ->paginate(10);
 
         return view('novedades.listar', ['elemento' => $elemento, 'novedades' => $novedades, 'proyecto' => $proyecto]);
     }
@@ -175,6 +175,7 @@ class ElementoNovedadController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        Novedad::find($id)->delete();
+        Alert::success('Eliminado', 'Novedad con exito');
     }
 }

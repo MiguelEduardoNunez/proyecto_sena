@@ -1,11 +1,14 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Http\Controllers\Controller;
+use App\Models\Novedad;
 use Illuminate\Http\Request;
 use App\Models\TipoNovedad;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Validation\Rule;
+
 class TipoNovedadController extends Controller
 {
     /**
@@ -25,7 +28,6 @@ class TipoNovedadController extends Controller
     {
         //
         return view('tipo_novedades.crear');
-
     }
 
     /**
@@ -36,18 +38,17 @@ class TipoNovedadController extends Controller
 
         $request->validate([
             //regex para que solo acepte letras y espacios 
-            'tipo_novedad' => ['required', 'string', 'max:100','unique:tipos_novedades'],
+            'tipo_novedad' => ['required', 'string', 'max:100', 'unique:tipos_novedades'],
             'descripcion' => ['nullable', 'string', 'max:100']
         ]);
         $tipoNovedad = new TipoNovedad();
-        $tipoNovedad->tipo_novedad= $request->tipo_novedad;
+        $tipoNovedad->tipo_novedad = $request->tipo_novedad;
         $tipoNovedad->descripcion = $request->descripcion;
 
         $tipoNovedad->save();
 
         Alert::success('Registrado', 'Tipo de novedad con éxito');
         return redirect(route('tipo_novedades.index'));
-
     }
 
     /**
@@ -95,6 +96,15 @@ class TipoNovedadController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $novedad = Novedad::where('tipo_novedad_id', '=', $id)->first();
+
+        if ($novedad != null) {
+            Alert::error('Error', 'El tipo novedad tiene registros asociados');
+        }
+        else {
+        TipoNovedad::find($id)->delete();
+        Alert::success('Eliminada', 'Tipo de Novedad con exito');
+        }
+        return redirect(route('tipo_novedades.index'));
     }
 }

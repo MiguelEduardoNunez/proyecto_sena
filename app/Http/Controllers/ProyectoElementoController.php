@@ -6,6 +6,7 @@ use App\Imports\ElementoImport;
 use App\Models\Categoria;
 use App\Models\Elemento;
 use App\Models\Item;
+use App\Models\Novedad;
 use App\Models\Proyecto;
 use App\Models\ProyectoElemento;
 use App\Models\Stand;
@@ -216,7 +217,17 @@ class ProyectoElementoController extends Controller
      */
     public function destroy(string $id_proyecto, string $id_elemento)
     {
-        //
+        $novedad = Novedad::where('elemento_id', '=', $id_elemento)->first();
+        $proyecto_elemento = ProyectoElemento::where('elemento_id', '=', $id_elemento)->first();
+
+        if ($novedad != null or $proyecto_elemento != null) {
+            Alert::error('Error', 'el item tiene registros asociados');
+        } else {
+            Elemento::find($id_elemento)->delete();
+            Alert::success('Eliminado', 'Elemento con exito');
+        }
+
+        return redirect(route('proyectos.elementos.index', $id_proyecto));
     }
 
 
@@ -257,71 +268,81 @@ class ProyectoElementoController extends Controller
         $idProyectoDestino = $request->proyecto_destino;
         $cantidades = $request->cantidades;
 
+        $elementos_migracion = array_map(function (int $elemento, int $cantidad): array {
+            return ["elemento" => $elemento, "cantidad" => $cantidad];
+        }, $elementosSeleccionados, $cantidades);
+
         $request->validate([
             'elementos_seleccionados' => 'required|array|min:1',
             'proyecto_destino' => 'required'
         ]);
 
-        try {
-            DB::beginTransaction();
+        foreach ($elementos_migracion as $elementos) {
+            $elemento = Elemento::find($elementos['elemento']);
+            $cantidad_migrada = $elementos['cantidad'];
+            $cantidad_total = $elemento->cantidad;
 
-            foreach ($elementosSeleccionados as $elementoId) {
-                $elemento = Elemento::findOrFail($elementoId);
-                $cantidadMigrada = $cantidades[$elementoId];
-                $cantidadTotal = $elemento->cantidad;
+            $elemento_existente = Elemento::where('proyecto_id', '=', $idProyectoDestino)
+                ->where('item_id', $elemento->item_id)
+                ->first();
 
-                $elementoExistente = Elemento::where('proyecto_id', $idProyectoDestino)
-                    ->where('item_id', '=', $elemento->item_id)
-                    ->where('marca', '=', $elemento->marca)
-                    ->where('modelo', '=', $elemento->modelo)
-                    ->first();
+            if ($elemento_existente) {
+                $elemento_existente->cantidad += $cantidad_migrada;
+                $elemento_existente->save();
 
-                if ($cantidadMigrada < $cantidadTotal) {
-                    $elementoClonado = $elemento->replicate();
-                    $elementoClonado->proyecto_id = $idProyectoDestino;
-                    $elementoClonado->cantidad = $cantidadMigrada;
-                    $elementoClonado->save();
+                if ($cantidad_migrada == $cantidad_total) {
+                    $elemento->delete();
+                }
+            } else {
 
-                    $elemento->decrement('cantidad', $cantidadMigrada);
-                    $elementoMigrado = $elementoClonado;
-                } elseif ($cantidadMigrada == $cantidadTotal) {
-                    if ($elementoExistente) {
-                        $elementoExistente->cantidad += $cantidadMigrada;
-                        $elementoExistente->save();
-                        $elemento->delete();
-                        $elementoMigrado = $elementoExistente;
-                    } else {
+                if ($cantidad_migrada > $cantidad_total) {
+                    Alert::error('Error', 'La cantidad a migrar es mayor a la cantidad total');
+                    return back()->withInput();
+                } else {
+
+                    if ($cantidad_migrada == $cantidad_total) {
                         $elemento->proyecto_id = $idProyectoDestino;
                         $elemento->save();
-                        $elementoMigrado = $elemento;
+                    } else {
+                        $elemento->cantidad -= $cantidad_migrada;
+                        $elemento->save();
+
+                        $elemento_clonado = $elemento->replicate();
+                        $elemento_clonado->proyecto_id = $idProyectoDestino;
+                        $elemento_clonado->cantidad = $cantidad_migrada;
+                        $elemento_clonado->save();
                     }
-                }
-
-                $registroExistente = ProyectoElemento::where('proyecto_id', $elemento->proyecto_id)
-                    ->where('elemento_id', $elemento->id_elemento)
-                    ->first();
-
-                if ($registroExistente) {
-                    $registroExistente->proyecto_id = $idProyectoDestino;
-                    $registroExistente->cantidad = $cantidadMigrada;
-                    $registroExistente->save();
-                } else {
-                    ProyectoElemento::create([
-                        'proyecto_id' => $idProyectoDestino,
-                        'elemento_id' => $elementoMigrado->id_elemento,
-                        'cantidad' => $cantidadMigrada
-                    ]);
                 }
             }
 
-            DB::commit();
-            Alert::success('Migrados', 'Elementos con éxito');
-            return redirect()->route('proyectos.elementos.index', $id_proyecto);
-        } catch (\Exception $e) {
-            DB::rollback();
-            Alert::error('Error', 'Hubo un error al migrar elementos.');
-            return back()->withErrors(['error' => $e->getMessage()]);
+            
+            $elemento = Elemento::find($elementos['elemento']);
+            if ($elemento) {
+                $proyecto_elemento = ProyectoElemento::where('proyecto_id', '=', $idProyectoDestino)
+                    ->where('elemento_id', $elementos['elemento'])
+                    ->first();
+            
+                if ($proyecto_elemento) {
+                    $proyecto_elemento->cantidad = $elementos['cantidad'];
+                    $proyecto_elemento->save();
+                } else {
+                    $proyecto_elemento = new ProyectoElemento();
+                    $proyecto_elemento->proyecto_id = $idProyectoDestino;
+                    $proyecto_elemento->proyecto_origen = $id_proyecto;
+                    $proyecto_elemento->elemento_id = $elementos['elemento'];
+                    $proyecto_elemento->cantidad = $elementos['cantidad'];
+                    $proyecto_elemento->save();
+                }
+            } else {
+                Alert::error('Error', 'El elemento no existe');
+                return back()->withInput();
+            }
+
         }
+
+
+        Alert::success('Migrados', 'Los Elementos se migraron con éxito');
+        return redirect()->route('proyectos.elementos.index', $id_proyecto);
     }
 
     public function createImport($id_proyecto)

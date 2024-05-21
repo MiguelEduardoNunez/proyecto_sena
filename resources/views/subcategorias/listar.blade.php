@@ -65,6 +65,18 @@
                                                 <i class="far fa-edit" data-toggle="tooltip" title="Actualizar Subcategoría"></i>
                                             </a>
                                         </div>
+                                        <div class="col-2">
+                                            <form method="POST" action="{{route('categorias.subcategorias.destroy', [$categoria->id_categoria, $subcategoria->id_subcategoria])}}">
+                                              @csrf @method('DELETE')
+                                              <button type="submit" class="btn p-0">
+                                                <i
+                                                  class="far fa-trash-alt text-danger"
+                                                  data-toggle="tooltip"
+                                                  title="Eliminar Subcategoría"
+                                                ></i>
+                                              </button>
+                                            </form>
+                                          </div>
                                     </div>
                                 </td>
                             </tr>
@@ -81,3 +93,4 @@
         </div>
     </div>
 </x-app-layout>
+<x-message-confirm text="Desea eliminar la subcategoría" />

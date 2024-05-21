@@ -98,6 +98,7 @@ Route::get('/proyectos/{proyecto}/entregas-elementos/{entrega_elemento}/reporte'
 Route::resource('/proyectos.entregas-elementos', ProyectoEntregaElementoController::class)->middleware('auth');
 
 
-
+Route::post('/proyectos/{id_proyecto}/elementos-importar', [ProyectoElementoController::class, 'storeImport'])->name('elementos.storeImport')->middleware('auth');
+Route::get('/proyectos/{id_proyecto}/elementos-importar', [ProyectoElementoController::class, 'createImport'])->name('elementos.createImport')->middleware('auth');
 
 require __DIR__.'/auth.php';

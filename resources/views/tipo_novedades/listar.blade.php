@@ -31,14 +31,24 @@
                                     <div class="row justify-content-center align-items-center">
                                         <div class="col-2">
                                             <a href="{{ route('tipo_novedades.show', $tipo_novedad->id_tipo_novedad) }}">
-                                                <i class="far fa-eye "  data-toggle="tooltip" title="Detalles Tipo de Novedad"></i>
+                                                <i class="far fa-eye "  data-toggle="tooltip" title="Detalles Tipo Novedad"></i>
                                             </a>
                                         </div>
                                         <div class="col-2">
                                             <a href="{{ route('tipo_novedades.edit', $tipo_novedad->id_tipo_novedad) }}" class="text-success">
-                                                <i class="far fa-edit" data-toggle="tooltip" title="Actualizar Tipo de Novedad"></i>
+                                                <i class="far fa-edit" data-toggle="tooltip" title="Actualizar Tipo Novedad"></i>
                                             </a>
                                         </div>
+                                        <div class="col-2">
+                                            <form method="POST" action="{{route('tipo_novedades.destroy', $tipo_novedad->id_tipo_novedad)}}">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn p-0">
+                                                    <i class="far fa-trash-alt text-danger" data-toggle="tooltip" title="Eliminar Tipo Novedad"></i>
+                                                </button>
+                                            </form>
+                                        </div>
+                                        
                                     </div>
                                 </td>
                             </tr>
@@ -55,3 +65,4 @@
         </div>
     </div>
 </x-app-layout>
+<x-message-confirm text="Desea eliminar el tipo de novedad" />

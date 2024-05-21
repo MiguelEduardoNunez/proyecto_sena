@@ -20,7 +20,7 @@
                         </div>
                         <div class="col-1">
                             <a href="{{ route('items.createImport') }}">
-                                <i class="fas fa-plus-circle fa-2x" data-toggle="tooltip" title="Importar Items"></i>
+                                <i class="fas fa-file-excel fa-2x" data-toggle="tooltip" title="Importar Items"></i>
                             </a>
                         </div>
                     </div>
@@ -47,6 +47,15 @@
                                                 <i class="far fa-edit" data-toggle="tooltip" title="Actualizar Item"></i>
                                             </a>
                                         </div>
+                                        <div class="col-2">
+                                            <form method="POST" action="{{route('items.destroy', $item->id_item)}}">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn p-0">
+                                                    <i class="far fa-trash-alt text-danger" data-toggle="tooltip" title="Eliminar Item"></i>
+                                                </button>
+                                            </form>
+                                        </div>
                                     </div>
                                 </td>
                             </tr>
@@ -63,4 +72,4 @@
         </div>
     </div>
 </x-app-layout>
-
+<x-message-confirm text="Desea eliminar el item" />

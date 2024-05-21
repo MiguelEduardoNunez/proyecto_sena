@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Categoria;
+use App\Models\Subcategoria;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -18,7 +19,6 @@ class CategoriaController extends Controller
         $categorias = Categoria::all();
 
         return view('categorias.listar', ['categorias' => $categorias]);
-
     }
     /**
      * Show the form for creating a new resource.
@@ -38,7 +38,7 @@ class CategoriaController extends Controller
         ]);
 
         $categoria = new Categoria();
-        $categoria->categoria  = $request->categoria ;
+        $categoria->categoria  = $request->categoria;
         $categoria->descripcion = $request->descripcion;
         $categoria->save();
 
@@ -77,11 +77,11 @@ class CategoriaController extends Controller
         ]);
 
         $categoria = Categoria::find($id);
-        $categoria->categoria  = $request->categoria ;
+        $categoria->categoria  = $request->categoria;
         $categoria->descripcion = $request->descripcion;
         $categoria->save();
 
-        Alert::success('Actualizado', 'Categoria con exito');
+        Alert::success('Actualizada', 'Categoria con exito');
         return redirect(route('categorias.index'));
     }
 
@@ -90,6 +90,14 @@ class CategoriaController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $subcategoria = Subcategoria::where('categoria_id', '=', $id)->first();
+
+        if ($subcategoria != null) {
+            Alert::error('Error', 'la categoría tiene registros asociados');
+        } else {
+        Categoria::find($id)->delete();
+        Alert::success('Eliminada', 'Categoría con exito');
+        }
+        return redirect(route('categorias.index'));
     }
 }

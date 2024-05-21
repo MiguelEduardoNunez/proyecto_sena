@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Empleado;
+use App\Models\EntregaElemento;
+use App\Models\Novedad;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -85,6 +87,15 @@ class EmpleadoController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $entrega_elemento = EntregaElemento::where('empleado_id', '=', $id)->first();
+        $novedad = Novedad::where('empleado_id', '=', $id)->first();
+
+        if ($entrega_elemento != null or $novedad != null) {
+            Alert::error('Error', 'el empleado tiene registros asociados');
+        } else {
+        Empleado::find($id)->delete();
+        Alert::success('Eliminado', 'Empleado con exito');
+        }
+        return redirect(route('empleados.index'));
     }
 }

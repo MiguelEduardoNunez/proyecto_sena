@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Imports\ItemImport;
 use App\Models\Categoria;
+use App\Models\Elemento;
 use App\Models\Item;
 use App\Models\Subcategoria;
 use Illuminate\Http\Request;
@@ -112,7 +113,17 @@ class ItemController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $elemento = Elemento::where('item_id', '=', $id)->first();
+
+        if ($elemento != null) {
+            Alert::error('Error', 'el item tiene registros asociados');
+        } else {
+
+            Item::find($id)->delete();
+            Alert::success('Eliminado', 'Item con exito');
+        }
+
+        return redirect(route('items.index'));
     }
 
     /**

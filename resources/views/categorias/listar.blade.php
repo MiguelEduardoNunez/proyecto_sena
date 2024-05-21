@@ -31,13 +31,13 @@
                                     <div class="row justify-content-center align-items-center">
                                         <div class="col-2">
                                             <a href="{{ route('categorias.show', $categoria->id_categoria) }}">
-                                                <i class="far fa-eye" data-toggle="tooltip" title="Detalles Categoria"></i>
+                                                <i class="far fa-eye" data-toggle="tooltip" title="Detalles Categoría"></i>
                                             </a>
                                         </div>
 
                                         <div class="col-2">
                                             <a href="{{ route('categorias.edit', $categoria->id_categoria) }}" class="text-success">
-                                                <i class="far fa-edit" data-toggle="tooltip" title="Actualizar Categoria"></i>
+                                                <i class="far fa-edit" data-toggle="tooltip" title="Actualizar Categoría"></i>
                                             </a>
                                         </div>
 
@@ -46,6 +46,18 @@
                                                 <i class="fas fa-tools" data-toggle="tooltip" title="Gestionar Subcategorias"></i>
                                             </a>
                                         </div>
+                                        <div class="col-2">
+                                            <form method="POST" action="{{route('categorias.destroy', $categoria->id_categoria)}}">
+                                              @csrf @method('DELETE')
+                                              <button type="submit" class="btn p-0">
+                                                <i
+                                                  class="far fa-trash-alt text-danger"
+                                                  data-toggle="tooltip"
+                                                  title="Eliminar Categoría"
+                                                ></i>
+                                              </button>
+                                            </form>
+                                          </div>
                                     </div>
                                 </td>
                             </tr>
@@ -62,4 +74,5 @@
         </div>
     </div>
 </x-app-layout>
+<x-message-confirm text="Desea eliminar la categoría" />
 

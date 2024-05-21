@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Elemento;
 use App\Models\Proyecto;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -114,6 +115,14 @@ class ProyectoController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $elemento = Elemento::where('proyecto_id', '=', $id)->first();
+
+        if ($elemento != null) {
+            Alert::error('Error', 'el proyecto tiene registros asociados');
+        } else {
+            Proyecto::find($id)->delete();
+            Alert::success('Eliminado', 'Proyecto con exito');
+        }
+        return redirect(route('proyectos.index'));
     }
 }

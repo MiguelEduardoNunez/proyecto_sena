@@ -15,7 +15,7 @@ class StandController extends Controller
      */
     public function index()
     {
-        $stands = Stand::orderBy('stand', 'asc')->paginate(3);
+        $stands = Stand::orderBy('stand', 'asc')->paginate();
 
         return view('stands.listar', ['stands' => $stands]);
     }
@@ -102,5 +102,7 @@ class StandController extends Controller
         }
 
         return redirect(route('stands.index'));
+
+        
     }
 }  

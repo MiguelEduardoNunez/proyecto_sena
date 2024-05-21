@@ -67,25 +67,4 @@
         </div>
     </div>
 </x-app-layout>
-
-<script>
-    $(function () {
-        $("form").on("submit", function(evento) {
-            evento.preventDefault();
-            Swal.fire({
-                title: "¿Esta seguro?",
-                text: "Desea eliminar el stand",
-                icon: "warning",
-                showCancelButton: true,
-                cancelButtonColor: "#dc3545",
-                confirmButtonColor: "#007bff",
-                cancelButtonText: "No, Cancelar",
-                confirmButtonText: "Si, Eliminar"
-            }).then((result) => {
-                if (result.value) {
-                    this.submit();
-                }
-            })
-        });
-    });
-</script>
+<x-message-confirm text="Desea eliminar el stand" />

@@ -40,6 +40,18 @@
                                                 <i class="far fa-edit" data-toggle="tooltip" title="Actualizar Empleado"></i>
                                             </a>
                                         </div>
+                                        <div class="col-2">
+                                            <form method="POST" action="{{route('empleados.destroy', $empleado->id_empleado)}}">
+                                              @csrf @method('DELETE')
+                                              <button type="submit" class="btn p-0">
+                                                <i
+                                                  class="far fa-trash-alt text-danger"
+                                                  data-toggle="tooltip"
+                                                  title="Eliminar Perfil"
+                                                ></i>
+                                              </button>
+                                            </form>
+                                          </div>
                                     </div>
                                 </td>
                             </tr>
@@ -56,3 +68,4 @@
         </div>
     </div>
 </x-app-layout>
+<x-message-confirm text="Desea eliminar el empleado" />

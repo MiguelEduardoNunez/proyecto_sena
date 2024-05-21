@@ -98,6 +98,17 @@
                                                                 title="Gestionar Novedades"></i>
                                                         </a>
                                                     </div>
+                                                    <div class="col-2">
+                                                        <form method="POST"
+                                                            action="{{route('proyectos.elementos.destroy', [$proyecto->id_proyecto, $elemento->id_elemento])}}">
+                                                            @csrf @method('DELETE')
+                                                            <button type="submit" class="btn p-0">
+                                                                <i class="far fa-trash-alt text-danger"
+                                                                    data-toggle="tooltip" title="Eliminar Elemento"></i>
+                                                            </button>
+                                                        </form>
+                                                    </div>
+    
                                                 </div>
                                             </td>
                                 </tr>
@@ -114,3 +125,4 @@
                 </div>
             </div>
     </x-app-layout>
+    <x-message-confirm text="Desea eliminar el elemento" />
