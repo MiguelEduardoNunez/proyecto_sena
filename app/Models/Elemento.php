@@ -18,7 +18,7 @@ class Elemento extends Model
      */
     protected $table = 'elementos';
 
-
+  
     /**
      * The primary key associated with the table.
      *
@@ -26,7 +26,21 @@ class Elemento extends Model
      */
     protected $primaryKey = 'id_elemento';
 
-
+    protected $fillable = [
+        'proyecto_id',
+        'stand_id',
+        'item_id',
+        'marca',
+        'modelo',
+        'serial',
+        'span',
+        'codigo_barras',
+        'grosor',
+        'peso',
+        'cantidad',
+        'cantidad_minima',
+        'tipo_cantidad_id',
+    ];
     /**
      * Names of the timestamps.
      */

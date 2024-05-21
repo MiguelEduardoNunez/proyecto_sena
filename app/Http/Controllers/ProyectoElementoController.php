@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Imports\ElementoImport;
 use App\Models\Categoria;
 use App\Models\Elemento;
 use App\Models\Item;
@@ -14,9 +15,13 @@ use Barryvdh\DomPDF\Facade\Pdf;
 use Barryvdh\DomPDF\PDF as DomPDFPDF;
 use Dompdf\Dompdf;
 use Illuminate\Contracts\Validation\Validator;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
+use Maatwebsite\Excel\Validators\ValidationException;
 use RealRashid\SweetAlert\Facades\Alert;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Http\Request;
+
 
 class ProyectoElementoController extends Controller
 {
@@ -251,32 +256,32 @@ class ProyectoElementoController extends Controller
         $elementosSeleccionados = $request->elementos_seleccionados;
         $idProyectoDestino = $request->proyecto_destino;
         $cantidades = $request->cantidades;
-    
+
         $request->validate([
             'elementos_seleccionados' => 'required|array|min:1',
             'proyecto_destino' => 'required'
         ]);
-    
+
         try {
             DB::beginTransaction();
-    
+
             foreach ($elementosSeleccionados as $elementoId) {
                 $elemento = Elemento::findOrFail($elementoId);
                 $cantidadMigrada = $cantidades[$elementoId];
                 $cantidadTotal = $elemento->cantidad;
-    
+
                 $elementoExistente = Elemento::where('proyecto_id', $idProyectoDestino)
                     ->where('item_id', '=', $elemento->item_id)
                     ->where('marca', '=', $elemento->marca)
                     ->where('modelo', '=', $elemento->modelo)
                     ->first();
-    
+
                 if ($cantidadMigrada < $cantidadTotal) {
                     $elementoClonado = $elemento->replicate();
                     $elementoClonado->proyecto_id = $idProyectoDestino;
                     $elementoClonado->cantidad = $cantidadMigrada;
                     $elementoClonado->save();
-    
+
                     $elemento->decrement('cantidad', $cantidadMigrada);
                     $elementoMigrado = $elementoClonado;
                 } elseif ($cantidadMigrada == $cantidadTotal) {
@@ -291,11 +296,11 @@ class ProyectoElementoController extends Controller
                         $elementoMigrado = $elemento;
                     }
                 }
-    
+
                 $registroExistente = ProyectoElemento::where('proyecto_id', $elemento->proyecto_id)
                     ->where('elemento_id', $elemento->id_elemento)
                     ->first();
-    
+
                 if ($registroExistente) {
                     $registroExistente->proyecto_id = $idProyectoDestino;
                     $registroExistente->cantidad = $cantidadMigrada;
@@ -308,7 +313,7 @@ class ProyectoElementoController extends Controller
                     ]);
                 }
             }
-    
+
             DB::commit();
             Alert::success('Migrados', 'Elementos con éxito');
             return redirect()->route('proyectos.elementos.index', $id_proyecto);
@@ -317,5 +322,32 @@ class ProyectoElementoController extends Controller
             Alert::error('Error', 'Hubo un error al migrar elementos.');
             return back()->withErrors(['error' => $e->getMessage()]);
         }
+    }
+
+    public function createImport($id_proyecto)
+    
+    {
+        $proyecto=Proyecto::find($id_proyecto);
+        return view('elementos.importar',['proyecto'=>$proyecto]);
+    }
+
+    public function storeImport(Request $request,String $id_proyecto) 
+    {
+        $archivo = $request->file('archivo_excel');
+
+        try {
+            Excel::import(new ElementoImport, $archivo);
+            Alert::success('Importado', 'Archivo con éxito');
+        } catch (ValidationException $exception) {
+            $failures = $exception->failures();
+
+            $fila = $failures[0]->row();
+            $columna = $failures[0]->attribute();
+            $error = implode("", $failures[0]->errors());
+             
+            Alert::error('Error', 'Revise la Fila '.$fila.' en la Columna '.$columna.' '.$error);
+        }
+
+        return redirect()->route('proyectos.elementos.index',$id_proyecto);
     }
 }
