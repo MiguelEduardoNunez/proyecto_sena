@@ -69,7 +69,11 @@ Route::resource('/empleados', EmpleadoController::class)->middleware('auth');
 
 Route::resource('/categorias', CategoriaController::class)->middleware('auth');
 
+
+
 Route::resource('/categorias.subcategorias', CategoriaSubcategoriaController::class)->middleware('auth');
+Route::get('/categorias/{id_categoria}/subcategorias-import', [CategoriaSubcategoriaController::class, 'createImport'])->name('categorias.subcategorias.createImport')->middleware('auth');
+Route::post('/categorias/{id_categoria}/subcategorias-import', [CategoriaSubcategoriaController::class, 'storeImport'])->name('categorias.subcategorias.storeImport')->middleware('auth');
 
 // Rutas Items
 Route::get('/items-importar/create', [ItemController::class, 'createImport'])->name('items.createImport')->middleware('auth');

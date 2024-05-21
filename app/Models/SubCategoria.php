@@ -24,6 +24,14 @@ class Subcategoria extends Model
      */
     protected $primaryKey = 'id_subcategoria';
 
+
+    protected $fillable = [
+        'categoria_id',
+        'subcategoria',
+        'descripcion'
+    ];
+
+
     /**
      * Names of the timestamps.
      */

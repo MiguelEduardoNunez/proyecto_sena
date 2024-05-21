@@ -30,10 +30,18 @@
                             </x-input-group>
                         </div>
                         <div class="col-auto">
-                            <a href="{{ route('categorias.subcategorias.create',$categoria->id_categoria) }}">
-                                <i class="fas fa-plus-circle fa-2x" data-toggle="tooltip" title="Registrar Subcategoría"></i>
+                            <a href="{{ route('categorias.subcategorias.create', $categoria->id_categoria) }}">
+                                <i class="fas fa-plus-circle fa-2x" data-toggle="tooltip" title="Crear Subcategoría"></i>
+                            </a>
+
+                        </div>
+
+                        <div class="col-auto">
+                            <a href="{{ route('categorias.subcategorias.createImport', $categoria->id_categoria) }}">
+                                <i class="fas fa-file-excel fa-2x" data-toggle="tooltip" title="Importar Subcategorías"></i>
                             </a>
                         </div>
+
                     </div>
                 </x-slot:header>
 

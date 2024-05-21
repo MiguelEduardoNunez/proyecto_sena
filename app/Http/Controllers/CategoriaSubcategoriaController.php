@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Imports\SubcategoriasImport;
 use App\Models\Categoria;
 use App\Models\Subcategoria;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Validation\Rule;
+use Maatwebsite\Excel\Facades\Excel;
+use Maatwebsite\Excel\Validators\ValidationException;
 
 class CategoriaSubcategoriaController extends Controller
 {
@@ -112,5 +115,36 @@ class CategoriaSubcategoriaController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function createImport($id_categoria)
+    {
+        $categoria = Categoria::find($id_categoria);
+
+        return view('subcategorias.importar', ['categoria' => $categoria]);
+    }
+
+    public function storeImport(Request $request, $id_categoria)
+    {
+        $archivo = $request->file('archivo');
+
+        try{
+
+            Excel::import(new SubcategoriasImport, $archivo);
+
+            Alert::success('Importado', 'subcategorías con éxito');
+
+        } catch(ValidationException $e){
+            $failures = $e->failures();
+
+            $fila = $failures[0]->row();
+            $columna = $failures[0]->attribute();
+            $error= $failures[0]->errors()[0];
+
+            Alert::error('Error', 'Revise la fila'.$fila.'en la Columna: '.$columna.' Error: '.$error);
+
+        }
+
+        return redirect(route('categorias.subcategorias.index', $id_categoria));
     }
 }
