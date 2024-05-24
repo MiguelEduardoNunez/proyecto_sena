@@ -70,7 +70,7 @@ class ElementoNovedadController extends Controller
             'empleado' => ['required', 'numeric'],
             'novedad' => ['required', 'string'],
             'fecha_reporte' => ['required', 'date'],
-            'fecha_cierre' => ['required', 'date', 'after:fecha_reporte']
+            'fecha_cierre' => ['required', 'date', 'after_or_equal:fecha_reporte']
             
         ]);
 
@@ -173,9 +173,11 @@ class ElementoNovedadController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(string $id_elemento, string $id_novedad)
     {
-        Novedad::find($id)->delete();
+        Novedad::find($id_novedad)->delete();
         Alert::success('Eliminado', 'Novedad con exito');
+
+        return redirect(route('elementos.novedades.index', $id_elemento));
     }
 }

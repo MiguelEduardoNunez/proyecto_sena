@@ -24,7 +24,7 @@
                 <x-card>
                     <x-slot:header>
                         <div class="col-10 col-md-7 col-lg-7">
-                            <x-text :value="__('Gestionar Elementos')" />
+                            <x-text :value="__('Importar Elementos')" />
                         </div>
                     </x-slot:header>
                     <x-slot:body>
