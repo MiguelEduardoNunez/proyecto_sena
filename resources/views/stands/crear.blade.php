@@ -23,6 +23,12 @@
                             <x-input type="text" id="ubicacion" name="ubicacion" :value="old('ubicacion')" />
                             <x-input-error :messages="$errors->get('ubicacion')" />
                         </div>
+
+                        <div class="form-group">
+                            <x-input-label :value="__('Descripción')" :obligatorio="false" for="descripcion" />
+                            <x-text-area type="text" id="descripcion" name="descripcion" :value="old('descripcion')" />
+                            <x-input-error :messages="$errors->get('descripcion')" />
+                        </div>
                     </x-slot:body>
 
                     <x-slot:footer>

@@ -15,7 +15,7 @@ class StandController extends Controller
      */
     public function index()
     {
-        $stands = Stand::orderBy('stand', 'asc')->paginate();
+        $stands = Stand::orderBy('stand', 'asc')->paginate(100);
 
         return view('stands.listar', ['stands' => $stands]);
     }
@@ -35,12 +35,14 @@ class StandController extends Controller
     {
         $validaciones = $request->validate([
             'stand' => ['required', 'string', 'max:100', 'unique:stands,stand'],
-            'ubicacion' => ['required', 'string', 'max:100']
+            'ubicacion' => ['required', 'string', 'max:100'],
+            'descripcion' => ['nullable', 'string']
         ]);
 
         $stand = new Stand();
         $stand->stand = $request->stand;
         $stand->ubicacion = $request->ubicacion;
+        $stand->descripcion = $request->descripcion;
         $stand->save();
 
         Alert::success('Registrado', 'Stand con éxito');
@@ -74,12 +76,14 @@ class StandController extends Controller
     {
         $validaciones = $request->validate([
             'stand' => ['required', 'string', 'max:100', Rule::unique('stands')->ignore($id, 'id_stand')],
-            'ubicacion' => ['required', 'string', 'max:100']
+            'ubicacion' => ['required', 'string', 'max:100'],
+            'descripcion' => ['nullable', 'string']
         ]);
 
         $stand = Stand::find($id);
         $stand->stand = $request->stand;
         $stand->ubicacion = $request->ubicacion;
+        $stand->descripcion = $request->descripcion;
         $stand->save();
         
         Alert::success('Actualizado', 'Stand con éxito');
@@ -102,7 +106,5 @@ class StandController extends Controller
         }
 
         return redirect(route('stands.index'));
-
-        
     }
 }  

@@ -20,6 +20,14 @@
 
                     <x-text size="h6" color="black" :value="__('Ubicación')" class="mt-4" />
                     <x-text size="h6" style="font-weight-normal" color="black" :value="$stand->ubicacion" />
+
+                    <x-text size="h6" color="black" :value="__('Descripcion')" class="mt-4" />
+                    @if ($stand->descripcion != null)
+                        <x-text size="h6" style="font-weight-normal" color="black" :value="$stand->descripcion" />
+                    @else
+                        {{ __('No registrada') }}
+                    @endif
+                    
                 </x-slot:body>
 
                 <x-slot:footer>
