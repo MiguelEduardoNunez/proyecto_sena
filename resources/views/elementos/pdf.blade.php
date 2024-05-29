@@ -14,10 +14,6 @@
             padding: 0;
         }
 
-        .codigo-barras{
-            font-family: fantasy;
-        }
-
         .textend {
             text-align: right;
             font-size: 15px;
@@ -134,7 +130,7 @@
 
         <div>
             <table class="tabla">
-                //campos entregado por,cargo, recibido por, cargo
+
                 <thead>
                     <th> Entregado por:</th>
                     <th> Cargo:</th>
@@ -167,8 +163,6 @@
     <footer class="footer">
         <img src="{{ public_path('footer.png') }}" alt="" style="width: 100%">
     </footer>
-    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.0/dist/JsBarcode.all.min.js"></script>
-
 </body>
 
 </html>
