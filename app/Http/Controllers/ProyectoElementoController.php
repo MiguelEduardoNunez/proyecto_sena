@@ -239,7 +239,7 @@ class ProyectoElementoController extends Controller
 
 
         $pdf = PDF::loadView('elementos.pdf', ['proyecto' => $proyecto, 'elementos' => $elementos]);
-        return $pdf->download('elementos-' . $proyecto->proyecto . '.pdf');
+        return $pdf->stream('elementos-' . $proyecto->proyecto . '.pdf');
     }
 
 
