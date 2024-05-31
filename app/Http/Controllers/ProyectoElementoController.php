@@ -371,4 +371,6 @@ class ProyectoElementoController extends Controller
 
         return redirect()->route('proyectos.elementos.index',$id_proyecto);
     }
+    
+ 
 }

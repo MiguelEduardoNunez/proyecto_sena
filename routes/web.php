@@ -9,7 +9,9 @@ use App\Http\Controllers\ElementoNovedadController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CategoriaSubcategoriaController;
+use App\Http\Controllers\DetalleElementoController;
 use App\Http\Controllers\EmpleadoController;
+use App\Http\Controllers\InformeController;
 use App\Http\Controllers\ProyectoController;
 use App\Http\Controllers\ProyectoElementoController;
 use App\Http\Controllers\ProyectoEntregaElementoController;
@@ -90,6 +92,9 @@ Route::get('/migrar-elementos/{id_proyecto}', [ProyectoElementoController::class
 Route::post('/migrar-elementos/{id_proyecto}', [ProyectoElementoController::class, 'migrarElementosStore'])->name('proyectos.migrar.elementos.store');
 Route::resource('/proyectos.elementos', ProyectoElementoController::class)->middleware('auth');
 
+//Ruta informes
+Route::get('/informes', [InformeController::class, 'index'])->name('informes.index')->middleware('auth');
+
 // Rutas Novedades
 Route::resource('/elementos.novedades', ElementoNovedadController::class)->middleware('auth');
 
@@ -97,7 +102,7 @@ Route::resource('/elementos.novedades', ElementoNovedadController::class)->middl
 Route::get('/proyectos/{proyecto}/entregas-elementos/{entrega_elemento}/reporte', [ProyectoEntregaElementoController::class, 'reporte'])->name('proyectos.entregas-elementos.reporte');
 Route::resource('/proyectos.entregas-elementos', ProyectoEntregaElementoController::class)->middleware('auth');
 
-
+//Ruta Detalle Elementos
 Route::post('/proyectos/{id_proyecto}/elementos-importar', [ProyectoElementoController::class, 'storeImport'])->name('elementos.storeImport')->middleware('auth');
 Route::get('/proyectos/{id_proyecto}/elementos-importar', [ProyectoElementoController::class, 'createImport'])->name('elementos.createImport')->middleware('auth');
 
