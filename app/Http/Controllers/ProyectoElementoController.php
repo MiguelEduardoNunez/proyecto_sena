@@ -217,17 +217,7 @@ class ProyectoElementoController extends Controller
      */
     public function destroy(string $id_proyecto, string $id_elemento)
     {
-        $novedad = Novedad::where('elemento_id', '=', $id_elemento)->first();
-        $proyecto_elemento = ProyectoElemento::where('elemento_id', '=', $id_elemento)->first();
-
-        if ($novedad != null or $proyecto_elemento != null) {
-            Alert::error('Error', 'el item tiene registros asociados');
-        } else {
-            Elemento::find($id_elemento)->delete();
-            Alert::success('Eliminado', 'Elemento con exito');
-        }
-
-        return redirect(route('proyectos.elementos.index', $id_proyecto));
+        //
     }
 
 

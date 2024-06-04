@@ -18,6 +18,7 @@ return new class extends Migration
             $table->integer('id_stand')->autoIncrement();
             $table->string('stand', '100');
             $table->string('ubicacion', '100');
+            $table->text('descripcion')->nullable();
             $table->timestamp('creado_en');
             $table->timestamp('actualizado_en')->nullable();
         });

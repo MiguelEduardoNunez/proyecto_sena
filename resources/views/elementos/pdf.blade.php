@@ -80,9 +80,8 @@
 
         <div class="textencabezado">
             <h3 class="textend">Fecha: {{ $proyecto->creado_en }}</h3>
-            <h1 class="textencabezado"> ACTA ENTREGA DE EQUIPOS </h1>
-            <p class="textencabezado">Con la presente acta se le hace entrega de los siguientes elementos al
-                proyecto
+            <h1 class="textencabezado"> ELEMENTOS DEL PROYECTO {{$proyecto->id_proyecto}}</h1>
+            <p class="textencabezado">En el presente documento se detallan los elementos del proyecto
                 {{ $proyecto->proyecto }}</p>
         </div>
 
@@ -109,55 +108,7 @@
             </table>
         </div>
 
-        <div>
-            <p>Manifiesto que:</p>
-            <ul>
-                <li>He recibido los equipos relacionados y me comprometo a cuidarlos y darles el manejo adecuado
-                    para
-                    cada actividad.</li>
-                <li>Que he sido instruido sobre el uso, mantenimiento y cuidados de estos.</li>
-                <li>Los equipos y herramientas que aquí se entregan son y serán de la empresa Colombianet y
-                    Sepcom
-                    ingeniería y Telecomunicaciones S.A.S. En todo momento, en caso de retiro por cualquier
-                    causa
-                    debe
-                    devolverlos de forma inmediata, si ocurriera la pérdida, daño o no devolución de los mismos,
-                    autorizo a mi empleador para que retenga de mi salario o liquidación definitiva el valor de
-                    los
-                    mismos.</li>
-            </ul>
-        </div>
 
-        <div>
-            <table class="tabla">
-
-                <thead>
-                    <th> Entregado por:</th>
-                    <th> Cargo:</th>
-                    <th> Recibido por:</th>
-                    <th> Cargo:</th>
-                </thead>
-                <tr>
-                    <td>LEIDY VIVIANA BOLAÑOS</td>
-                    <td>Almacen</td>
-                    <td> </td>
-                    <td>Tecnico</td>
-                </tr>
-                <thead>
-                    <th> Firma:</th>
-                    <th> Cedula:</th>
-                    <th> Firma:</th>
-                    <th> Cedula:</th>
-                </thead>
-                <tr>
-                    <td> </td>
-                    <td> 1061720521 </td>
-                    <td> </td>
-                    <td> </td>
-                </tr>
-            </table>
-
-        </div>
     </div>
 
     <footer class="footer">
