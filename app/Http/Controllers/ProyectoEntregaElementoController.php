@@ -60,7 +60,9 @@ class ProyectoEntregaElementoController extends Controller
     {
         $validaciones = $request->validate([
             'empleado' => ['required', 'numeric'],
-            'fecha_entrega' => ['required', 'date']
+            'fecha_entrega' => ['required', 'date', 'after_or_equal:today'],
+        ], [
+            'fecha_entrega.after_or_equal' => 'La fecha de entrega debe ser una fecha posterior o igual a la fecha actual.',
         ]);
 
         $entrega_elemento = new EntregaElemento();
