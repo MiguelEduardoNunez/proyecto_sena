@@ -62,15 +62,6 @@
                                             </a>
                                         </div>
 
-                                        <div class="col-2">
-                                            <form method="POST" action="{{ route('proyectos.entregas-elementos.destroy', [$proyecto->id_proyecto, $entrega_elemento->id_entrega_elemento]) }}">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn p-0">
-                                                    <i class="far fa-trash-alt text-danger" data-toggle="tooltip" title="Eliminar Entrega de Elementos"></i>
-                                                </button>
-                                            </form>
-                                        </div>
                                     </div>
                                 </td>
                             </tr>

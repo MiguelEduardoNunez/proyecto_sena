@@ -1,29 +1,29 @@
 <x-app-layout>
     <x-slot:page>
         {{ __('Gestionar Proyectos') }}
-    </x-slot>
-    <div class="row">
-        <div class="col-12">
-            <x-card>
-                <x-slot:header>
-                    <div class="row align-items-center">
-                        <div class="col-12 col-md-8 col-lg-9">
-                            <x-text :value="__('Gestionar Proyectos')" />
+        </x-slot>
+        <div class="row">
+            <div class="col-12">
+                <x-card>
+                    <x-slot:header>
+                        <div class="row align-items-center">
+                            <div class="col-12 col-md-8 col-lg-9">
+                                <x-text :value="__('Gestionar Proyectos')" />
+                            </div>
+                            <div class="col-12 col-md-4 col-lg-3">
+                                <x-input-group>
+                                    <x-input type="text" id="searchertable" name="searcher" placeholder="Buscar" />
+                                    <x-slot:icon>
+                                        <i class="fas fa-search text-primary"></i>
+                                    </x-slot:icon>
+                                </x-input-group>
+                            </div>
                         </div>
-                        <div class="col-12 col-md-4 col-lg-3">
-                            <x-input-group>
-                                <x-input type="text" id="searchertable" name="searcher" placeholder="Buscar" />
-                                <x-slot:icon>
-                                    <i class="fas fa-search text-primary"></i>
-                                </x-slot:icon>
-                            </x-input-group>
-                        </div>
-                    </div>
-                </x-slot:header>
+                    </x-slot:header>
 
-                <x-slot:body class="table-responsive p-0" style="height: 400px;">
-                    <x-data-table :headers="['#', 'Proyecto', 'Fecha Inicio', 'Fecha Fin', 'Responsable', 'Acciones']">
-                        @foreach ($proyectos as $proyecto)
+                    <x-slot:body class="table-responsive p-0" style="height: 400px;">
+                        <x-data-table :headers="['#', 'Proyecto', 'Fecha Inicio', 'Fecha Fin', 'Responsable', 'Acciones']">
+                            @foreach ($proyectos as $proyecto)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $proyecto->proyecto }}</td>
@@ -55,33 +55,20 @@
                                                 <i class="fas fa-truck-loading" data-toggle="tooltip" title="Gestionar Entregas"></i>
                                             </a>
                                         </div>
-                                        <div class="col-2">
-                                            <form method="POST" action="{{route('proyectos.destroy', $proyecto->id_proyecto)}}">
-                                              @csrf @method('DELETE')
-                                              <button type="submit" class="btn p-0">
-                                                <i
-                                                  class="far fa-trash-alt text-danger"
-                                                  data-toggle="tooltip"
-                                                  title="Eliminar Proyecto"
-                                                ></i>
-                                              </button>
-                                            </form>
-                                          </div>
                                     </div>
                                 </td>
                             </tr>
-                        @endforeach
-                    </x-data-table>
-                </x-slot:body>
+                            @endforeach
+                        </x-data-table>
+                    </x-slot:body>
 
-                <x-slot:footer>
-                    <div class="float-right">
-                        {{ $proyectos->links() }}
-                    </div>
-                </x-slot:footer>
-            </x-card>
+                    <x-slot:footer>
+                        <div class="float-right">
+                            {{ $proyectos->links() }}
+                        </div>
+                    </x-slot:footer>
+                </x-card>
+            </div>
         </div>
-    </div>
 </x-app-layout>
 <x-message-confirm text="Desea eliminar el proyecto" />
-  

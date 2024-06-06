@@ -2,8 +2,11 @@
     <x-slot:page>
         {{ __('Registrar Item') }}
     </x-slot>
+
     <div class="row justify-content-center">
+
         <div class="col-12 col-md-10 col-lg-6">
+            
             <form method="POST" action="{{ route('items.store') }}">
                 @csrf
                 <x-card>

@@ -10,10 +10,12 @@ use App\Http\Controllers\ItemController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CategoriaSubcategoriaController;
 use App\Http\Controllers\DetalleElementoController;
+use App\Http\Controllers\ElementoEntradaController;
 use App\Http\Controllers\EmpleadoController;
 use App\Http\Controllers\InformeController;
 use App\Http\Controllers\ProyectoController;
 use App\Http\Controllers\ProyectoElementoController;
+use App\Http\Controllers\ProyectoEntradaElementoController;
 use App\Http\Controllers\ProyectoEntregaElementoController;
 use App\Http\Controllers\StandController;
 use App\Http\Controllers\TipoNovedadController;
@@ -97,6 +99,14 @@ Route::get('/informes', [InformeController::class, 'index'])->name('informes.ind
 
 // Rutas Novedades
 Route::resource('/elementos.novedades', ElementoNovedadController::class)->middleware('auth');
+
+// Rutas para entradas de elementos
+Route::middleware('auth')->group(function () {
+    Route::get('proyectos/{id_proyecto}/entrada-elementos/create', [ElementoEntradaController::class, 'create'])->name('entrada_elementos.create');
+    Route::post('proyectos/{id_proyecto}/entrada-elementos', [ElementoEntradaController::class, 'store'])->name('entrada_elementos.store');
+    Route::get('proyectos/{id_proyecto}/entrada-elementos', [ElementoEntradaController::class, 'index'])->name('entrada_elementos.index');
+    Route::get('proyectos/{id_proyecto}/entrada-elementos/{id_entrada_elementos}', [ElementoEntradaController::class, 'show'])->name('entrada_elementos.show');
+});
 
 // Rutas Entregas de Elementos
 Route::get('/proyectos/{proyecto}/entregas-elementos/{entrega_elemento}/reporte', [ProyectoEntregaElementoController::class, 'reporte'])->name('proyectos.entregas-elementos.reporte');

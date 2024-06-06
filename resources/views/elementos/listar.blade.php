@@ -45,6 +45,11 @@
                                         <i class="fas fa-file-excel text-primary mr-2"></i>Importar Excel
                                     </a>
 
+                                    {{-- @if($proyecto->proyecto == 'Colombianet') --}}
+                                    <a class="dropdown-item" href="{{ route('entrada_elementos.index', $proyecto->id_proyecto) }}">
+                                        <i class="fas fa-arrow-circle-down text-primary mr-2"></i>Registrar Entrada de Elementos
+                                    </a>
+                                    {{-- @endif --}}
 
 
                                     </a>

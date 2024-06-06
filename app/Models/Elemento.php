@@ -85,4 +85,9 @@ class Elemento extends Model
     {
         return $this->hasMany(ProyectoElemento::class, 'elemento_id', 'id_elemento');
     }
+
+    public function entradas(): HasMany
+    {
+        return $this->hasMany(EntradaElemento::class, 'elemento_id', 'id_elemento');
+    }
 }

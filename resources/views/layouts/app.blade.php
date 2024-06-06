@@ -291,6 +291,11 @@
                 locale: 'es'
             });
 
+            $("#fecha_entrada, #fecha_entrada").datetimepicker({
+                format: 'YYYY/MM/DD',
+                locale: 'es'
+            });
+
             // Searcher table
             $("#searchertable").on("keyup", function() {
                 var value = $(this).val().toLowerCase()
