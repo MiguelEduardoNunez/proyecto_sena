@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Categoria;
 use App\Models\DetalleEntregaElemento;
+use App\Models\DevolucionElemento;
 use App\Models\Elemento;
 use App\Models\Empleado;
 use App\Models\EntregaElemento;
@@ -115,9 +116,19 @@ class ProyectoEntregaElementoController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id_proyecto, string $id_entrega_elemento)
+    public function edit(string $id_proyecto,string $id_entrega_elemento)
     {
         //
+
+        $entrega_elemento = EntregaElemento::find($id_entrega_elemento);
+
+        $proyecto = Proyecto::find($id_proyecto);
+
+        $detalle_entrega_elementos = DetalleEntregaElemento::with(['elemento' => ['item', 'tipoCantidad']])
+            ->where('entrega_elemento_id', '=', $id_entrega_elemento)
+            ->get();
+
+        return view('entregas_elementos.editar', ['proyecto' => $proyecto, 'entrega_elemento' => $entrega_elemento, 'detalle_entrega_elementos' => $detalle_entrega_elementos]);
     }
 
     /**
@@ -125,7 +136,45 @@ class ProyectoEntregaElementoController extends Controller
      */
     public function update(Request $request, string $id_proyecto, string $id_entrega_elemento)
     {
-        //
+        $proyecto = $request->input('proyecto');
+        $empleado= $request->input('empleado');
+        $fechaEntrega = $request->input('fecha_entrega');
+
+        $elementosSeleccionados = $request->input('elementos_seleccionados');
+        $cantidades = $request->input('cantidades');
+
+
+        $entrega_elemento = EntregaElemento::find($id_entrega_elemento);
+
+        $detalle_entrega_elementos = DetalleEntregaElemento::where('entrega_elemento_id', '=', $id_entrega_elemento)->get();
+
+
+        foreach ($elementosSeleccionados as $key => $elementoSeleccionado) {
+           
+            if($cantidades[$key] > $detalle_entrega_elementos[$key]->cantidad){
+                
+                Alert::error('Error', 'La cantidad a devolver es mayor a la cantidad entregada');
+                return back()->withInput();
+            }
+
+            $devolucion = new DevolucionElemento();
+            $devolucion->detalles_entregas_id = $id_entrega_elemento;
+            $devolucion->proyecto_id = $id_proyecto;
+            $devolucion->devolucion_cantidad = $cantidades[$key] ;
+
+
+            $elemento = Elemento::find($elementoSeleccionado);
+            $elemento->cantidad = $elemento->cantidad+$cantidades[$key];
+
+            $devolucion->save();
+            $elemento->save();
+            
+        }
+
+        Alert::success('Actualizada', 'Entrega de elementos con éxito');
+        return redirect()->route('proyectos.entregas-elementos.index', $id_proyecto);
+
+
     }
 
     /**

@@ -51,7 +51,7 @@
                                         </div>
 
                                         <div class="col-2">
-                                            <a href="#" class="text-success">
+                                            <a href="{{route('proyectos.entregas-elementos.edit',[$proyecto->id_proyecto, $entrega_elemento->id_entrega_elemento])}}" class="text-success">
                                                 <i class="far fa-edit" data-toggle="tooltip" title="Actualizar Entrega de Elementos"></i>
                                             </a>
                                         </div>

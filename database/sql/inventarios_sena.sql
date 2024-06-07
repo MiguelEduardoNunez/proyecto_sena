@@ -177,6 +177,20 @@ CREATE TABLE `tipos_novedades` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
+--Estructura de la tabla devolucion_elemento
+
+CREATE TABLE devolucion_elementos (
+    id_devolucion_elementos INT AUTO_INCREMENT PRIMARY KEY,
+    detalles_entregas_id INT,
+    devolucion_cantidad INT,
+    proyecto_id INT,
+    creado_en TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    actualizado_en TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (detalles_entregas_id) REFERENCES detalles_entregas_elementos(entrega_elemento_id),
+    FOREIGN KEY (proyecto_id) REFERENCES proyectos(id_proyecto)
+);
+
+
 -- Índices para tablas volcadas
 --
 

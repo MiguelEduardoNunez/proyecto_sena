@@ -42,4 +42,10 @@ class DetalleEntregaElemento extends Model
     {
         return $this->belongsTo(Elemento::class, 'elemento_id', 'id_elemento');
     }
+
+    public function devolucionElemento(): BelongsTo
+    {
+        return $this->belongsTo(DevolucionElemento::class, 'devolucion_elemento_id', 'id_devolucion_elemento');
+    }
+    
 }
