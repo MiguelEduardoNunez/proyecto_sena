@@ -20,7 +20,7 @@ class ItemController extends Controller
      */
     public function index()
     {
-        $items = Item::orderBy('item', 'asc')->paginate();
+        $items = Item::orderBy('item', 'asc')->paginate(10);
 
         return view('items.listar', ['items' => $items]);
     }
