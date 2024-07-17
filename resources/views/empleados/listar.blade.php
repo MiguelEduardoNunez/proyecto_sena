@@ -22,7 +22,7 @@
                 </x-slot:header>
 
                 <x-slot:body class="table-responsive p-0" style="height: 400px;">
-                    <x-data-table :headers="['#', 'Empleado', 'Acciones']">
+                    <x-data-table :headers="['#', 'Empleado', 'otros', 'Acciones']">
                         @foreach ($empleados as $empleado)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
