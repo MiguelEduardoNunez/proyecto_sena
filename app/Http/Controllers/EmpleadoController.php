@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\DocumentoIdentidad;
 use App\Models\Empleado;
 use App\Models\EntregaElemento;
+use App\Models\HistoriaClinica;
 use App\Models\Novedad;
+use App\Models\TipoDocumento;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -15,8 +18,11 @@ class EmpleadoController extends Controller
      */
     public function index()
     {
-        $empleados = Empleado::orderBy('empleado', 'asc')->paginate(100);
-
+        // Cargar todos los empleados con sus historias clínicas
+        $empleados = Empleado::with(['municipio', 'municipio.departamento', 'cargoEmpleado', 'nivelEducativo',
+            'fondoCesantia', 'fondoPension', 'eps', 'arl', 'tipoContrato', 'tipoDocumento', 'historiaClinica',
+            'cursoRealizado', 'contactoEmergencia'])->get();
+           
         return view('empleados.listar', ['empleados' => $empleados]);
     }
 
@@ -25,7 +31,8 @@ class EmpleadoController extends Controller
      */
     public function create()
     {
-        return view('empleados.crear');
+        $tiposDocumentos = ['Cédula de Ciudadanía', 'Cédula Extranjera', 'Tarjeta de Identidad', 'Pasaporte'];
+        return view('empleados.crear', ['tiposDocumentos' => $tiposDocumentos]);
     }
 
     /**

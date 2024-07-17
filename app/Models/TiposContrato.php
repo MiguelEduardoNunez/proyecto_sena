@@ -6,38 +6,35 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Categoria extends Model
+class TiposContrato extends Model
 {
-    use HasFactory;
-
     /**
      * The table associated with the model.
      *
      * @var string
      */
-    protected $table = 'categorias';
+    protected $table = 'tipos_contratos';
 
-    
     /**
      * The primary key associated with the table.
      *
      * @var string
      */
-    protected $primaryKey = 'id_categoria';
-    
+    protected $primaryKey = 'id_tipo_contrato';
+
     /**
      * Names of the timestamps.
      */
-    const CREATED_AT='creado_en';
-    const UPDATED_AT='actualizado_en';
+    const CREATED_AT = 'creado_en';
+    const UPDATED_AT = 'actualizado_en';
 
     /**
-     *
-    * Relationships associated with the model.
-    */
-    public function subcategoria(): HasMany
-    {
-        return $this->hasMany(Subcategoria::class, 'categoria_id', 'id_categoria');
-    }
+     * Relationship with the model.
+     */
 
+    public function empleados():HasMany
+    {
+        return $this->hasMany(Empleado::class, 'tipo_contrato_id', 'id_tipo_contrato');
+    }
+    use HasFactory;
 }

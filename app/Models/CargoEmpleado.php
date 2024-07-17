@@ -6,38 +6,39 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Categoria extends Model
+class CargoEmpleado extends Model
 {
-    use HasFactory;
 
     /**
      * The table associated with the model.
      *
      * @var string
      */
-    protected $table = 'categorias';
+    protected $table = 'cargos_empleados';
 
-    
+
     /**
      * The primary key associated with the table.
      *
      * @var string
      */
-    protected $primaryKey = 'id_categoria';
-    
+    protected $primaryKey = 'id_cargo_empleado';
+
     /**
      * Names of the timestamps.
      */
-    const CREATED_AT='creado_en';
-    const UPDATED_AT='actualizado_en';
+    const CREATED_AT = 'creado_en';
+    const UPDATED_AT = 'actualizado_en';
 
+    
     /**
      *
     * Relationships associated with the model.
     */
-    public function subcategoria(): HasMany
+    public function empleado(): HasMany
     {
-        return $this->hasMany(Subcategoria::class, 'categoria_id', 'id_categoria');
+        return $this->hasMany(Empleado::class, 'empleado_id', 'id_empleado');
     }
 
+    use HasFactory;
 }

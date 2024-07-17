@@ -5,24 +5,24 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class EntradaElemento extends Model
+class Municipio extends Model
 {
-    use HasFactory;
-
     /**
      * The table associated with the model.
      *
      * @var string
      */
-    protected $table = 'entradas_elementos';
+    protected $table = 'municipios';
+
 
     /**
      * The primary key associated with the table.
      *
      * @var string
      */
-    protected $primaryKey = 'id_entrada_elementos';
+    protected $primaryKey = 'id_municipio';
 
     /**
      * Names of the timestamps.
@@ -31,16 +31,17 @@ class EntradaElemento extends Model
     const UPDATED_AT = 'actualizado_en';
 
     /**
-     *
      * Relationships associated with the model.
      */
-    public function proyecto(): BelongsTo
+    public function departamento(): BelongsTo
     {
-        return $this->belongsTo(Proyecto::class, 'proyecto_id', 'id_proyecto');
+        return $this->belongsTo(Departamento::class, 'departamento_id', 'id_departamento');
     }
 
-    public function elemento(): BelongsTo
+    public function empleados(): HasMany
     {
-        return $this->belongsTo(Elemento::class, 'elemento_id', 'id_elemento');
+        return $this->hasMany(Empleado::class, 'lugar_expedicion_id', 'id_municipio');
     }
+
+    use HasFactory;
 }

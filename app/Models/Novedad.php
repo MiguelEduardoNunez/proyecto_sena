@@ -31,7 +31,6 @@ class Novedad extends Model
     const UPDATED_AT = 'actualizado_en';
 
     /**
-     * 
     * Relationships associated with the model.
     */
     public function tipoNovedad(): BelongsTo

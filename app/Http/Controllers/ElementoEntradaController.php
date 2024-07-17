@@ -23,10 +23,11 @@ class ElementoEntradaController extends Controller
         $entradas = EntradaElemento::with('elemento')
             ->where('proyecto_id', '=', $id_proyecto)
             ->orderBy('descripcion', 'desc')
-            ->paginate(100);
+            ->paginate(10);
 
         return view('entradas_elementos.listar', ['entradas' => $entradas, 'proyecto' => $proyecto]);
     }
+
 
     /**
      * Show the form for creating a new resource.

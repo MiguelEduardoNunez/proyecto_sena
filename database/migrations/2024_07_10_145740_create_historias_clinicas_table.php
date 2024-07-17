@@ -1,0 +1,34 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('historias_clinicas', function (Blueprint $table) {
+            $table->charset = 'utf8';
+            $table->collation = 'utf8_spanish_ci';
+
+            $table->integer('id_historia_clinica')->autoIncrement();
+            $table->integer('empleado_id');
+            $table->string('alergias', '150');
+            $table->string('enfermedades', '150');
+            $table->timestamp('creado_en');
+            $table->timestamp('actualizado_en')->nullable();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('informaciones_medicas');
+    }
+};
