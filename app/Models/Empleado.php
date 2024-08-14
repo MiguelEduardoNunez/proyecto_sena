@@ -87,7 +87,7 @@ class Empleado extends Model
 
     public function tipoContrato(): BelongsTo
     {
-        return $this->belongsTo(TiposContrato::class, 'tipo_contrato_id', 'id_tipo_contrato');
+        return $this->belongsTo(TipoContrato::class, 'tipo_contrato_id', 'id_tipo_contrato');
     }
 
     public function historiaClinica(): HasMany

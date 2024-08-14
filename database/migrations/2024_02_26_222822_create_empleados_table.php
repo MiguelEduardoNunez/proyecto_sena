@@ -15,6 +15,8 @@ return new class extends Migration
             $table->charset = 'utf8';
             $table->collation = 'utf8_spanish_ci';
 
+            $table->string('nombres_completos', '100');
+            $table->string('apellidos_completos', '100');
             $table->integer('id_empleado')->autoIncrement();
             $table->smallInteger('tipo_documento_id');
             $table->smallInteger('lugar_expedicion_id');
@@ -25,8 +27,6 @@ return new class extends Migration
             $table->smallInteger('eps_id');
             $table->smallInteger('fondo_pension_id');
             $table->smallInteger('fondo_cesantias_id');
-            $table->string('nombres_completos', '100');
-            $table->string('apellidos_completos', '100');
             $table->string('documento', '20');
             $table->date('fecha_expedicion');
             $table->date('fecha_nacimiento');

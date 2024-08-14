@@ -2,11 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Arl;
+use App\Models\CargoEmpleado;
+use App\Models\Departamento;
 use App\Models\DocumentoIdentidad;
 use App\Models\Empleado;
 use App\Models\EntregaElemento;
+use App\Models\Eps;
+use App\Models\FondoCesantia;
+use App\Models\FondoPension;
 use App\Models\HistoriaClinica;
+use App\Models\Municipio;
+use App\Models\NivelEducativo;
 use App\Models\Novedad;
+use App\Models\TipoContrato;
 use App\Models\TipoDocumento;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -31,8 +40,20 @@ class EmpleadoController extends Controller
      */
     public function create()
     {
-        $tiposDocumentos = ['Cédula de Ciudadanía', 'Cédula Extranjera', 'Tarjeta de Identidad', 'Pasaporte'];
-        return view('empleados.crear', ['tiposDocumentos' => $tiposDocumentos]);
+        $tipos_documentos = TipoDocumento::all();
+        $niveles_educativos = NivelEducativo::all();
+        $tipos_contratos = TipoContrato::all();
+        $departamentos = Departamento::all();
+        $municipios = Municipio::all();
+        $tipos_sangre = ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'];
+        $cargos_empleados = CargoEmpleado::all();
+        $niveles_educativos = NivelEducativo::all();
+        $arls = Arl::all();
+        $fondos_pensiones = FondoPension::all();
+        $fondos_cesantias = FondoCesantia::all();
+    
+        return view('empleados.crear', ['tipos_documentos' => $tipos_documentos, 'niveles_educativos' => $niveles_educativos, 'tipos_contratos' => $tipos_contratos, 'departamentos' => $departamentos, 'municipios' => $municipios, 'tipos_sangre' => $tipos_sangre,
+            'cargos_empleados' => $cargos_empleados, 'niveles_educativos' => $niveles_educativos, 'arls' => $arls, 'fondos_pensiones' => $fondos_pensiones, 'fondos_cesantias' => $fondos_cesantias]);
     }
 
     /**
@@ -41,7 +62,10 @@ class EmpleadoController extends Controller
     public function store(Request $request)
     {
         $validaciones = $request->validate([
-            'empleado' => ['required', 'string', 'max:100', 'regex:/^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+$/']
+            'nombres_completos' => ['required', 'string', 'max:100', 'regex:/^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+$/'],
+            'apellidos_completos' => ['required', 'string', 'max:100', 'regex:/^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+$/'],
+            'tipo_documento_id' => ['required', 'numeric'],
+            'documento' => ['required', 'numeric', 'digits_between:6,10'],
         ]);
 
         $empleado = new Empleado();
