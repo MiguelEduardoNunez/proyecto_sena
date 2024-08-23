@@ -37,7 +37,7 @@ class TipoDocumento extends Model
 
     public function empleado(): HasMany
     {
-        return $this->hasMany(Empleado::class, 'empleado_id', 'id_empleado');
+        return $this->hasMany(Empleado::class, 'tipo_documento_id', 'id_tipo_documento');
     }
 
 
