@@ -22,6 +22,8 @@ return new class extends Migration
             $table->string('icono', '50');
             $table->smallInteger('orden')->nullable();
             $table->smallInteger('hijos')->nullable();
+            $table->timestamp('creado_en');
+            $table->timestamp('actualizado_en')->nullable();
         });
     }
 
