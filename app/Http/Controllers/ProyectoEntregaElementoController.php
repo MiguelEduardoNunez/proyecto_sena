@@ -26,7 +26,7 @@ class ProyectoEntregaElementoController extends Controller
         $entregas_elementos = EntregaElemento::with('empleado')
             ->where('proyecto_id', '=', $id_proyecto)
             ->orderBy('fecha_entrega', 'desc')
-            ->paginate(100);
+            ->paginate(10);
 
         return view('entregas_elementos.listar', ['proyecto' => $proyecto, 'entregas_elementos' => $entregas_elementos]);
     }

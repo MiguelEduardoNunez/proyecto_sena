@@ -36,7 +36,7 @@ class ProyectoElementoController extends Controller
         $elementos = Elemento::with(['item', 'tipoCantidad'])
             ->where('proyecto_id', '=', $id_proyecto)
             ->orderBy('modelo', 'asc')
-            ->paginate(100);
+            ->paginate(00);
 
         return view('elementos.listar', ['proyecto' => $proyecto, 'elementos' => $elementos]);
     }
