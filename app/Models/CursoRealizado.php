@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class CursoRealizado extends Model
 {
@@ -37,5 +38,10 @@ class CursoRealizado extends Model
     {
         return $this->belongsTo(Empleado::class, 'empleado_id', 'id_empleado');
     }
+    public function archivos(): HasMany
+    {
+        return $this->hasMany(ArchivoCurso::class, 'curso_realizado_id');
+    }
+
     use HasFactory;
 }

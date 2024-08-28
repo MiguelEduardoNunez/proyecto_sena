@@ -4,7 +4,7 @@
     </x-slot>
     <div class="row justify-content-center">
         <div class="col-12 col-md-10 col-lg-8">
-            <form method="POST" action="{{ route('empleados.store') }}">
+            <form method="POST" action="{{ route('empleados.store') }}" enctype="multipart/form-data">
                 @csrf
                 <x-card>
                     <x-slot:header>
@@ -283,28 +283,6 @@
                             <div class="tab-pane fade form-section" id="informacion-adicional" role="tabpanel"
                                 aria-labelledby="informacion-adicional-tab">
                                 <div class="form-row">
-                                    {{-- Cursos Realizados --}}
-                                    <div class="form-group col-md-6">
-                                        <x-input-label :value="__('Cursos Realizados (separados por comas)')" for="cursos_realizados" :obligatorio=false />
-                                        <x-input type="text" id="cursos_realizados" name="cursos_realizados"
-                                            :value="old('cursos_realizados')" placeholder="Curso 1, Curso 2, Curso 3" />
-                                        <x-input-error :messages="$errors->get('cursos_realizados')" />
-                                    </div>
-                                    {{-- Certificados --}}
-                                    <div class="form-group col-md-6">
-                                        <x-input-label :value="__('Certificados del Curso Realizado')" for="certificado_curso_pdf"
-                                            :obligatorio=false />
-                                        <div class="input-group">
-                                            <div class="custom-file">
-                                                <input type="file" class="custom-file-input"
-                                                    id="certificado_curso_pdf" name="certificado_curso_pdf[]"
-                                                    multiple>
-                                                <label class="custom-file-label"
-                                                    for="certificado_curso">{{ __('Seleccionar archivos') }}</label>
-                                            </div>
-                                        </div>
-                                        <x-input-error :messages="$errors->get('certificado_curso_pdf')" />
-                                    </div>
                                     {{-- Información del Acudiente --}}
                                     <div class="form-group col-md-6">
                                         <x-input-label :value="__('Nombre del Contacto de Emergencia')" for="nombre_acudiente" :obligatorio=false />
@@ -312,23 +290,60 @@
                                             :value="old('nombre_acudiente')" />
                                         <x-input-error :messages="$errors->get('nombre_acudiente')" />
                                     </div>
+
                                     <div class="form-group col-md-6">
-                                        <x-input-label :value="__('Parentesco')" for="parentesco" :obligatorio=false />
-                                        <x-input type="text" id="parentesco" name="parentesco"
-                                            :value="old('parentesco')" />
-                                        <x-input-error :messages="$errors->get('parentesco')" />
+                                        <x-input-label :value="__('Parentesco')" for="parentesco_acudiente"
+                                            :obligatorio=false />
+                                        <x-input type="text" id="parentesco_acudiente" name="parentesco_acudiente"
+                                            :value="old('parentesco_acudiente')" />
+                                        <x-input-error :messages="$errors->get('parentesco_acudiente')" />
                                     </div>
                                     <div class="form-group col-md-6">
-                                        <x-input-label :value="__('Numero de Contacto de Emergencia')" for="numero" :obligatorio=false />
-                                        <x-input type="text" id="numero" name="numero" :value="old('numero')" />
-                                        <x-input-error :messages="$errors->get('numero')" />
+                                        <x-input-label :value="__('Número de Contacto de Emergencia')" for="telefono_acudiente"
+                                            :obligatorio=false />
+                                        <x-input type="text" id="telefono_acudiente" name="telefono_acudiente"
+                                            :value="old('telefono_acudiente')" />
+                                        <x-input-error :messages="$errors->get('telefono_acudiente')" />
                                     </div>
                                 </div>
-                                <x-button type="submit">
+
+                                <hr>
+
+                                {{-- Campos Base para Cursos --}}
+                                <div class="form-row">
+                                    <div class="form-group col-md-5">
+                                        <x-input-label :value="__('Curso Realizado')" for="nombre_curso" :obligatorio=false />
+                                        <x-input type="text" id="nombre_curso" name="cursos_realizados[]"/>
+                                        <x-input-error :messages="$errors->get('nombre_curso')" />
+                                    </div>
+                                    <div class="form-group col-md-5">
+                                        <x-input-label :value="__('Certificado del Curso Realizado')" for="certificado_curso_pdf"
+                                            :obligatorio=false />
+                                        <div class="input-group">
+                                            <div class="custom-file">
+                                                <input type="file" class="custom-file-input"
+                                                    id="certificado_curso_pdf" name="certificados_cursos_pdf[]">
+                                                <label class="custom-file-label"
+                                                    for="certificado_curso">{{ __('Seleccionar archivos') }}</label>
+                                            </div>
+                                        </div>
+                                        <x-input-error :messages="$errors->get('certificado_curso_pdf')" />
+                                    </div>
+                                    <div class="form-group col-md-2 d-flex align-items-end">
+                                        <button type="button" id="add-curso-btn" class="btn btn-primary">Agregar</button>
+                                    </div>
+                                </div>
+
+                                {{-- Contenedor para los Cursos Agregados --}}
+                                <div id="cursos-list" class="mt-3">
+                                    <!-- Aquí se agregarán los cursos nuevos -->
+                                </div>
+
+                                <x-button type="submit" class="mt-3">
                                     {{ __('Registrar') }}
                                 </x-button>
                             </div>
-                        </div>
+
                     </x-slot:body>
 
                     <x-slot:footer>
@@ -381,4 +396,53 @@
 
         $(nextTabId).tab('show');
     }
+
+    document.getElementById('add-curso-btn').addEventListener('click', function() {
+    // Obtener los valores de los campos base
+    let nombreCurso = document.getElementById('nombre_curso').value;
+    let certificadoCurso = document.getElementById('certificado_curso_pdf').files;
+
+    // Verificar que haya un archivo seleccionado
+    if(certificadoCurso.length === 0) {
+        alert('Por favor, selecciona un archivo para el certificado.');
+        return;
+    }
+
+    // Crear un nuevo div para el curso agregado
+    let newCursoItem = document.createElement('div');
+    newCursoItem.classList.add('curso-item', 'form-row', 'mt-3');
+
+    // Crear un ID único para el nuevo input de archivo
+    let uniqueId = Date.now();
+
+    // HTML del nuevo curso realizado y certificado
+    newCursoItem.innerHTML = `
+        <div class="form-group col-md-5">
+            <label for="cursos_realizados_${uniqueId}" class="form-label">Curso Realizado</label>
+            <input type="text" class="form-control" name="cursos_realizados[]" value="${nombreCurso}" readonly />
+        </div>
+        <div class="form-group col-md-5">
+            <label for="certificado_curso_${uniqueId}" class="form-label">Certificado del Curso</label>
+            <input type="file" class="form-control" name="certificados_cursos_pdf[]" id="certificado_curso_${uniqueId}" />
+        </div>
+        <div class="form-group col-md-2 d-flex align-items-end">
+            <button type="button" class="btn btn-danger remove-curso-btn">Eliminar</button>
+        </div>
+    `;
+
+    // Agregar el nuevo item al contenedor de cursos
+    document.getElementById('cursos-list').appendChild(newCursoItem);
+
+    // Limpiar los campos base
+    document.getElementById('nombre_curso').value = '';
+    document.getElementById('certificado_curso_pdf').value = '';
+
+    // Añadir un event listener para el botón de eliminar
+    newCursoItem.querySelector('.remove-curso-btn').addEventListener('click', function() {
+        this.closest('.curso-item').remove();
+    });
+});
+
+
+
 </script>
