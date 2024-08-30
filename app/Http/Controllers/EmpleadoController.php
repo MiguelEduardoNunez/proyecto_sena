@@ -31,12 +31,7 @@ class EmpleadoController extends Controller
      */
     public function index()
     {
-<<<<<<< HEAD
-        // Cargar todos los empleados con sus historias clínicas
         $empleados = Empleado::orderBy('nombres_completos', 'asc')->paginate(100);
-=======
-        $empleados = Empleado::orderBy('empleado', 'asc')->paginate(10);
->>>>>>> 67222144f64fba1eddaf384a5e64fa4d3b6b97b1
 
         return view('empleados.listar', ['empleados' => $empleados]);
     }

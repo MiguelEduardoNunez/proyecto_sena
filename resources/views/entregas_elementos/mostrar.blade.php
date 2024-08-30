@@ -19,7 +19,7 @@
                     <x-text size="h6" style="font-weight-normal" color="black" :value="$proyecto->proyecto" />
 
                     <x-text size="h6" color="black" :value="__('Empleado')" class="mt-4" />
-                    <x-text size="h6" style="font-weight-normal" color="black" :value="$entrega_elemento->empleado->empleado" />
+                    <x-text size="h6" style="font-weight-normal" color="black" :value="$entrega_elemento->empleado->nombres_completos" />
 
                     <x-text size="h6" color="black" :value="__('Fecha de Entrega')" class="mt-4" />
                     <x-text size="h6" style="font-weight-normal" color="black" :value="$entrega_elemento->fecha_entrega" />

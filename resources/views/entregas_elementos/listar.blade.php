@@ -40,7 +40,8 @@
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $proyecto->proyecto }}</td>
-                                <td>{{ $entrega_elemento->empleado->empleado }}</td>
+                                <td>{{ $entrega_elemento->empleado ? $entrega_elemento->empleado->nombres_completos : 'Empleado no encontrado' }}</td>
+
                                 <td>{{ $entrega_elemento->fecha_entrega }}</td>
                                 <td class="text-center">
                                     <div class="row justify-content-center align-items-center">
