@@ -25,7 +25,7 @@
 
                         <div class="form-group" id="val_empleado">
                             <x-input-label :value="__('Empleado')" for="empleado" />
-                            <x-select :elements="$empleados" identifier="id_empleado" label="empleado" id="empleado"
+                            <x-select :elements="$empleados" identifier="id_empleado" label="nombres_completos" id="empleado"
                                 name="empleado">
                                 <option selected disabled>{{ __('Seleccionar') }}</option>
                             </x-select>

@@ -38,7 +38,7 @@ class ProyectoEntregaElementoController extends Controller
     {
         $proyecto = Proyecto::find($id_proyecto);
 
-        $empleados = Empleado::orderBy('empleado', 'asc')->get();
+        $empleados = Empleado::orderBy('nombres_completos', 'asc')->get();
 
         $categorias = Categoria::orderBy('categoria', 'asc')->get();
 
@@ -138,7 +138,7 @@ class ProyectoEntregaElementoController extends Controller
     {
         $proyecto = $request->input('proyecto');
         $empleado= $request->input('empleado');
-        $fechaEntrega = $request->input('fecha_entrega');
+        $fechaEntrega= $request->input('fecha_entrega');
 
         $elementosSeleccionados = $request->input('elementos_seleccionados');
         $cantidades = $request->input('cantidades');
@@ -215,5 +215,23 @@ class ProyectoEntregaElementoController extends Controller
         ]);
 
         return $reporte->download('Entrega-Elementos-'.$proyecto->proyecto.'.pdf');
+    }
+    public function reporteDevolucion(string $id_proyecto, string $id_entrega_elemento)
+    {
+        $proyecto = Proyecto::find($id_proyecto);
+
+        $entrega_elemento = EntregaElemento::find($id_entrega_elemento);
+
+        $devolucion_elemento = DevolucionElemento::where('detalles_entregas_id', '=', $id_entrega_elemento)->get();
+
+        $detalle_entrega_elementos = DetalleEntregaElemento::with(['elemento' => ['item', 'tipoCantidad']])
+            ->where('entrega_elemento_id', '=', $id_entrega_elemento)
+            ->get();
+
+        $reporte = Pdf::loadView('entregas_elementos.reporte_devolucion', [
+            'proyecto' => $proyecto, 'entrega_elemento' => $entrega_elemento, 'detalle_entrega_elementos' => $detalle_entrega_elementos, 'devolucion_elemento' => $devolucion_elemento
+        ]);
+
+        return $reporte->download('Devolucion-Elementos-'.$proyecto->proyecto.'.pdf');
     }
 }

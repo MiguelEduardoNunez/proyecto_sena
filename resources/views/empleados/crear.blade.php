@@ -216,8 +216,8 @@
                                             <div class="custom-file">
                                                 <input type="file" class="custom-file-input" id="arl_pdf"
                                                     name="arl_pdf">
-                                                <label class="custom-file-label"
-                                                    for="arl_pdf">{{ __('Seleccionar archivos') }}</label>
+                                                <label class="custom-file-label" for="arl_pdf">Seleccionar
+                                                    archivo</label>
                                             </div>
                                         </div>
                                         <x-input-error :messages="$errors->get('arl_pdf')" />
@@ -231,11 +231,10 @@
 
 
                                     {{-- <div class="form-group col-md-6">
-                                        <x-input-label :value="__('Eps')" for="eps" :obligatorio=false />
-                                        <x-input type="text" id="eps" name="eps"
-                                            :value="old('eps')" />
-                                        <x-input-error :messages="$errors->get('eps')" />
-                                    </div> --}}
+                                            <x-input-label :value="__('Eps')" for="eps" :obligatorio=false />
+                                            <x-input type="text" id="eps" name="eps" :value="old('eps')" />
+                                            <x-input-error :messages="$errors->get('eps')" />
+                                        </div> --}}
                                     <div class="form-group col-md-6">
                                         <x-input-label :value="__('EPS')" for="eps" :obligatorio=false />
                                         <x-select :elements="$eps" identifier="id_eps" label="nombre_eps"
@@ -252,8 +251,8 @@
                                             <div class="custom-file">
                                                 <input type="file" class="custom-file-input" id="eps_pdf"
                                                     name="eps_pdf">
-                                                <label class="custom-file-label"
-                                                    for="eps_pdf">{{ __('Seleccionar archivos') }}</label>
+                                                <label class="custom-file-label" for="eps_pdf">Seleccionar
+                                                    archivo</label>
                                             </div>
                                         </div>
                                         <x-input-error :messages="$errors->get('eps_pdf')" />
@@ -312,25 +311,24 @@
                                 {{-- Campos Base para Cursos --}}
                                 <div class="form-row">
                                     <div class="form-group col-md-5">
-                                        <x-input-label :value="__('Curso Realizado')" for="nombre_curso" :obligatorio=false />
-                                        <x-input type="text" id="nombre_curso" name="cursos_realizados[]"/>
-                                        <x-input-error :messages="$errors->get('nombre_curso')" />
+                                        <label for="nombre_curso">Curso Realizado</label>
+                                        <input type="text" id="nombre_curso" name="cursos_realizados[]"
+                                            class="form-control">
                                     </div>
                                     <div class="form-group col-md-5">
-                                        <x-input-label :value="__('Certificado del Curso Realizado')" for="certificado_curso_pdf"
-                                            :obligatorio=false />
+                                        <label for="certificado_curso_pdf">Certificado del Curso Realizado</label>
                                         <div class="input-group">
                                             <div class="custom-file">
                                                 <input type="file" class="custom-file-input"
                                                     id="certificado_curso_pdf" name="certificados_cursos_pdf[]">
                                                 <label class="custom-file-label"
-                                                    for="certificado_curso">{{ __('Seleccionar archivos') }}</label>
+                                                    for="certificado_curso_pdf">Seleccionar archivos</label>
                                             </div>
                                         </div>
-                                        <x-input-error :messages="$errors->get('certificado_curso_pdf')" />
                                     </div>
                                     <div class="form-group col-md-2 d-flex align-items-end">
-                                        <button type="button" id="add-curso-btn" class="btn btn-primary">Agregar</button>
+                                        <button type="button" id="add-curso-btn"
+                                            class="btn btn-primary">Agregar</button>
                                     </div>
                                 </div>
 
@@ -338,6 +336,9 @@
                                 <div id="cursos-list" class="mt-3">
                                     <!-- Aquí se agregarán los cursos nuevos -->
                                 </div>
+
+
+
 
                                 <x-button type="submit" class="mt-3">
                                     {{ __('Registrar') }}
@@ -357,7 +358,7 @@
 
 <script>
     $(function() {
-        // Select dinamic
+        // Select dinamicp
         var municipios = {{ Js::from($municipios) }};
         $("#departamento").on("change", function() {
             $("#municipio").empty();
@@ -373,6 +374,7 @@
             });
         });
     });
+
     document.addEventListener('DOMContentLoaded', function() {
         const fileInput = document.getElementById('certificado_curso_pdf');
         const fileLabel = document.querySelector('label[for="certificado_curso"]');
@@ -397,52 +399,82 @@
         $(nextTabId).tab('show');
     }
 
-    document.getElementById('add-curso-btn').addEventListener('click', function() {
-    // Obtener los valores de los campos base
-    let nombreCurso = document.getElementById('nombre_curso').value;
-    let certificadoCurso = document.getElementById('certificado_curso_pdf').files;
-
-    // Verificar que haya un archivo seleccionado
-    if(certificadoCurso.length === 0) {
-        alert('Por favor, selecciona un archivo para el certificado.');
-        return;
+    function actualizarNombreArchivo(input) {
+        input.addEventListener('change', function() {
+            let fileName = this.files[0] ? this.files[0].name : 'Seleccionar archivos';
+            this.nextElementSibling.innerHTML = fileName;
+        });
     }
 
-    // Crear un nuevo div para el curso agregado
-    let newCursoItem = document.createElement('div');
-    newCursoItem.classList.add('curso-item', 'form-row', 'mt-3');
+    document.addEventListener('DOMContentLoaded', function() {
+        // Para el input base ARL PDF
+        actualizarNombreArchivo(document.getElementById('arl_pdf'));
 
-    // Crear un ID único para el nuevo input de archivo
-    let uniqueId = Date.now();
+        // Para el input base EPS PDF
+        actualizarNombreArchivo(document.getElementById('eps_pdf'));
 
-    // HTML del nuevo curso realizado y certificado
-    newCursoItem.innerHTML = `
+        actualizarNombreArchivo(document.getElementById('certificado_curso_pdf'));
+    });
+
+    // Aplicar la función cuando se agregan nuevos inputs de cursos dinámicamente
+    document.getElementById('add-curso-btn').addEventListener('click', function() {
+        let cursosList = document.getElementById('cursos-list');
+        let nuevoCurso = `
+    <div class="form-row">
         <div class="form-group col-md-5">
-            <label for="cursos_realizados_${uniqueId}" class="form-label">Curso Realizado</label>
-            <input type="text" class="form-control" name="cursos_realizados[]" value="${nombreCurso}" readonly />
+            <label for="nombre_curso">Curso Realizado</label>
+            <input type="text" name="cursos_realizados[]" class="form-control">
         </div>
         <div class="form-group col-md-5">
-            <label for="certificado_curso_${uniqueId}" class="form-label">Certificado del Curso</label>
-            <input type="file" class="form-control" name="certificados_cursos_pdf[]" id="certificado_curso_${uniqueId}" />
+            <label for="certificado_curso_pdf">Certificado del Curso Realizado</label>
+            <div class="input-group">
+                <div class="custom-file">
+                    <input type="file" name="certificados_cursos_pdf[]" class="custom-file-input">
+                    <label class="custom-file-label" for="certificado_curso_pdf">Seleccionar archivos</label>
+                </div>
+            </div>
         </div>
         <div class="form-group col-md-2 d-flex align-items-end">
             <button type="button" class="btn btn-danger remove-curso-btn">Eliminar</button>
         </div>
-    `;
+    </div>`;
 
-    // Agregar el nuevo item al contenedor de cursos
-    document.getElementById('cursos-list').appendChild(newCursoItem);
+        cursosList.insertAdjacentHTML('beforeend', nuevoCurso);
 
-    // Limpiar los campos base
-    document.getElementById('nombre_curso').value = '';
-    document.getElementById('certificado_curso_pdf').value = '';
+        // Agregar funcionalidad para eliminar cursos
+        document.querySelectorAll('.remove-curso-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                this.closest('.form-row').remove();
+            });
+        });
 
-    // Añadir un event listener para el botón de eliminar
-    newCursoItem.querySelector('.remove-curso-btn').addEventListener('click', function() {
-        this.closest('.curso-item').remove();
+        // Actualizar el nombre del archivo seleccionado para los nuevos campos de archivo
+        document.querySelectorAll('.custom-file-input').forEach(input => {
+            actualizarNombreArchivo(input); // Llamamos a la función para los nuevos inputs de archivo
+        });
     });
-});
-
-
-
 </script>
+
+
+{{-- document.addEventListener('DOMContentLoaded', function() {
+    // Función para mostrar el nombre del archivo seleccionado
+    function updateFileName(inputElement) {
+        const fileInput = inputElement;
+        const label = fileInput.nextElementSibling;
+        const fileName = fileInput.files[0] ? fileInput.files[0].name : 'Seleccionar archivo';
+
+        label.textContent = fileName;
+    }
+
+    // Agregar el evento "change" para el campo arl_pdf
+    const arlInput = document.getElementById('arl_pdf');
+    arlInput.addEventListener('change', function() {
+        updateFileName(arlInput);
+    });
+
+    // Agregar el evento "change" para el campo eps_pdf
+    const epsInput = document.getElementById('eps_pdf');
+    epsInput.addEventListener('change', function() {
+        updateFileName(epsInput);
+    });
+}); --}}

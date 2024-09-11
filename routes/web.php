@@ -110,6 +110,7 @@ Route::middleware('auth')->group(function () {
 
 // Rutas Entregas de Elementos
 Route::get('/proyectos/{proyecto}/entregas-elementos/{entrega_elemento}/reporte', [ProyectoEntregaElementoController::class, 'reporte'])->name('proyectos.entregas-elementos.reporte');
+Route::get('/proyectos/{proyecto}/entregas-elementos/{entrega_elemento}/reporte_devolucion', [ProyectoEntregaElementoController::class, 'reporteDevolucion'])->name('proyectos.entregas-elementos.reporte_devolucion');
 Route::resource('/proyectos.entregas-elementos', ProyectoEntregaElementoController::class)->middleware('auth');
 
 //Ruta Detalle Elementos

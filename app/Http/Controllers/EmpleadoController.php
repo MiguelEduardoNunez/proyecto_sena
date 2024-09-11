@@ -6,6 +6,7 @@ use App\Models\ArchivoCurso;
 use App\Models\Arl;
 use App\Models\CargoEmpleado;
 use App\Models\ContactoEmergencia;
+use App\Models\Curso;
 use App\Models\CursoRealizado;
 use App\Models\Departamento;
 use App\Models\Empleado;
@@ -20,6 +21,7 @@ use App\Models\Novedad;
 use App\Models\TipoContrato;
 use App\Models\TipoDocumento;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use PgSql\Lob;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -75,7 +77,9 @@ class EmpleadoController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request->all());
+        //($request->file('certificados_cursos_pdf'));
+
+        //dd($request->all());
         try {
             // Validar los datos del request
             $validaciones = $request->validate([
@@ -111,7 +115,7 @@ class EmpleadoController extends Controller
                 'telefono_acudiente' => ['required', 'string', 'max:10'],
 
                 'nombre_curso' => ['nullable', 'array'],
-                'nombre_curso.*' => ['string', 'max:255'],
+                'nombre_curso.*' => ['string', 'max:100'],
                 'certificado_curso_pdf.*' => ['nullable', 'file', 'mimes:pdf', 'max:2048'],
             ]);
 
@@ -165,16 +169,33 @@ class EmpleadoController extends Controller
             $contacto_emergencia->telefono_acudiente = $request->telefono_acudiente;
             $contacto_emergencia->save();
 
-           
+            if ($request->hasFile('certificados_cursos_pdf')) {
+                foreach ($request->file('certificados_cursos_pdf') as $index => $file) {
+                    // Guardar el archivo del certificado
+                    $filePath = $file->store('certificados_cursos', 'public');
+                    
+                    // Crear el curso solo si no existe con ese nombre
+                    $curso = Curso::firstOrCreate([
+                        'nombre_curso' => $request->cursos_realizados[$index]
+                    ]);
 
+                    DB::table('empleado_curso')->insert([
+                        'empleado_id' => $empleado->id_empleado,  // Asumimos que $empleado es el objeto del empleado
+                        'curso_id' => $curso->id_curso,
+                        'certificado_pdf' => $filePath,  // Guardar el path del archivo del certificado
+                    ]);
+                }
+            }
+            
             Alert::success('Registrado', 'Empleado con éxito');
             return redirect(route('empleados.index'));
+
         } catch (\Exception $e) {
             // Registrar el error en el log
             Log::error('Error al guardar el empleado: ' . $e->getMessage());
 
             // Mostrar mensaje de error al usuario
-            Alert::error('Error', 'Ocurrió un error al registrar el empleado.');
+            Alert::error('Error', 'Ocurrió un error al registrar el empleado.' . $e->getMessage());
             return redirect()->back()->withInput();
         }
     }

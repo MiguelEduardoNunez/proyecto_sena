@@ -11,14 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('cursos_ralizados', function (Blueprint $table) {
+        Schema::create('cursos', function (Blueprint $table) {
             $table->charset = 'utf8';
             $table->collation = 'utf8_spanish_ci';
 
-            $table->integer('id_curso_realizado')->autoIncrement();
-            $table->integer('empleado_id');
+            $table->integer('id_curso')->autoIncrement();
             $table->string('nombre_curso', '150');
-            $table->string('certificado_estudio', '100');
             $table->timestamp('creado_en');
             $table->timestamp('actualizado_en')->nullable();
         });
@@ -29,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('cursos_ralizados');
+        Schema::dropIfExists('cursos');
     }
 };
