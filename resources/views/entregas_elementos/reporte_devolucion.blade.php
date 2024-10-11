@@ -97,7 +97,7 @@
                         <td>{{ $detalle_entrega_elemento->elemento->marca }}</td>
                         <td>{{ $detalle_entrega_elemento->elemento->modelo }}</td>
                         <td>{{ $detalle_entrega_elemento->elemento->tipoCantidad->tipo_cantidad }}</td>
-                        <td>{{ $detalle_entrega_elemento->cantidad }}</td>
+                        <td>{{ $detalle_entrega_elemento->devolucionElemento }}</td>
                     </tr>
                     @endforeach
                 </tbody>

@@ -26,7 +26,7 @@ class ProyectoEntregaElementoController extends Controller
         $entregas_elementos = EntregaElemento::with('empleado')
             ->where('proyecto_id', '=', $id_proyecto)
             ->orderBy('fecha_entrega', 'desc')
-            ->paginate(10);
+            ->paginate(100);
 
         return view('entregas_elementos.listar', ['proyecto' => $proyecto, 'entregas_elementos' => $entregas_elementos]);
     }
@@ -38,7 +38,7 @@ class ProyectoEntregaElementoController extends Controller
     {
         $proyecto = Proyecto::find($id_proyecto);
 
-        $empleados = Empleado::orderBy('nombres_completos', 'asc')->get();
+        $empleados = Empleado::orderBy('empleado', 'asc')->get();
 
         $categorias = Categoria::orderBy('categoria', 'asc')->get();
 
@@ -61,7 +61,8 @@ class ProyectoEntregaElementoController extends Controller
     {
         $validaciones = $request->validate([
             'empleado' => ['required', 'numeric'],
-            'fecha_entrega' => ['required', 'date', 'after_or_equal:today'],
+            'fecha_entrega' => ['required', 'date'],
+            // , 'after_or_equal:today'
         ], [
             'fecha_entrega.after_or_equal' => 'La fecha de entrega debe ser una fecha posterior o igual a la fecha actual.',
         ]);
@@ -138,7 +139,7 @@ class ProyectoEntregaElementoController extends Controller
     {
         $proyecto = $request->input('proyecto');
         $empleado= $request->input('empleado');
-        $fechaEntrega= $request->input('fecha_entrega');
+        $fechaEntrega = $request->input('fecha_entrega');
 
         $elementosSeleccionados = $request->input('elementos_seleccionados');
         $cantidades = $request->input('cantidades');
@@ -214,8 +215,10 @@ class ProyectoEntregaElementoController extends Controller
             'proyecto' => $proyecto, 'entrega_elemento' => $entrega_elemento, 'detalle_entrega_elementos' => $detalle_entrega_elementos
         ]);
 
-        return $reporte->download('Entrega-Elementos-'.$proyecto->proyecto.'.pdf');
+        return $reporte->stream('Entrega-Elementos-'.$proyecto->proyecto.'.pdf');
     }
+
+
     public function reporteDevolucion(string $id_proyecto, string $id_entrega_elemento)
     {
         $proyecto = Proyecto::find($id_proyecto);
@@ -232,6 +235,6 @@ class ProyectoEntregaElementoController extends Controller
             'proyecto' => $proyecto, 'entrega_elemento' => $entrega_elemento, 'detalle_entrega_elementos' => $detalle_entrega_elementos, 'devolucion_elemento' => $devolucion_elemento
         ]);
 
-        return $reporte->download('Devolucion-Elementos-'.$proyecto->proyecto.'.pdf');
+        return $reporte->stream('Devolucion-Elementos-'.$proyecto->proyecto.'.pdf');
     }
 }

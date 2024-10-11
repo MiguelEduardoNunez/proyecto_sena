@@ -19,6 +19,7 @@ return new class extends Migration
             $table->integer('proyecto_id');
             $table->integer('stand_id');
             $table->integer('item_id');
+            $table->smallInteger('tipo_cantidad_id');
             $table->string('marca', '50');
             $table->string('modelo', '50');
             $table->string('serial', '50');

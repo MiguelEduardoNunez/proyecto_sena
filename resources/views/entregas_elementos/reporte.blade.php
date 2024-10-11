@@ -125,10 +125,10 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td>Leidy Viviana Bolaños</td>
+                        <td>LEIDY VIVIANA BOLAÑOS</td>
                         <td>Almacén</td>
-                        <td>{{ $entrega_elemento->empleado->nombres_completos }}</td>
-                        <td>{{ $entrega_elemento->empleado->cargoEmpleado->cargo_empleado }}</td>
+                        <td></td>
+                        <td>Técnico</td>
                     </tr>
                     <tr>
                         <th>Firma:</th>

@@ -23,9 +23,9 @@
                             <x-input type="text" id="proyecto" name="proyecto" :value="$proyecto->proyecto" disabled />
                         </div>
 
-                        <div class="form-group" id="val_empleado">
+                        <div class="form-group">
                             <x-input-label :value="__('Empleado')" for="empleado" />
-                            <x-select :elements="$empleados" identifier="id_empleado" label="nombres_completos" id="empleado"
+                            <x-select :elements="$empleados" identifier="id_empleado" label="empleado" id="empleado"
                                 name="empleado">
                                 <option selected disabled>{{ __('Seleccionar') }}</option>
                             </x-select>
