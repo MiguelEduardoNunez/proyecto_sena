@@ -56,24 +56,42 @@
             bottom: 0;
         }
 
-        .fondoContainer {
-            background-image: url("{{ public_path('marcadeagua.png') }}");
-            background-repeat: no-repeat;
-            background-position: center;
-            background-size: 100%;
+        .logo_fecha {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        .logo {
+            width: 10%;
+        }
+
+        .fecha {
+            font-size: 16px;
+            font-weight: bold;
+            text-align: right;
+        }
+
+        .campos {
+            height: 5%;
         }
     </style>
 </head>
 
 <body class="fondoContainer">
     <header class="header">
-        <img src="{{ public_path('logo.png') }}" alt="Logo" style="width: 100%">
     </header>
 
     <div class="container">
+        <div class="logo_fecha">
+            <img src="{{ public_path('logo_sena.jpg') }}" alt="logo_sena" class="logo">
+            <div class="fecha">Fecha: {{ $proyecto->creado_en }}</div>
+        </div>
+
         <div class="textencabezado">
-            <h3 class="textend">Fecha: {{ $proyecto->creado_en }}</h3>
-            <h1 class="textencabezado">ACTA DEVOLUCION DE EQUIPOS</h1>
+            <h1 class="textencabezado">ACTA DEVOLUCIÓN DE EQUIPOS</h1>
             <p class="textencabezado">Con la presente acta se le hace entrega de los siguientes elementos al proyecto {{ $proyecto->proyecto }}</p>
         </div>
 
@@ -97,7 +115,7 @@
                         <td>{{ $detalle_entrega_elemento->elemento->marca }}</td>
                         <td>{{ $detalle_entrega_elemento->elemento->modelo }}</td>
                         <td>{{ $detalle_entrega_elemento->elemento->tipoCantidad->tipo_cantidad }}</td>
-                        <td>{{ $detalle_entrega_elemento->devolucionElemento }}</td>
+                        <td>{{ $detalle_entrega_elemento->cantidad_devolucionada ?: 'N/A' }}</td>
                     </tr>
                     @endforeach
                 </tbody>
@@ -107,8 +125,7 @@
         <div>
             <p>Manifiesto que:</p>
             <ul>
-                <li>He recibido los equipos de la devoluvión en buen estado.</li>
-              
+                <li>He recibido los equipos de la devolución en buen estado.</li>
             </ul>
         </div>
 
@@ -118,17 +135,16 @@
                     <tr>
                         <th>Entregado por:</th>
                         <th>Cargo:</th>
-
                         <th>Recibido por:</th>
                         <th>Cargo:</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
+                        <td class="campos"></td>
                         <td></td>
-                        <td>Técnico</td>
-                        <td>LEIDY VIVIANA BOLAÑOS</td>
-                        <td>Almacén</td>
+                        <td></td>
+                        <td></td>
                     </tr>
                     <tr>
                         <th>Firma:</th>
@@ -137,10 +153,10 @@
                         <th>Cédula:</th>
                     </tr>
                     <tr>
+                        <td class="campos"></td>
                         <td></td>
                         <td></td>
                         <td></td>
-                        <td>1061720521</td>
                     </tr>
                 </tbody>
             </table>

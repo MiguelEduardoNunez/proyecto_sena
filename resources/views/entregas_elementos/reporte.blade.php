@@ -56,23 +56,42 @@
             bottom: 0;
         }
 
-        .fondoContainer {
-            background-image: url("{{ public_path('marcadeagua.png') }}");
-            background-repeat: no-repeat;
-            background-position: center;
-            background-size: 100%;
+        .logo_fecha {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        .logo {
+            width: 10%;
+            flex-grow: 0;
+        }
+
+        .fecha {
+            font-size: 16px;
+            font-weight: bold;
+            text-align: right;
+            flex-grow: 1;
+        }
+        .campos {
+            height: 5%;
         }
     </style>
 </head>
 
 <body class="fondoContainer">
     <header class="header">
-        <img src="{{ public_path('logo.png') }}" alt="Logo" style="width: 100%">
     </header>
 
     <div class="container">
+        <div class="logo_fecha">
+            <img src="{{ public_path('logo_sena.jpg') }}" alt="logo_sena" class="logo">
+            <div class="fecha">Fecha: {{ $proyecto->creado_en }}</div>
+        </div>
+
         <div class="textencabezado">
-            <h3 class="textend">Fecha: {{ $proyecto->creado_en }}</h3>
             <h1 class="textencabezado">ACTA ENTREGA DE EQUIPOS</h1>
             <p class="textencabezado">Con la presente acta se le hace entrega de los siguientes elementos al proyecto {{ $proyecto->proyecto }}</p>
         </div>
@@ -109,7 +128,7 @@
             <ul>
                 <li>He recibido los equipos relacionados y me comprometo a cuidarlos y darles el manejo adecuado para cada actividad.</li>
                 <li>Que he sido instruido sobre el uso, mantenimiento y cuidados de estos.</li>
-                <li>Los equipos y herramientas que aquí se entregan son y serán de la empresa Colombianet y Sepcom ingeniería y Telecomunicaciones S.A.S. En todo momento, en caso de retiro por cualquier causa debe devolverlos de forma inmediata, si ocurriera la pérdida, daño o no devolución de los mismos, autorizo a mi empleador para que retenga de mi salario o liquidación definitiva el valor de los mismos.</li>
+                <li>Los equipos y herramientas que aquí se entregan son y serán propiedad del Servicio Nacional de Aprendizaje (SENA).</li>
             </ul>
         </div>
 
@@ -125,10 +144,10 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td>LEIDY VIVIANA BOLAÑOS</td>
-                        <td>Almacén</td>
+                        <td class="campos"></td>
                         <td></td>
-                        <td>Técnico</td>
+                        <td></td>
+                        <td></td>
                     </tr>
                     <tr>
                         <th>Firma:</th>
@@ -137,8 +156,8 @@
                         <th>Cédula:</th>
                     </tr>
                     <tr>
+                        <td class="campos"></td>
                         <td></td>
-                        <td>1061720521</td>
                         <td></td>
                         <td></td>
                     </tr>
@@ -148,7 +167,7 @@
     </div>
 
     <footer class="footer">
-        <img src="{{ public_path('footer.png') }}" alt="Footer" style="width: 100%">
+        {{-- <img src="{{ public_path('footer.png') }}" alt="Footer" style="width: 100%"> --}}
     </footer>
 </body>
 
