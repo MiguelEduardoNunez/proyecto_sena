@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('detalles_entregas', function (Blueprint $table) {
+        Schema::table('detalles_entregas_elementos', function (Blueprint $table) {
             $table->foreign('entrega_elemento_id')->references('id_entrega_elemento')->on('entregas_elementos');
             $table->foreign('elemento_id')->references('id_elemento')->on('elementos');
         });

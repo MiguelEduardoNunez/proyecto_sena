@@ -164,7 +164,7 @@
     </div>
 
     <footer class="footer">
-        <img src="{{ public_path('footer.png') }}" alt="Footer" style="width: 100%">
+        {{-- <img src="{{ public_path('footer.png') }}" alt="Footer" style="width: 100%"> --}}
     </footer>
 </body>
 
