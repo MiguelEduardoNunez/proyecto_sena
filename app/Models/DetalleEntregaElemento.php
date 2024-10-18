@@ -22,7 +22,7 @@ class DetalleEntregaElemento extends Model
      *
      * @var string
      */
-    protected $primaryKey = 'entrega_elemento_id';
+    protected $primaryKey = 'id_detalle_entrega_elemento';
 
     /**
      * Names of the timestamps.
