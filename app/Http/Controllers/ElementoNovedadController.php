@@ -55,7 +55,7 @@ class ElementoNovedadController extends Controller
         $empleados = Empleado::orderBy('empleado', 'asc')->get();
 
 
-        return view('novedades.crear', ['elemento' => $elemento, 'proyectos' => $proyectos, 
+        return view('novedades.crear', ['elemento' => $elemento, 'proyectos' => $proyectos,
         'stands' => $stans, 'categorias' => $categorias, 'subcategorias' => $subcategorias, 'items' => $items, 'tipos_novedades' => $tipos_novedades, 'empleados' => $empleados]);
     }
 
@@ -64,15 +64,30 @@ class ElementoNovedadController extends Controller
      */
     public function store(Request $request, string $id_elemento)
     {
-        //Error en las validaciones 
+
+        //Error en las validaciones
         $validaciones = $request->validate([
-            'tipo_novedad' => ['required', 'numeric'], 
+            'tipo_novedad' => ['required', 'numeric'],
             'empleado' => ['required', 'numeric'],
             'novedad' => ['required', 'string'],
             'fecha_reporte' => ['required', 'date'],
             'fecha_cierre' => ['required', 'date', 'after_or_equal:fecha_reporte']
-            
         ]);
+        
+        // Actualizar el estado del elemento si el tipo de novedad es Préstamo o Devuelto
+        $tipoNovedad = TipoNovedad::find($request->tipo_novedad)->tipo_novedad ?? null;
+
+        // Buscar el elemento relacionado
+        $elemento = Elemento::find($id_elemento);
+        
+        if ($tipoNovedad === 'Préstamo') {
+            $elemento->estado = 1;
+        } elseif ($tipoNovedad === 'Devuelto') {
+            $elemento->estado = 0;
+        }
+        if (isset($elemento->estado)) {
+            $elemento->save();
+        }
 
         $novedad = new Novedad();
         $novedad->tipo_novedad_id = $request->tipo_novedad;
@@ -142,20 +157,34 @@ class ElementoNovedadController extends Controller
         ]);
 
     }
-
+  
     /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, string $id_elemento, string $id_novedad)
     {
         $validaciones = $request->validate([
-            'tipo_novedad' => ['required', 'numeric'], 
+            'tipo_novedad' => ['required', 'numeric'],
             'empleado' => ['required', 'numeric'],
             'novedad' => ['required', 'string'],
             'fecha_reporte' => ['required', 'date'],
             'fecha_cierre' => ['required', 'date', 'after:fecha_reporte']
-            
         ]);
+
+        // Actualizar el estado del elemento si el tipo de novedad es Préstamo o Devuelto
+        $tipoNovedad = TipoNovedad::find($request->tipo_novedad)->tipo_novedad ?? null;
+
+        // Buscar el elemento relacionado
+        $elemento = Elemento::find($id_elemento);
+                
+        if ($tipoNovedad === 'Préstamo') {
+            $elemento->estado = 1;
+        } elseif ($tipoNovedad === 'Devuelto') {
+            $elemento->estado = 0;
+        }
+        if (isset($elemento->estado)) {
+            $elemento->save();
+        }
 
         $novedad = Novedad::find($id_novedad);
         $novedad->tipo_novedad_id = $request->tipo_novedad;
