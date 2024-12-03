@@ -40,8 +40,6 @@
                         {{ __('No registrada') }}
                         @endif
     
-
-
                     </x-slot:body>
 
                     <x-slot:footer>

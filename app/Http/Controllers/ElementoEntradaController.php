@@ -10,7 +10,6 @@ use App\Models\Proyecto;
 use App\Models\Subcategoria;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
-use Termwind\Components\Element;
 
 class ElementoEntradaController extends Controller
 {
@@ -28,7 +27,6 @@ class ElementoEntradaController extends Controller
         return view('entradas_elementos.listar', ['entradas' => $entradas, 'proyecto' => $proyecto]);
     }
 
-
     /**
      * Show the form for creating a new resource.
      */
@@ -41,7 +39,17 @@ class ElementoEntradaController extends Controller
         $items = Item::orderBy('item', 'asc')->get();
 
         $proyecto = Proyecto::findOrFail($id_proyecto);
-        $elementos = Elemento::where('proyecto_id', $id_proyecto)->get(); // Suponiendo que hay elementos asociados al proyecto
+        // filtra los elementos que estén en el proyecto
+        $elementos = Elemento::with(['item', 'tipoCantidad'])
+        ->where('proyecto_id', '=', $id_proyecto)
+        ->orderBy('marca', 'asc')
+        ->get()
+        ->map(function ($elemento) {
+            // Asegúrate de que el elemento y el item existen antes de concatenar
+            $elemento->concatenated = $elemento->item->item . ' - ' . $elemento->serial;
+            return $elemento;
+        });
+        
         return view('entradas_elementos.crear', ['proyecto' => $proyecto, 'elementos' => $elementos, 'categorias' => $categorias, 'subcategorias' => $subcategorias, 'items' => $items]);
     }
 
@@ -50,14 +58,20 @@ class ElementoEntradaController extends Controller
      */
     public function store(Request $request, string $id_proyecto)
     {
-        $elemento = Elemento::findOrFail($request->elemento); // Cambia la forma de obtener el elemento
+        $elementoId = $request->elemento; 
     
+        // Asegúrate de que existe el elemento con el ID proporcionado
+        $elemento = Elemento::findOrFail($elementoId);
+    
+        // Validación de la solicitud
         $request->validate([
             'cantidad' => 'required|numeric',
-            'fecha_entrada' => 'required|date|after_or_equal:today', // Asume que la fecha no puede ser en el pasado
+            'fecha_entrada' => 'required|date|after_or_equal:today',
             'descripcion' => 'nullable|string',
+            'elemento' => 'required|exists:elementos,id_elemento',
         ]);
     
+        // Crear una nueva entrada de elemento
         $entrada = new EntradaElemento();
         $entrada->proyecto_id = $id_proyecto;
         $entrada->elemento_id = $elemento->id_elemento;
@@ -65,10 +79,12 @@ class ElementoEntradaController extends Controller
         $entrada->fecha_entrada = $request->fecha_entrada;
         $entrada->descripcion = $request->descripcion;
         $entrada->save();
-
+    
+        // Actualizar la cantidad del elemento
         $elemento->cantidad += $request->cantidad;
         $elemento->save();
     
+        // Mostrar un mensaje de éxito y redirigir
         Alert::success('Registrada', 'Entrada con éxito');
         return redirect(route('entrada_elementos.index', $id_proyecto));
     }
@@ -76,10 +92,10 @@ class ElementoEntradaController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id_proyecto, string $id_entrada_elementos)
+    public function show(string $id_proyecto, string $id_entrada_elemento)
     {
         $proyecto = Proyecto::findOrFail($id_proyecto);
-        $entrada = EntradaElemento::with('elemento')->findOrFail($id_entrada_elementos);
+        $entrada = EntradaElemento::with('elemento')->findOrFail($id_entrada_elemento);
     
         return view('entradas_elementos.mostrar', ['proyecto' => $proyecto,'entrada' => $entrada]);
     }

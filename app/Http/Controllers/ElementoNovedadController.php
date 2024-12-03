@@ -73,11 +73,8 @@ class ElementoNovedadController extends Controller
             'fecha_reporte' => ['required', 'date'],
             'fecha_cierre' => ['required', 'date', 'after_or_equal:fecha_reporte']
         ]);
-        
-        // Actualizar el estado del elemento si el tipo de novedad es Préstamo o Devuelto
-        $tipoNovedad = TipoNovedad::find($request->tipo_novedad)->tipo_novedad ?? null;
 
-        // Buscar el elemento relacionado
+        $tipoNovedad = TipoNovedad::find($request->tipo_novedad)->tipo_novedad ?? null;
         $elemento = Elemento::find($id_elemento);
         
         if ($tipoNovedad === 'Préstamo') {

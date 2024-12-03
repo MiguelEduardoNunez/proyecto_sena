@@ -31,7 +31,7 @@
                             </x-select>
                             <x-input-error :messages="$errors->get('empleado')" />
                         </div>
-
+                
                         <div class="form-group" id="val_fecha_entrega">
                             <x-input-label :value="__('Fecha de Entrega')" for="fecha_entrega" />
                             <x-input-group id="fecha_entrega" data-target-input="nearest">
@@ -105,7 +105,6 @@
                             <x-data-table :headers="['Elemento', 'Tipo de Cantidad', 'Cantidad','Acciones']" id="tabla_entregas">
                             </x-data-table>
                         </div>
-
                     </x-slot:body>
 
                     <x-slot:footer>
@@ -373,8 +372,6 @@
                     "</tr>"
                 );
             });
-
-
 
             // Limpiar el campo de cantidad disponible
             $("#cantidad_disponible").val("");

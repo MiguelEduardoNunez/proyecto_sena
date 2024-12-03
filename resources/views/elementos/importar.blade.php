@@ -3,7 +3,7 @@
         {{ __('Importar Elementos') }}
     </x-slot>
     <div class="col-auto d-none d-lg-flex">
-        <a href="{{ route('entrada_elementos.index', $proyecto->id_proyecto) }}">
+        <a href="{{ route('proyectos.elementos.index', $proyecto->id_proyecto) }}">
             <i class="far fa-arrow-alt-circle-left fa-2x" data-toggle="tooltip" title="Regresar"></i>
         </a>
     </div>
