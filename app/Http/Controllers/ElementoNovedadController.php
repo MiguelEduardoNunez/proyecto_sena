@@ -78,9 +78,17 @@ class ElementoNovedadController extends Controller
         $elemento = Elemento::find($id_elemento);
         
         if ($tipoNovedad === 'Préstamo') {
+            if ($elemento->cantidad <= 0) {
+                Alert::error('Error', 'No hay elementos disponibles para prestar');
+                return redirect(route('elementos.novedades.create', $id_elemento));
+            }else{
             $elemento->estado = 1;
+            $elemento->cantidad = $elemento->cantidad - 1;
+            }
+
         } elseif ($tipoNovedad === 'Devuelto') {
             $elemento->estado = 0;
+            $elemento->cantidad = $elemento->cantidad + 1;
         }
         if (isset($elemento->estado)) {
             $elemento->save();
@@ -176,8 +184,18 @@ class ElementoNovedadController extends Controller
                 
         if ($tipoNovedad === 'Préstamo') {
             $elemento->estado = 1;
+            if ($elemento->cantidad <= 0) {
+                Alert::error('Error', 'No hay elementos disponibles para prestar');
+                return redirect(route('elementos.novedades.edit', [$id_elemento, $id_novedad]));
+            }else{
+            //se resta la cantidad del inventario
+            $elemento->cantidad = $elemento->cantidad - 1;
+            }
+            
         } elseif ($tipoNovedad === 'Devuelto') {
             $elemento->estado = 0;
+            //se suma la cantidad del inventario
+            $elemento->cantidad = $elemento->cantidad + 1;
         }
         if (isset($elemento->estado)) {
             $elemento->save();
